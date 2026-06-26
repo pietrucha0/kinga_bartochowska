@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import PillButton from "@/components/PillButton";
-import GlassCard from "@/components/GlassCard";
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
