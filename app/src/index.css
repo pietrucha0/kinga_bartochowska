@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.625rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Card Base */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px 0 rgba(255, 105, 180, 0.15);
+    border-radius: 32px;
+  }
+
+  /* Glass Card Hover State */
+  .glass-card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card-hover:hover {
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    box-shadow: 0 12px 40px 0 rgba(255, 105, 180, 0.25);
+    transform: translateY(-4px);
+  }
+
+  /* Fallback for browsers without backdrop-filter */
+  @supports not (backdrop-filter: blur(24px)) {
+    .glass-card {
+      background: rgba(255, 240, 245, 0.9);
+    }
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    background: linear-gradient(135deg, #e0115f 0%, #ff007f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Cyan Button */
+  .btn-cyan {
+    @apply bg-cyan text-white font-semibold px-8 py-3 rounded-pill transition-all duration-300;
+    box-shadow: 0 4px 16px rgba(0, 194, 203, 0.3);
+  }
+
+  .btn-cyan:hover {
+    box-shadow: 0 6px 24px rgba(0, 194, 203, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Pink Button */
+  .btn-pink {
+    @apply bg-gradient-to-r from-pink to-pink-hot text-white font-semibold px-8 py-3 rounded-pill transition-all duration-300;
+    box-shadow: 0 4px 16px rgba(224, 17, 95, 0.3);
+  }
+
+  .btn-pink:hover {
+    box-shadow: 0 6px 24px rgba(224, 17, 95, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Section Container */
+  .section-container {
+    @apply w-full px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24;
+  }
+
+  /* Input Minimal Style */
+  .input-minimal {
+    @apply w-full bg-transparent border-0 border-b-2 border-white/60 py-3 px-1 text-charcoal placeholder:text-charcoal/40 focus:outline-none transition-colors duration-300;
+  }
+
+  .input-minimal:focus {
+    border-color: #00c2cb;
+    box-shadow: 0 2px 8px rgba(0, 194, 203, 0.2);
+  }
+}
+
+@layer utilities {
+  /* Pink gradient background */
+  .bg-pink-gradient {
+    background: linear-gradient(180deg, #ffc0cb 0%, #ffb6c1 100%);
+  }
+
+  .bg-blush-mist {
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+  }
+
+  /* Glow effects */
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(0, 194, 203, 0.4);
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+  }
+
+  /* Text shadow for readability on video */
+  .text-shadow-soft {
+    text-shadow: 0 2px 20px rgba(255, 240, 245, 0.8), 0 0 40px rgba(255, 240, 245, 0.5);
+  }
+}
