@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PillButton from "@/components/PillButton";
 import GlassCard from "@/components/GlassCard";
+import { getLenis } from "@/hooks/useSmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -202,8 +203,10 @@ export default function PricingSection() {
                 <PillButton
                   variant={plan.variant}
                   className={`w-full ${plan.popular ? "glow-cyan" : ""}`}
-                  onClick={() => {
-                    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+                  href="#contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getLenis()?.scrollTo("#contact", { duration: 1.2 });
                   }}
                 >
                   {plan.cta}

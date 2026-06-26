@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import PillButton from "@/components/PillButton";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getLenis } from "@/hooks/useSmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,11 +27,17 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (href: string) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLElement>, href: string) => {
+    e.preventDefault();
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+    const lenis = getLenis();
+    if (lenis) {
+      lenis.scrollTo(href, { duration: 1.2 });
+    } else {
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -49,31 +56,44 @@ export default function Navigation() {
         {/* Logo */}
         <a
           href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            setMobileOpen(false);
+            const lenis = getLenis();
+            if (lenis) {
+              lenis.scrollTo(0, { duration: 1.2 });
+            } else {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
           className="absolute left-6 sm:left-8 font-display font-bold text-lg sm:text-xl md:text-2xl gradient-text tracking-tight whitespace-nowrap"
         >
           KINGA BARTOCHOWSKA
         </a>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8 mx-auto">
+        <ul className="hidden md:flex items-center gap-6 lg:gap-8 mx-auto">
           {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => scrollToSection(link.href)}
-              className="font-body text-sm font-medium text-charcoal/80 hover:text-charcoal transition-colors duration-300 relative group"
-            >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-pink to-pink-hot rounded-full transition-all duration-300 group-hover:w-full" />
-            </button>
+            <li key={link.href}>
+              <a
+                href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
+                className="font-body text-sm font-medium text-charcoal/80 hover:text-charcoal transition-colors duration-300 relative group block py-1"
+              >
+                {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-pink to-pink-hot rounded-full transition-all duration-300 group-hover:w-full" />
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Desktop CTA */}
         <div className="hidden md:block absolute right-6 sm:right-8">
           <PillButton
             variant="cyan"
             className="text-xs lg:text-sm py-2 lg:py-2.5 px-4 lg:px-6"
-            onClick={() => scrollToSection("#contact")}
+            href="#contact"
+            onClick={(e) => scrollToSection(e, "#contact")}
           >
             Zacznij teraz
           </PillButton>
@@ -83,6 +103,8 @@ export default function Navigation() {
         <button
           className="md:hidden absolute right-6 sm:right-8 flex flex-col gap-1.5 p-2"
           onClick={() => setMobileOpen(!mobileOpen)}
+          aria-expanded={mobileOpen}
+          aria-label="Menu nawigacyjne"
         >
           <span
             className={`w-6 h-0.5 bg-charcoal transition-all duration-300 ${
@@ -110,24 +132,29 @@ export default function Navigation() {
             : "max-h-0 opacity-0"
         }`}
       >
-        <div className="flex flex-col p-6 gap-4">
+        <ul className="flex flex-col p-6 gap-4">
           {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => scrollToSection(link.href)}
-              className="font-body text-base font-medium text-charcoal/80 hover:text-charcoal transition-colors text-left py-2"
-            >
-              {link.label}
-            </button>
+            <li key={link.href}>
+              <a
+                href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
+                className="font-body text-base font-medium text-charcoal/80 hover:text-charcoal transition-colors text-left py-2 block"
+              >
+                {link.label}
+              </a>
+            </li>
           ))}
-          <PillButton
-            variant="cyan"
-            className="mt-2 w-full"
-            onClick={() => scrollToSection("#contact")}
-          >
-            Zacznij teraz
-          </PillButton>
-        </div>
+          <li>
+            <PillButton
+              variant="cyan"
+              className="mt-2 w-full"
+              href="#contact"
+              onClick={(e) => scrollToSection(e, "#contact")}
+            >
+              Zacznij teraz
+            </PillButton>
+          </li>
+        </ul>
       </div>
     </nav>
   );

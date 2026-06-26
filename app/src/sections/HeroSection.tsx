@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import PillButton from "@/components/PillButton";
+import { getLenis } from "@/hooks/useSmoothScroll";
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -64,28 +65,28 @@ export default function HeroSection() {
       <div ref={shapesRef} className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Clips - Top Left Corner */}
         <img
-          src="/assets/clips.png"
+          src="/assets/clips.webp"
           alt=""
           className="floating-shape absolute top-[8%] left-[2%] w-24 opacity-35 sm:top-[2%] sm:left-[3%] sm:w-32 md:w-40 sm:opacity-80 animate-float-slow"
           style={{ animationDelay: "0s" }}
         />
         {/* Dumbbell - Top Right Corner */}
         <img
-          src="/assets/dumbbell.png"
+          src="/assets/dumbbell.webp"
           alt=""
           className="floating-shape absolute top-[12%] right-[2%] w-24 opacity-35 sm:top-[12%] sm:right-[8%] sm:w-24 md:w-32 sm:opacity-70 animate-float"
           style={{ animationDelay: "1s" }}
         />
         {/* Kettlebell - Bottom Right Corner */}
         <img
-          src="/assets/kettlebell.png"
+          src="/assets/kettlebell.webp"
           alt=""
           className="floating-shape absolute bottom-[8%] right-[2%] w-24 opacity-35 sm:bottom-[20%] sm:right-[3%] sm:w-24 md:w-32 sm:opacity-70 animate-float"
           style={{ animationDelay: "0.5s" }}
         />
         {/* Barbell - Desktop Only */}
         <img
-          src="/assets/barbell.png"
+          src="/assets/barbell.webp"
           alt=""
           className="floating-shape absolute bottom-[15%] left-[30%] w-40 sm:w-64 md:w-80 opacity-90 animate-float-slow hidden sm:block"
           style={{ animationDelay: "3s" }}
@@ -121,9 +122,14 @@ export default function HeroSection() {
 
             <div ref={ctaRef} className="flex items-center gap-4 justify-center lg:justify-start">
               <div className="relative">
-                <PillButton variant="cyan" onClick={() => {
-                  document.querySelector("#pricing")?.scrollIntoView({ behavior: "smooth" });
-                }}>
+                <PillButton
+                  variant="cyan"
+                  href="#pricing"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getLenis()?.scrollTo("#pricing", { duration: 1.2 });
+                  }}
+                >
                   Zacznij teraz
                 </PillButton>
               </div>
@@ -142,7 +148,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-pink-light/40 via-pink-mist/20 to-transparent rounded-full blur-3xl scale-90" />
               
               <img
-                src="/assets/trainer.png"
+                src="/assets/trainer.webp"
                 alt="Kinga Bartochowska - Personal Trainer"
                 className="relative z-10 w-full max-w-[290px] sm:max-w-[350px] lg:max-w-[410px] xl:max-w-[460px] h-auto object-contain drop-shadow-2xl scale-120 lg:scale-125 origin-bottom"
               />

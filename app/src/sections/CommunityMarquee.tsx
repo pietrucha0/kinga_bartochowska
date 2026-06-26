@@ -30,10 +30,10 @@ function createBouncyEase(
 }
 
 const floatingIcons = [
-  { src: "/assets/dumbbell.png", alt: "Dumbbell" },
-  { src: "/assets/kettlebell.png", alt: "Kettlebell" },
-  { src: "/assets/barbell.png", alt: "Barbell" },
-  { src: "/assets/clips.png", alt: "Clips" },
+  { src: "/assets/dumbbell.webp", alt: "Dumbbell" },
+  { src: "/assets/kettlebell.webp", alt: "Kettlebell" },
+  { src: "/assets/barbell.webp", alt: "Barbell" },
+  { src: "/assets/clips.webp", alt: "Clips" },
 ];
 
 export default function CommunityMarquee() {
@@ -139,6 +139,7 @@ export default function CommunityMarquee() {
                   key={`${setIndex}-${i}`}
                   src={icon.src}
                   alt=""
+                  loading="lazy"
                   className="w-16 sm:w-20 md:w-24 h-auto flex-shrink-0"
                 />
               ))}

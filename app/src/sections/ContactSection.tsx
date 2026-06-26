@@ -185,6 +185,8 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [botcheck, setBotcheck] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -220,6 +222,63 @@ export default function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
+    setErrors({});
+
+    // Honeypot check
+    if (botcheck) {
+      // Trick bots by simulating a successful submission
+      setTimeout(() => {
+        setSubmitted(true);
+        setIsSubmitting(false);
+      }, 1000);
+      return;
+    }
+
+    // Client-side validations
+    const validationErrors: { [key: string]: string } = {};
+
+    const nameTrimmed = formData.name.trim();
+    if (nameTrimmed.length < 3) {
+      validationErrors.name = "Imię i nazwisko musi zawierać co najmniej 3 znaki.";
+    } else if (nameTrimmed.length > 60) {
+      validationErrors.name = "Imię i nazwisko nie może przekraczać 60 znaków.";
+    } else if (!/^[A-Za-zŻżÓóŁłĆćĘęĄąŚśŹźŻżŃńa-pr-u-y-z\s-]+$/i.test(nameTrimmed)) {
+      validationErrors.name = "Imię i nazwisko może zawierać tylko litery i spacje.";
+    }
+
+    const emailTrimmed = formData.email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
+      validationErrors.email = "Podaj poprawny adres e-mail.";
+    } else if (emailTrimmed.length > 100) {
+      validationErrors.email = "Adres e-mail jest zbyt długi (maks. 100 znaków).";
+    }
+
+    const phoneTrimmed = formData.phone.trim();
+    if (phoneTrimmed) {
+      if (!/^[+0-9\s()-,]+$/.test(phoneTrimmed)) {
+        validationErrors.phone = "Numer telefonu zawiera niedozwolone znaki.";
+      } else if (phoneTrimmed.length < 7 || phoneTrimmed.length > 20) {
+        validationErrors.phone = "Numer telefonu musi mieć od 7 do 20 znaków.";
+      }
+    }
+
+    const goalTrimmed = formData.goal.trim();
+    if (!goalTrimmed) {
+      validationErrors.goal = "Opis celu jest wymagany.";
+    } else if (goalTrimmed.length > 1000) {
+      validationErrors.goal = "Cel i oczekiwania mogą mieć maksymalnie 1000 znaków.";
+    }
+
+    const healthTrimmed = formData.healthNotes.trim();
+    if (healthTrimmed.length > 500) {
+      validationErrors.healthNotes = "Przeciwwskazania mogą mieć maksymalnie 500 znaków.";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -230,17 +289,18 @@ export default function ContactSection() {
         },
         body: JSON.stringify({
           access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone || "Nie podano",
+          name: nameTrimmed,
+          email: emailTrimmed,
+          phone: phoneTrimmed || "Nie podano",
           experience: formData.experience === "beginner"
             ? "Początkujący (brak stażu / < 6 msc)"
             : formData.experience === "intermediate"
               ? "Średniozaawansowany (6 msc - 2 lata)"
               : "Zaawansowany (powyżej 2 lat)",
-          subject: `Nowe zgłoszenie od ${formData.name} - Kinga Bartochowska Fitness`,
-          message: `Cel: ${formData.goal}\n\nPrzeciwwskazania zdrowotne: ${formData.healthNotes || 'Brak'}\nTelefon: ${formData.phone || 'Nie podano'}`,
+          subject: `Nowe zgłoszenie od ${nameTrimmed} - Kinga Bartochowska Fitness`,
+          message: `Cel: ${goalTrimmed}\n\nPrzeciwwskazania zdrowotne: ${healthTrimmed || 'Brak'}\nTelefon: ${phoneTrimmed || 'Nie podano'}`,
           from_name: "Kinga Bartochowska Fitness",
+          botcheck: botcheck
         }),
       });
 
@@ -280,13 +340,15 @@ export default function ContactSection() {
 
       {/* Decorative shapes */}
       <img
-        src="/assets/dumbbell.png"
+        src="/assets/dumbbell.webp"
         alt=""
+        loading="lazy"
         className="absolute top-[10%] left-[5%] w-20 sm:w-28 opacity-50 animate-float-slow"
       />
       <img
-        src="/assets/kettlebell.png"
+        src="/assets/kettlebell.webp"
         alt=""
+        loading="lazy"
         className="absolute bottom-[15%] right-[8%] w-16 sm:w-24 opacity-40 animate-float"
       />
 
@@ -308,6 +370,18 @@ export default function ContactSection() {
               <ContactSuccess />
             ) : (
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
+                {/* Honeypot hidden field */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  checked={botcheck}
+                  onChange={(e) => setBotcheck(e.target.checked)}
+                  className="hidden animate-none"
+                  style={{ display: "none" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
                 {/* Form fields grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Name */}
@@ -326,9 +400,12 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="input-minimal font-body text-base"
+                      className={`input-minimal font-body text-base ${errors.name ? "border-pink-hot" : ""}`}
                       placeholder="np. Anna Kowalska"
                     />
+                    {errors.name && (
+                      <p className="text-xs text-pink-hot font-body mt-1.5">{errors.name}</p>
+                    )}
                   </div>
 
                   {/* Email */}
@@ -347,9 +424,12 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="input-minimal font-body text-base"
+                      className={`input-minimal font-body text-base ${errors.email ? "border-pink-hot" : ""}`}
                       placeholder="np. anna@przyklad.pl"
                     />
+                    {errors.email && (
+                      <p className="text-xs text-pink-hot font-body mt-1.5">{errors.email}</p>
+                    )}
                   </div>
 
                   {/* Experience */}
@@ -388,9 +468,12 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, phone: e.target.value })
                       }
-                      className="input-minimal font-body text-base"
+                      className={`input-minimal font-body text-base ${errors.phone ? "border-pink-hot" : ""}`}
                       placeholder="np. +48 123 456 789"
                     />
+                    {errors.phone && (
+                      <p className="text-xs text-pink-hot font-body mt-1.5">{errors.phone}</p>
+                    )}
                   </div>
                 </div>
 
@@ -410,9 +493,12 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, goal: e.target.value })
                     }
-                    className="input-minimal font-body text-base resize-none"
+                    className={`input-minimal font-body text-base resize-none ${errors.goal ? "border-pink-hot" : ""}`}
                     placeholder="np. redukcja wagi o 5 kg, budowa pośladków, poprawa kondycji, powrót do sprawności..."
                   />
+                  {errors.goal && (
+                    <p className="text-xs text-pink-hot font-body mt-1.5">{errors.goal}</p>
+                  )}
                 </div>
 
                 {/* Health Notes */}
@@ -431,9 +517,12 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, healthNotes: e.target.value })
                     }
-                    className="input-minimal font-body text-base resize-none"
+                    className={`input-minimal font-body text-base resize-none ${errors.healthNotes ? "border-pink-hot" : ""}`}
                     placeholder="Wpisz wszelkie przebyte urazy, bóle kręgosłupa, problemy z kolanami itp."
                   />
+                  {errors.healthNotes && (
+                    <p className="text-xs text-pink-hot font-body mt-1.5">{errors.healthNotes}</p>
+                  )}
                 </div>
 
                 {/* Submit */}
@@ -462,11 +551,6 @@ export default function ContactSection() {
                     {submitError}
                   </p>
                 )}
-
-                {/* <p className="text-center font-body text-xs text-charcoal/50">
-                  Wysyłając formularz, wyrażasz zgodę na otrzymywanie wskazówek
-                  fitness i e-maili promocyjnych. Możesz zrezygnować w każdej chwili.
-                </p> */}
               </form>
             )}
           </GlassCard>

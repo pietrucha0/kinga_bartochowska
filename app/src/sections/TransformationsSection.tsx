@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getLenis } from "@/hooks/useSmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -95,13 +96,15 @@ export default function TransformationsSection() {
 
       {/* Decorative elements */}
       <img
-        src="/assets/clips.png"
+        src="/assets/clips.webp"
         alt=""
+        loading="lazy"
         className="absolute top-[8%] right-[3%] w-16 sm:w-24 opacity-40 animate-float-slow"
       />
       <img
-        src="/assets/kettlebell.png"
+        src="/assets/kettlebell.webp"
         alt=""
+        loading="lazy"
         className="absolute bottom-[10%] left-[5%] w-14 sm:w-20 opacity-35 animate-float"
       />
 
@@ -191,12 +194,12 @@ export default function TransformationsSection() {
           <p className="font-body text-charcoal/70 mb-4">
             Dołącz do kobiet, które już przeszły swoją metamorfozę
           </p>
-          <button
-            onClick={() =>
-              document
-                .querySelector("#pricing")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
+          <a
+            href="#pricing"
+            onClick={(e) => {
+              e.preventDefault();
+              getLenis()?.scrollTo("#pricing", { duration: 1.2 });
+            }}
             className="font-display font-semibold text-lg gradient-text hover:opacity-80 transition-opacity inline-flex items-center gap-2 group"
           >
             Rozpocznij swoją metamorfozę
@@ -213,7 +216,7 @@ export default function TransformationsSection() {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-          </button>
+          </a>
         </div>
       </div>
     </section>

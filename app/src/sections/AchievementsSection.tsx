@@ -20,13 +20,13 @@ const achievements = [
 
 const gallery = [
   {
-    src: "/assets/kinga3.png",
+    src: "/assets/kinga3.webp",
     alt: "Kinga na zawodach",
     caption: "Pasja i walka",
     rotation: "rotate-2",
   },
   {
-    src: "/assets/kinga4.png",
+    src: "/assets/kinga4.webp",
     alt: "Kinga Bartochowska martwy ciąg",
     caption: "Droga po rekord",
     rotation: "-rotate-2",
@@ -117,13 +117,15 @@ export default function AchievementsSection() {
     >
       {/* Background decoration */}
       <img
-        src="/assets/barbell.png"
+        src="/assets/barbell.webp"
         alt=""
+        loading="lazy"
         className="absolute top-[10%] left-[2%] w-24 sm:w-36 opacity-10 animate-float-slow -z-0 pointer-events-none"
       />
       <img
-        src="/assets/kettlebell.png"
+        src="/assets/kettlebell.webp"
         alt=""
+        loading="lazy"
         className="absolute bottom-[8%] right-[2%] w-20 sm:w-28 opacity-15 animate-float -z-0 pointer-events-none"
       />
 
@@ -179,6 +181,7 @@ export default function AchievementsSection() {
                     <img
                       src={photo.src}
                       alt={photo.alt}
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-500"
                     />
                   ) : (

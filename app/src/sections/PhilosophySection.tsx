@@ -90,16 +90,10 @@ export default function PhilosophySection() {
             <div ref={cardRef} style={{ transform: "rotate(-2deg)" }}>
               <GlassCard className="p-6 sm:p-8 lg:p-10" tilt={true}>
                 <p className="font-body text-base sm:text-lg text-charcoal/80 leading-relaxed mb-6" style={{ transform: "rotate(2deg)" }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                  enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                  nisi ut aliquip ex ea commodo consequat.
+                  Jako certyfikowana trenerka personalna oraz czynna zawodniczka – Mistrzyni Polski Juniorów w Trójboju Siłowym Klasycznym i krajowa rekordzistka w martwym ciągu – doskonale rozumiem, jak ważna jest dyscyplina, cierpliwość oraz precyzyjnie dobrany system treningowy.
                 </p>
                 <p className="font-body text-base sm:text-lg text-charcoal/80 leading-relaxed mb-8" style={{ transform: "rotate(2deg)" }}>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  W mojej pracy nie obiecuję dróg na skróty ani cudownych diet głodówkowych. Oferuję Ci poparte nauką i moim własnym doświadczeniem sportowym podejście, w którym skupiamy się na bezpiecznej technice, stopniowym progresie oraz trwałym budowaniu nawyków. Razem stworzymy silne, sprawne ciało i sylwetkę, z której będziesz dumna.
                 </p>
 
                 <div className="flex items-center gap-4" style={{ transform: "rotate(2deg)" }}>
@@ -140,16 +134,18 @@ export default function PhilosophySection() {
               {/* Main portrait with a beautiful border and shadow */}
               <div className="relative p-3 sm:p-4 rounded-[32px] bg-white/50 backdrop-blur-lg border-2 border-white shadow-[0_25px_60px_-15px_rgba(224,17,95,0.25)]">
                 <img
-                  src="/assets/kinga2.png"
+                  src="/assets/kinga2.webp"
                   alt="Portret Kingi Bartochowskiej"
+                  loading="lazy"
                   className="w-full max-w-[280px] sm:max-w-sm lg:max-w-md h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
                 />
               </div>
 
               {/* Floating decorative shape */}
               <img
-                src="/assets/dumbbell.png"
+                src="/assets/dumbbell.webp"
                 alt=""
+                loading="lazy"
                 className="absolute -bottom-6 -left-6 w-16 sm:w-20 opacity-90 animate-float-slow z-20"
               />
             </div>

@@ -6,9 +6,12 @@ interface PillButtonProps {
   children: ReactNode;
   variant?: "cyan" | "pink" | "outline";
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   magnetic?: boolean;
   disabled?: boolean;
+  href?: string;
+  target?: string;
+  rel?: string;
 }
 
 export default function PillButton({
@@ -18,11 +21,14 @@ export default function PillButton({
   onClick,
   magnetic = true,
   disabled = false,
+  href,
+  target,
+  rel,
 }: PillButtonProps) {
-  const btnRef = useRef<HTMLButtonElement>(null);
+  const btnRef = useRef<any>(null);
 
   const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       if (!magnetic || !btnRef.current || disabled) return;
       const btn = btnRef.current;
       const rect = btn.getBoundingClientRect();
@@ -49,16 +55,35 @@ export default function PillButton({
   }, [magnetic]);
 
   const variantClasses = {
-    cyan: "btn-cyan disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none",
-    pink: "btn-pink disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none",
+    cyan: "btn-cyan disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center justify-center",
+    pink: "btn-pink disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center justify-center",
     outline:
-      "border-2 border-white/60 text-charcoal font-semibold px-8 py-3 rounded-pill transition-all duration-300 hover:border-cyan hover:text-cyan disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none",
+      "border-2 border-white/60 text-charcoal font-semibold px-8 py-3 rounded-pill transition-all duration-300 hover:border-cyan hover:text-cyan disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center justify-center",
   };
+
+  const classes = cn(variantClasses[variant], className);
+
+  if (href) {
+    return (
+      <a
+        ref={btnRef}
+        href={href}
+        className={classes}
+        onClick={onClick}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        target={target}
+        rel={rel}
+      >
+        {children}
+      </a>
+    );
+  }
 
   return (
     <button
       ref={btnRef}
-      className={cn(variantClasses[variant], className)}
+      className={classes}
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
