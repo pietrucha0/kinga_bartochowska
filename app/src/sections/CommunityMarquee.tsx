@@ -64,6 +64,9 @@ export default function CommunityMarquee() {
         });
       });
 
+      // Select the subtext element
+      const subtext = textEl.querySelector(".font-accent");
+
       // Set initial state to avoid flash
       gsap.set(allChars, {
         opacity: 0,
@@ -73,27 +76,47 @@ export default function CommunityMarquee() {
         scale: 0.8,
       });
 
-      // Animate characters on scroll
+      if (subtext) {
+        gsap.set(subtext, {
+          opacity: 0,
+          y: 20,
+        });
+      }
+
+      // Create timeline
+      const tl = gsap.timeline({ paused: true });
+
+      tl.to(allChars, {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        opacity: 1,
+        duration: 1.8,
+        ease: createBouncyEase(),
+        stagger: 0.05,
+      });
+
+      if (subtext) {
+        tl.to(
+          subtext,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          "-=0.8"
+        );
+      }
+
+      // Animate on scroll (replays every time user enters the section)
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top 85%",
-        once: true,
-        onEnter: () => {
-          gsap.killTweensOf(allChars);
-          gsap.to(
-            allChars,
-            {
-              x: 0,
-              y: 0,
-              rotation: 0,
-              scale: 1,
-              opacity: 1,
-              duration: 1.8,
-              ease: createBouncyEase(),
-              stagger: 0.05,
-            }
-          );
-        },
+        end: "bottom 15%",
+        animation: tl,
+        toggleActions: "play reset play reset",
       });
     }, sectionRef);
 
