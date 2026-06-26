@@ -133,87 +133,83 @@ export default function PricingSection() {
         {/* Pricing Cards */}
         <div
           ref={cardsRef}
-          className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch"
+          className="flex md:grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-none pt-5 pb-8 md:pt-0 md:pb-0 -mx-4 px-4 md:ml-auto md:mr-auto md:px-0"
         >
           {plans.map((plan) => (
-            <div
+            <GlassCard
               key={plan.name}
-              className="pricing-card h-full"
+              className={`pricing-card relative p-6 sm:p-8 bg-gradient-to-b ${plan.tint} flex flex-col justify-between flex-shrink-0 w-[85vw] sm:w-[350px] md:w-auto snap-center`}
+              hover={true}
+              tilt={true}
             >
-              <GlassCard
-                className={`relative p-6 sm:p-8 h-full bg-gradient-to-b ${plan.tint} flex flex-col justify-between`}
-                hover={true}
-                tilt={true}
-              >
-                {/* Upper Content */}
-                <div>
-                  {/* Popular badge */}
-                  {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                      <span className="bg-cyan text-white font-body text-xs font-semibold px-4 py-1.5 rounded-pill glow-cyan">
-                        Lorem Ipsum
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Plan header */}
-                  <div className="text-center mb-6 pt-2">
-                    <h3 className="font-display font-semibold text-xl text-charcoal mb-2">
-                      {plan.name}
-                    </h3>
-                    <div className="flex items-baseline justify-center gap-1">
-                      <span className="font-display font-bold text-4xl sm:text-5xl gradient-text">
-                        {plan.price}
-                      </span>
-                      <span className="font-body text-sm text-charcoal/60">
-                        {plan.period}
-                      </span>
-                    </div>
-                    <p className="font-body text-sm text-charcoal/60 mt-2">
-                      {plan.description}
-                    </p>
+              {/* Upper Content */}
+              <div>
+                {/* Popular badge */}
+                {plan.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <span className="bg-cyan text-white font-body text-xs font-semibold px-4 py-1.5 rounded-pill glow-cyan">
+                      Lorem Ipsum
+                    </span>
                   </div>
+                )}
 
-                  {/* Features */}
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-start gap-3 font-body text-sm text-charcoal/80"
+                {/* Plan header */}
+                <div className="text-center mb-6 pt-2">
+                  <h3 className="font-display font-semibold text-xl text-charcoal mb-2">
+                    {plan.name}
+                  </h3>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="font-display font-bold text-4xl sm:text-5xl gradient-text">
+                      {plan.price}
+                    </span>
+                    <span className="font-body text-sm text-charcoal/60">
+                      {plan.period}
+                    </span>
+                  </div>
+                  <p className="font-body text-sm text-charcoal/60 mt-2">
+                    {plan.description}
+                  </p>
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-start gap-3 font-body text-sm text-charcoal/80"
+                    >
+                      <svg
+                        className="w-5 h-5 text-pink flex-shrink-0 mt-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
                       >
-                        <svg
-                          className="w-5 h-5 text-pink flex-shrink-0 mt-0.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-                {/* CTA Button at bottom */}
-                <div>
-                  <PillButton
-                    variant={plan.variant}
-                    className={`w-full ${plan.popular ? "glow-cyan" : ""}`}
-                    onClick={() => {
-                      document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                  >
-                    {plan.cta}
-                  </PillButton>
-                </div>
-              </GlassCard>
-            </div>
+              {/* CTA Button at bottom */}
+              <div>
+                <PillButton
+                  variant={plan.variant}
+                  className={`w-full ${plan.popular ? "glow-cyan" : ""}`}
+                  onClick={() => {
+                    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  {plan.cta}
+                </PillButton>
+              </div>
+            </GlassCard>
           ))}
         </div>
       </div>

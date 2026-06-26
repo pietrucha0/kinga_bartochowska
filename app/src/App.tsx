@@ -2,6 +2,7 @@ import useSmoothScroll from "@/hooks/useSmoothScroll";
 import Navigation from "@/sections/Navigation";
 import HeroSection from "@/sections/HeroSection";
 import PhilosophySection from "@/sections/PhilosophySection";
+import AchievementsSection from "@/sections/AchievementsSection";
 import TransformationsSection from "@/sections/TransformationsSection";
 import PricingSection from "@/sections/PricingSection";
 import CommunityMarquee from "@/sections/CommunityMarquee";
@@ -17,6 +18,7 @@ export default function App() {
       <main>
         <HeroSection />
         <PhilosophySection />
+        <AchievementsSection />
         <TransformationsSection />
         <PricingSection />
         <CommunityMarquee />

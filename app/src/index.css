@@ -111,7 +111,7 @@
 
   /* Input Minimal Style */
   .input-minimal {
-    @apply w-full bg-transparent border-0 border-b-2 border-white/60 py-3 px-1 text-charcoal placeholder:text-charcoal/40 focus:outline-none transition-colors duration-300;
+    @apply w-full bg-transparent border-0 border-b-2 border-charcoal/20 py-3 px-1 text-charcoal placeholder:text-charcoal/40 focus:outline-none transition-colors duration-300;
   }
 
   .input-minimal:focus {
@@ -142,5 +142,15 @@
   /* Text shadow for readability on video */
   .text-shadow-soft {
     text-shadow: 0 2px 20px rgba(255, 240, 245, 0.8), 0 0 40px rgba(255, 240, 245, 0.5);
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-none {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }

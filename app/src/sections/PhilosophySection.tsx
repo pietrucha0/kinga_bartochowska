@@ -132,7 +132,7 @@ export default function PhilosophySection() {
           </div>
 
           {/* Right Column - Editorial Portrait */}
-          <div ref={imageRef} className="order-1 lg:order-2 flex justify-center lg:justify-end">
+          <div ref={imageRef} className="order-1 lg:order-2 flex justify-center lg:justify-end px-4 sm:px-0">
             <div className="relative">
               {/* Decorative elements behind image */}
               <div className="absolute -top-4 -left-4 w-full h-full rounded-[32px] bg-gradient-to-br from-pink-light/30 to-pink-soft/30 -z-10" />
@@ -142,13 +142,13 @@ export default function PhilosophySection() {
                 <img
                   src="/assets/kinga2.png"
                   alt="Portret Kingi Bartochowskiej"
-                  className="w-full max-w-sm lg:max-w-md h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
+                  className="w-full max-w-[280px] sm:max-w-sm lg:max-w-md h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
                 />
               </div>
 
               {/* Floating decorative shape */}
               <img
-                src="/assets/dumbbell-3d.png"
+                src="/assets/dumbbell.png"
                 alt=""
                 className="absolute -bottom-6 -left-6 w-16 sm:w-20 opacity-90 animate-float-slow z-20"
               />

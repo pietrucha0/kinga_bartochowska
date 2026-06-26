@@ -57,43 +57,46 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-[72vh] overflow-hidden flex items-center"
+      className="relative w-full min-h-screen lg:min-h-[72vh] overflow-hidden flex items-center py-12 lg:py-0"
     >
       <div className="absolute inset-0 bg-blush-mist" />
 
       <div ref={shapesRef} className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Clips - Top Left Corner */}
         <img
           src="/assets/clips.png"
           alt=""
-          className="floating-shape absolute top-[2%] left-[3%] w-20 sm:w-32 md:w-40 opacity-80 animate-float-slow"
+          className="floating-shape absolute top-[8%] left-[2%] w-24 opacity-35 sm:top-[2%] sm:left-[3%] sm:w-32 md:w-40 sm:opacity-80 animate-float-slow"
           style={{ animationDelay: "0s" }}
         />
+        {/* Dumbbell - Top Right Corner */}
         <img
           src="/assets/dumbbell.png"
           alt=""
-          className="floating-shape absolute top-[12%] right-[8%] w-16 sm:w-24 md:w-32 opacity-70 animate-float"
+          className="floating-shape absolute top-[12%] right-[2%] w-24 opacity-35 sm:top-[12%] sm:right-[8%] sm:w-24 md:w-32 sm:opacity-70 animate-float"
           style={{ animationDelay: "1s" }}
         />
+        {/* Kettlebell - Bottom Right Corner */}
         <img
           src="/assets/kettlebell.png"
           alt=""
-          className="floating-shape absolute bottom-[20%] right-[3%] w-16 sm:w-24 md:w-32 opacity-70 animate-float"
+          className="floating-shape absolute bottom-[8%] right-[2%] w-24 opacity-35 sm:bottom-[20%] sm:right-[3%] sm:w-24 md:w-32 sm:opacity-70 animate-float"
           style={{ animationDelay: "0.5s" }}
         />
+        {/* Barbell - Desktop Only */}
         <img
           src="/assets/barbell.png"
           alt=""
-          className="floating-shape absolute bottom-[15%] left-[30%] w-40 sm:w-64 md:w-80 opacity-90 animate-float-slow"
+          className="floating-shape absolute bottom-[15%] left-[30%] w-40 sm:w-64 md:w-80 opacity-90 animate-float-slow hidden sm:block"
           style={{ animationDelay: "3s" }}
         />
-
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full section-container pt-16 pb-8">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[50vh]">
+      <div className="relative z-10 w-full section-container pt-32 pb-8 lg:pt-16 lg:pb-8">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-0 lg:min-h-[50vh]">
           {/* Left Column - Text Content */}
-          <div className="flex flex-col justify-center order-2 lg:order-1">
+          <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left order-1 lg:order-1 max-w-xl mx-auto lg:max-w-none">
             <div ref={headlineRef} className="mb-4">
               <h1 className="font-display font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight">
                 <span className="headline-word inline-block gradient-text">
@@ -116,9 +119,7 @@ export default function HeroSection() {
               Trenuj ciężko. Wyglądaj i czuj się świetnie.
             </p>
 
-
-
-            <div ref={ctaRef} className="flex items-center gap-4">
+            <div ref={ctaRef} className="flex items-center gap-4 justify-center lg:justify-start">
               <div className="relative">
                 <PillButton variant="cyan" onClick={() => {
                   document.querySelector("#pricing")?.scrollIntoView({ behavior: "smooth" });
@@ -132,9 +133,10 @@ export default function HeroSection() {
             </div>
           </div>
 
+          {/* Right Column - Trainer Portrait (Hidden on Mobile/Tablet) */}
           <div
             ref={trainerRef}
-            className="relative flex justify-center lg:justify-end order-1 lg:order-2"
+            className="hidden lg:flex relative justify-center lg:justify-end order-2 lg:order-2"
           >
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-t from-pink-light/40 via-pink-mist/20 to-transparent rounded-full blur-3xl scale-90" />

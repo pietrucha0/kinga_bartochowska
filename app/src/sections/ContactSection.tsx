@@ -280,12 +280,12 @@ export default function ContactSection() {
 
       {/* Decorative shapes */}
       <img
-        src="/assets/sphere-pink-3d.png"
+        src="/assets/dumbbell.png"
         alt=""
         className="absolute top-[10%] left-[5%] w-20 sm:w-28 opacity-50 animate-float-slow"
       />
       <img
-        src="/assets/sphere-silver-3d.png"
+        src="/assets/kettlebell.png"
         alt=""
         className="absolute bottom-[15%] right-[8%] w-16 sm:w-24 opacity-40 animate-float"
       />
@@ -303,7 +303,7 @@ export default function ContactSection() {
           </div>
 
           {/* Form Card */}
-          <GlassCard className="contact-card p-8 sm:p-10 lg:p-12" hover={false}>
+          <GlassCard className="contact-card p-6 sm:p-10 lg:p-12" hover={false}>
             {submitted ? (
               <ContactSuccess />
             ) : (

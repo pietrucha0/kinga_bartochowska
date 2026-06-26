@@ -7,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const navLinks = [
   { label: "Filozofia", href: "#philosophy" },
+  { label: "Osiągnięcia", href: "#achievements" },
   { label: "Metamorfozy", href: "#transformations" },
   { label: "Cennik", href: "#pricing" },
   { label: "Opinie", href: "#community" },

@@ -95,12 +95,12 @@ export default function TransformationsSection() {
 
       {/* Decorative elements */}
       <img
-        src="/assets/measuring-tape-3d.png"
+        src="/assets/clips.png"
         alt=""
         className="absolute top-[8%] right-[3%] w-16 sm:w-24 opacity-40 animate-float-slow"
       />
       <img
-        src="/assets/kettlebell-3d.png"
+        src="/assets/kettlebell.png"
         alt=""
         className="absolute bottom-[10%] left-[5%] w-14 sm:w-20 opacity-35 animate-float"
       />
@@ -179,7 +179,7 @@ export default function TransformationsSection() {
               </div>
 
               {/* Quote */}
-              <p className="font-accent text-lg text-pink-hot italic leading-relaxed">
+              <p className="font-body text-base text-pink-hot italic leading-relaxed">
                 &ldquo;{t.quote}&rdquo;
               </p>
             </div>
