@@ -110,7 +110,7 @@ export default function CommunityMarquee() {
       <div className="absolute inset-0 flex items-center overflow-hidden opacity-20 pointer-events-none">
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(4)].map((_, setIndex) => (
-            <div key={setIndex} className="flex items-center gap-16 px-8">
+            <div key={setIndex} className="flex items-center gap-32 px-16">
               {floatingIcons.map((icon, i) => (
                 <img
                   key={`${setIndex}-${i}`}
