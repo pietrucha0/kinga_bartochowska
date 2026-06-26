@@ -8,6 +8,7 @@ interface PillButtonProps {
   className?: string;
   onClick?: () => void;
   magnetic?: boolean;
+  disabled?: boolean;
 }
 
 export default function PillButton({
@@ -16,12 +17,13 @@ export default function PillButton({
   className,
   onClick,
   magnetic = true,
+  disabled = false,
 }: PillButtonProps) {
   const btnRef = useRef<HTMLButtonElement>(null);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!magnetic || !btnRef.current) return;
+      if (!magnetic || !btnRef.current || disabled) return;
       const btn = btnRef.current;
       const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
@@ -33,7 +35,7 @@ export default function PillButton({
         ease: "power2.out",
       });
     },
-    [magnetic]
+    [magnetic, disabled]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -47,10 +49,10 @@ export default function PillButton({
   }, [magnetic]);
 
   const variantClasses = {
-    cyan: "btn-cyan",
-    pink: "btn-pink",
+    cyan: "btn-cyan disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none",
+    pink: "btn-pink disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none",
     outline:
-      "border-2 border-white/60 text-charcoal font-semibold px-8 py-3 rounded-pill transition-all duration-300 hover:border-cyan hover:text-cyan",
+      "border-2 border-white/60 text-charcoal font-semibold px-8 py-3 rounded-pill transition-all duration-300 hover:border-cyan hover:text-cyan disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none",
   };
 
   return (
@@ -60,6 +62,7 @@ export default function PillButton({
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      disabled={disabled}
     >
       {children}
     </button>
