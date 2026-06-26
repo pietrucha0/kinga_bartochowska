@@ -20,13 +20,13 @@ const achievements = [
 
 const gallery = [
   {
-    src: "/assets/kinga3.webp",
+    src: "/assets/kinga4.webp",
     alt: "Kinga na zawodach",
     caption: "Pasja i walka",
     rotation: "rotate-2",
   },
   {
-    src: "/assets/kinga4.webp",
+    src: "/assets/kinga3.webp",
     alt: "Kinga Bartochowska martwy ciąg",
     caption: "Droga po rekord",
     rotation: "-rotate-2",
@@ -188,7 +188,7 @@ export default function AchievementsSection() {
                     <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-br from-pink-light/20 via-white to-pink-soft/20 gap-1">
                       <span className="font-display text-3xl font-light text-pink-hot mb-1">+</span >
                       <span className="font-display font-semibold text-sm text-charcoal">
-                        Miejsce na Twoją przemianę
+                        Miejsce na Twoją przemianę ;)
                       </span>
                       <span className="font-body text-[10px] text-charcoal/50">
                         Zacznijmy już dziś
