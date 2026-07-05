@@ -7,21 +7,38 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function PhilosophySection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const leftColRef = useRef<HTMLDivElement>(null);
+  const rightColRef = useRef<HTMLDivElement>(null);
+  const middleColRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Heading reveal
       gsap.fromTo(
         headingRef.current,
-        { opacity: 0, x: -40 },
+        { opacity: 0, y: -40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+
+      // Left column reveal
+      gsap.fromTo(
+        leftColRef.current,
+        { opacity: 0, x: -50 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.8,
-          ease: "power2.out",
+          duration: 0.9,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 75%",
@@ -29,36 +46,35 @@ export default function PhilosophySection() {
         }
       );
 
-      // Card reveal
+      // Right column reveal
       gsap.fromTo(
-        cardRef.current,
-        { opacity: 0, x: -60, rotate: -4 },
+        rightColRef.current,
+        { opacity: 0, x: 50 },
         {
           opacity: 1,
           x: 0,
-          rotate: -2,
-          duration: 1,
+          duration: 0.9,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 70%",
+            start: "top 75%",
           },
         }
       );
 
-      // Image reveal
+      // Middle column reveal (image + highlight card)
       gsap.fromTo(
-        imageRef.current,
-        { opacity: 0, x: 60, scale: 0.95 },
+        middleColRef.current,
+        { opacity: 0, y: 60, scale: 0.95 },
         {
           opacity: 1,
-          x: 0,
+          y: 0,
           scale: 1,
           duration: 1,
-          ease: "power3.out",
+          ease: "back.out(1.1)",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 65%",
+            start: "top 70%",
           },
         }
       );
@@ -70,85 +86,92 @@ export default function PhilosophySection() {
   return (
     <section
       ref={sectionRef}
-      id="philosophy"
-      className="relative w-full py-24 sm:py-32 lg:py-40 overflow-hidden"
+      id="about"
+      className="relative w-full py-24 sm:py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white"
     >
       {/* Background gradient accent */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-light/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-light/10 to-transparent pointer-events-none" />
 
       <div className="relative z-10 section-container">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left Column - Text */}
-          <div className="order-2 lg:order-1">
-            <h2
-              ref={headingRef}
-              className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl gradient-text mb-8"
-            >
-              Moja Filozofia
-            </h2>
+        {/* Header */}
+        <h2
+          ref={headingRef}
+          className="font-display font-bold text-center text-4xl sm:text-5xl lg:text-6xl gradient-text mb-16 sm:mb-20"
+        >
+          O mnie
+        </h2>
 
-            <div ref={cardRef} style={{ transform: "rotate(-2deg)" }}>
-              <GlassCard className="p-6 sm:p-8 lg:p-10" tilt={true}>
-                <p className="font-body text-base sm:text-lg text-charcoal/80 leading-relaxed mb-6" style={{ transform: "rotate(2deg)" }}>
-                  Jako certyfikowana trenerka personalna oraz czynna zawodniczka – Mistrzyni Polski Juniorów w Trójboju Siłowym Klasycznym i krajowa rekordzistka w martwym ciągu – doskonale rozumiem, jak ważna jest dyscyplina, cierpliwość oraz precyzyjnie dobrany system treningowy.
-                </p>
-                <p className="font-body text-base sm:text-lg text-charcoal/80 leading-relaxed mb-8" style={{ transform: "rotate(2deg)" }}>
-                  W mojej pracy nie obiecuję dróg na skróty ani cudownych diet głodówkowych. Oferuję Ci poparte nauką i moim własnym doświadczeniem sportowym podejście, w którym skupiamy się na bezpiecznej technice, stopniowym progresie oraz trwałym budowaniu nawyków. Razem stworzymy silne, sprawne ciało i sylwetkę, z której będziesz dumna.
-                </p>
-
-                <div className="flex items-center gap-4" style={{ transform: "rotate(2deg)" }}>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink to-pink-hot flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="font-display font-semibold text-charcoal">
-                      Kinga Bartochowska
-                    </div>
-                    <div className="font-body text-sm text-charcoal/60">
-                      Certyfikowana Trenerka Personalna i Dietetyk
-                    </div>
-                  </div>
-                </div>
-              </GlassCard>
-            </div>
+        {/* 3-Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+          {/* Left Column */}
+          <div
+            ref={leftColRef}
+            className="lg:col-span-4 space-y-6 font-body text-base sm:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left"
+          >
+            <p>
+              Nazywam się Kinga i od zawsze sport był ważną częścią mojego życia. Swoją przygodę z aktywnością rozpoczęłam od tańca towarzyskiego, który nauczył mnie dyscypliny, precyzji, świadomości własnego ciała i konsekwencji w dążeniu do celu.
+            </p>
+            <p>
+              Z czasem zamieniłam parkiet na sztangę, a trening siłowy szybko stał się nie tylko moją największą pasją, ale również sposobem na życie.
+            </p>
+            <p>
+              Jestem trenerką personalną i instruktorką z 5-letnim doświadczeniem, a swoją wiedzę buduję nie tylko na edukacji, ale również doświadczeniu zawodniczym i codziennej pracy z podopiecznymi.
+            </p>
+            <p>
+              Doskonale wiem, ile można osiągnąć dzięki odpowiedniej strategii, konsekwencji i mądremu prowadzeniu. Dziś wykorzystuję swoje doświadczenie, aby pomagać innym odkrywać własną siłę, przekraczać granice i osiągać rezultaty, które wcześniej wydawały się poza ich zasięgiem.
+            </p>
           </div>
 
-          {/* Right Column - Editorial Portrait */}
-          <div ref={imageRef} className="order-1 lg:order-2 flex justify-center lg:justify-end px-4 sm:px-0">
+          {/* Middle Column (Portrait & Highlight Card) */}
+          <div
+            ref={middleColRef}
+            className="lg:col-span-4 flex flex-col items-center gap-8 px-4 sm:px-0 order-first lg:order-none"
+          >
             <div className="relative">
-              {/* Decorative elements behind image */}
-              <div className="absolute -top-4 -left-4 w-full h-full rounded-[32px] bg-gradient-to-br from-pink-light/30 to-pink-soft/30 -z-10" />
+              {/* Decorative background shape */}
+              <div className="absolute -top-4 -left-4 w-full h-full rounded-[32px] bg-gradient-to-br from-pink-light/30 to-pink-soft/30 -z-10 animate-pulse" />
               
-              {/* Main portrait with a beautiful border and shadow */}
-              <div className="relative p-3 sm:p-4 rounded-[32px] bg-white/50 backdrop-blur-lg border-2 border-white shadow-[0_25px_60px_-15px_rgba(224,17,95,0.25)]">
+              <div className="relative p-3 rounded-[32px] bg-white/50 backdrop-blur-lg border border-white shadow-xl">
                 <img
                   src="/assets/kinga2.webp"
-                  alt="Portret Kingi Bartochowskiej"
+                  alt="Kinga Bartochowska - O mnie"
                   loading="lazy"
-                  className="w-full max-w-[280px] sm:max-w-sm lg:max-w-md h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
+                  className="w-full max-w-[280px] h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
                 />
               </div>
-
-              {/* Floating decorative shape */}
-              <img
-                src="/assets/dumbbell.webp"
-                alt=""
-                loading="lazy"
-                className="absolute -bottom-6 -left-6 w-16 sm:w-20 opacity-90 animate-float-slow z-20"
-              />
             </div>
+
+            {/* Achievements Highlight Card */}
+            <GlassCard className="p-6 bg-gradient-to-br from-white/80 to-white/40 border border-white/80 rounded-[24px] text-center shadow-lg w-full max-w-sm" hover={true}>
+              <p className="font-display font-semibold text-lg text-pink-hot mb-3 leading-snug">
+                Sport nauczył mnie, że granice istnieją po to, by je przekraczać.
+              </p>
+              <p className="font-body text-sm text-charcoal/90 leading-relaxed mb-3">
+                Jako zawodniczka trójboju siłowego zdobyłam tytuł <strong className="text-pink font-semibold">Mistrzyni Polski Juniorów</strong> oraz ustanowiłam <strong className="text-pink font-semibold">rekord Polski w Martwym Ciągu</strong>.
+              </p>
+              <p className="font-body text-xs text-charcoal/60 italic leading-relaxed">
+                Za tymi osiągnięciami stoją lata ciężkiej pracy, dyscypliny i nieustannego doskonalenia techniki.
+              </p>
+            </GlassCard>
+          </div>
+
+          {/* Right Column */}
+          <div
+            ref={rightColRef}
+            className="lg:col-span-4 space-y-6 font-body text-base sm:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left"
+          >
+            <p>
+              Moim celem jest pokazanie Ci, że prawdziwa zmiana sylwetki to coś więcej niż sam trening. Dlatego dbam o cały proces — od indywidualnie dopasowanego planu treningowego, przez budowanie zdrowych nawyków, aż po wsparcie w zakresie odżywiania.
+            </p>
+            <p>
+              Pomagam uporządkować sposób odżywiania i dopasować go do Twojego celu, stylu życia oraz możliwości. Bez głodówek, skrajnych restrykcji i ciągłego zaczynania od poniedziałku. Zależy mi na rozwiązaniach, które są skuteczne, ale jednocześnie możliwe do utrzymania na co dzień.
+            </p>
+            <p>
+              W swojej pracy stawiam na indywidualne podejście, poprawną technikę, świadomy ruch i przemyślaną strategię działania. Chcę, żeby moi podopieczni nie tylko osiągali wymarzoną sylwetkę, ale również budowali siłę, sprawność i pewność siebie.
+            </p>
+            <p className="font-semibold text-pink-hot">
+              Ty masz cel. Ja pomogę Ci stworzyć plan i przeprowadzę Cię przez cały proces — krok po kroku.
+            </p>
           </div>
         </div>
       </div>

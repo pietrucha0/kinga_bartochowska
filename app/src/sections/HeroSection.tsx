@@ -99,19 +99,25 @@ export default function HeroSection() {
           {/* Left Column - Text Content */}
           <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left order-1 lg:order-1 max-w-xl mx-auto lg:max-w-none">
             <div ref={headlineRef} className="mb-4">
-              <h1 className="font-display font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight">
+              <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.85] tracking-tighter">
                 <span className="headline-word inline-block gradient-text">
-                  ZBUDUJ
+                  TWOJA
                 </span>{" "}
                 <span className="headline-word inline-block gradient-text">
-                  SWOJE
+                  NAJLEPSZA
+                </span>{" "}
+                <span className="headline-word inline-block gradient-text">
+                  FORMA
                 </span>
                 <br />
                 <span className="headline-word inline-block text-charcoal">
-                  WYMARZONE
+                  ZACZYNA
                 </span>{" "}
                 <span className="headline-word inline-block text-charcoal">
-                  CIAŁO
+                  SIĘ
+                </span>{" "}
+                <span className="headline-word inline-block text-charcoal">
+                  TUTAJ
                 </span>
               </h1>
             </div>
@@ -139,10 +145,10 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Column - Trainer Portrait (Hidden on Mobile/Tablet) */}
+          {/* Right Column - Trainer Portrait (Visible on all screens) */}
           <div
             ref={trainerRef}
-            className="hidden lg:flex relative justify-center lg:justify-end order-2 lg:order-2"
+            className="flex relative justify-center lg:justify-end order-2 lg:order-2 mt-8 lg:mt-0"
           >
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-t from-pink-light/40 via-pink-mist/20 to-transparent rounded-full blur-3xl scale-90" />
@@ -150,7 +156,7 @@ export default function HeroSection() {
               <img
                 src="/assets/trainer.webp"
                 alt="Kinga Bartochowska - Personal Trainer"
-                className="relative z-10 w-full max-w-[290px] sm:max-w-[350px] lg:max-w-[410px] xl:max-w-[460px] h-auto object-contain drop-shadow-2xl scale-120 lg:scale-125 origin-bottom"
+                className="relative z-10 w-full max-w-[250px] sm:max-w-[320px] lg:max-w-[410px] xl:max-w-[460px] h-auto object-contain drop-shadow-2xl scale-110 lg:scale-125 origin-bottom"
               />
             </div>
           </div>

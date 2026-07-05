@@ -19,7 +19,7 @@ export default function PillButton({
   variant = "cyan",
   className,
   onClick,
-  magnetic = true,
+  magnetic = false,
   disabled = false,
   href,
   target,
