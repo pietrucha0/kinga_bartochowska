@@ -41,80 +41,12 @@ export default function Navigation() {
   };
 
   return (
-    <>
-      {/* Top Utility Bar */}
-      <div
-        className={`fixed top-0 left-0 right-0 z-50 bg-charcoal text-white/90 text-xs flex justify-between items-center h-9 px-4 sm:px-8 border-b border-white/5 transition-all duration-500 ${
-          scrolled ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"
-        }`}
-      >
-        <div className="flex items-center gap-4 sm:gap-6 mx-auto sm:mx-0">
-          <a
-            href="mailto:kingsquadt@gmail.com"
-            className="flex items-center gap-1.5 hover:text-cyan transition-colors"
-          >
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            <span className="font-body">kingsquadt@gmail.com</span>
-          </a>
-          <a
-            href="tel:500547580"
-            className="flex items-center gap-1.5 hover:text-cyan transition-colors"
-          >
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-              />
-            </svg>
-            <span className="font-body">500-547-580</span>
-          </a>
-        </div>
-        <div className="hidden sm:flex items-center gap-4">
-          <a
-            href="https://www.instagram.com/kinga.bartochowska/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-cyan transition-colors"
-          >
-            Instagram
-          </a>
-          <span className="text-white/20">|</span>
-          <a
-            href="https://www.tiktok.com/@kingsquadt"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-cyan transition-colors"
-          >
-            TikTok
-          </a>
-        </div>
-      </div>
-
-      <nav
-        ref={navRef}
-        className={`fixed left-0 right-0 z-50 px-4 sm:px-6 transition-all duration-500 ${
-          scrolled ? "top-0 py-3" : "top-9 py-4 sm:py-5"
-        }`}
-      >
+    <nav
+      ref={navRef}
+      className={`fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 transition-all duration-500 ${
+        scrolled ? "py-3" : "py-4 sm:py-5"
+      }`}
+    >
       <div
         className={`mx-auto max-w-6xl relative flex items-center h-[60px] px-6 sm:px-8 rounded-pill transition-all duration-500 ${
           scrolled
@@ -226,6 +158,5 @@ export default function Navigation() {
         </ul>
       </div>
     </nav>
-    </>
   );
 }
