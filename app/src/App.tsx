@@ -19,8 +19,8 @@ export default function App() {
         <PhilosophySection />
         <TransformationsSection />
         <PricingSection />
-        <CommunityMarquee />
         <ContactSection />
+        <CommunityMarquee />
       </main>
       <Footer />
     </div>
