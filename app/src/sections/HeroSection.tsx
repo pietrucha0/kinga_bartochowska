@@ -139,9 +139,6 @@ export default function HeroSection() {
                   Zacznij teraz
                 </PillButton>
               </div>
-              <span className="font-body text-sm text-charcoal/60">
-                Rozpocznij swoją metamorfozę
-              </span>
             </div>
           </div>
 
