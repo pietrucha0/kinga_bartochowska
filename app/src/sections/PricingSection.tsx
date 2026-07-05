@@ -233,7 +233,7 @@ export default function PricingSection() {
                     <h3 className="font-display font-bold text-lg sm:text-xl text-charcoal mb-3 leading-snug">
                       {category.title}
                     </h3>
-                    <h4 className="font-accent text-sm text-pink-hot italic mb-4 leading-normal">
+                    <h4 className="font-display font-semibold text-sm text-pink-hot mb-4 leading-normal">
                       {category.subtitle}
                     </h4>
                     <p className="font-body text-xs sm:text-sm text-charcoal/70 leading-relaxed">
@@ -286,8 +286,8 @@ export default function PricingSection() {
               </div>
 
               {/* Callout box */}
-              <div className="p-5 rounded-2xl bg-pink-light/20 border border-pink-light/35 text-center sm:text-left">
-                <p className="font-display font-semibold text-base sm:text-lg text-pink-hot leading-relaxed">
+              <div className="p-4 rounded-xl bg-pink-light/10 border border-pink-light/25 text-center sm:text-left">
+                <p className="font-body font-medium text-xs sm:text-sm text-pink-hot/90 leading-relaxed">
                   "{activeData.callout}"
                 </p>
               </div>
