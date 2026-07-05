@@ -253,36 +253,21 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* Selected Category Details & Packages */}
         <div ref={detailsRef} className="max-w-6xl mx-auto mt-12 bg-white/30 backdrop-blur-xl border border-white/60 rounded-[32px] p-6 sm:p-10 lg:p-12 shadow-glass">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            
-            {/* Left side: Category Intro and Features Checklist */}
-            <div className="lg:col-span-5 flex flex-col justify-between h-full">
+          {/* Top Row: Category Info and Features Checklist */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pb-10 border-b border-charcoal/5">
+            {/* Left side: Category Intro and Callout */}
+            <div className="lg:col-span-7 flex flex-col justify-between h-full">
               <div>
                 <span className="font-body text-[10px] font-bold text-pink uppercase tracking-widest block mb-2">
                   O ofercie
                 </span>
-                <h3 className="font-display font-bold text-2xl sm:text-3xl text-charcoal mb-4">
+                <h3 className="font-display font-bold text-3xl text-charcoal mb-4">
                   {activeData.title}
                 </h3>
-                <p className="font-body text-sm sm:text-base text-charcoal/80 leading-relaxed mb-6">
+                <p className="font-body text-base text-charcoal/80 leading-relaxed mb-6">
                   {activeData.intro}
                 </p>
-
-                {/* Features list */}
-                <ul className="space-y-3.5 mb-8">
-                  {activeData.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3 font-body text-sm text-charcoal/85">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-cyan/15 flex items-center justify-center mt-0.5">
-                        <svg className="w-3.5 h-3.5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
 
               {/* Callout box */}
@@ -293,63 +278,83 @@ export default function PricingSection() {
               </div>
             </div>
 
-            {/* Right side: Package Cards Grid */}
-            <div className="lg:col-span-7">
-              <h4 className="font-display font-semibold text-charcoal text-center mb-6 block uppercase tracking-wider text-xs">
-                Wybierz preferowany pakiet (ceny promocyjne)
-              </h4>
-              
-              <div className={`grid gap-5 sm:gap-6 ${
-                activeData.packages.length === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2"
-              }`}>
-                {activeData.packages.map((pack) => (
-                  <GlassCard
-                    key={pack.id}
-                    className="p-5 sm:p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300"
-                    hover={true}
-                  >
-                    {/* Discount badge */}
-                    <div className="absolute top-3 right-3 bg-cyan text-white font-body text-[9px] font-bold px-2 py-0.5 rounded-full tracking-wide scale-95 uppercase shadow-sm">
-                      Promocja
-                    </div>
-
-                    <div className="text-center pt-2">
-                      <h4 className="font-display font-bold text-sm text-charcoal/90 mb-4 tracking-wide uppercase">
-                        {pack.name}
-                      </h4>
-
-                      <div className="flex flex-col items-center justify-center gap-1.5 mb-5">
-                        {/* Regular price (crossed out) */}
-                        <span className="font-body text-xs text-charcoal/45 line-through">
-                          {pack.regularPrice} zł
-                        </span>
-                        {/* Promo price */}
-                        <span className="font-display font-extrabold text-3xl sm:text-4xl gradient-text">
-                          {pack.promoPrice} zł
-                        </span>
-                      </div>
-
-                      {/* Savings text */}
-                      <div className="mb-6 py-1 px-3 bg-cyan/10 border border-cyan/15 rounded-pill inline-block">
-                        <span className="font-body text-[10px] font-bold text-cyan uppercase tracking-wider">
-                          Oszczędzasz {pack.savings} zł
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* CTA */}
-                    <PillButton
-                      variant="cyan"
-                      className="w-full text-xs py-2 px-3 justify-center text-center font-semibold"
-                      onClick={() => selectPackage(activeData.id, pack.id)}
-                    >
-                      Zacznij teraz
-                    </PillButton>
-                  </GlassCard>
+            {/* Right side: Features Checklist */}
+            <div className="lg:col-span-5">
+              <span className="font-body text-[10px] font-bold text-cyan uppercase tracking-widest block mb-4">
+                Co zawiera współpraca
+              </span>
+              <ul className="space-y-3.5">
+                {activeData.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-start gap-3 font-body text-sm text-charcoal/85">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-cyan/15 flex items-center justify-center mt-0.5">
+                      <svg className="w-3.5 h-3.5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                    <span>{feature}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
+          </div>
+
+          {/* Bottom Row: Dynamic Packages Grid */}
+          <div className="pt-10">
+            <h4 className="font-display font-semibold text-charcoal text-center mb-8 block uppercase tracking-wider text-xs">
+              Wybierz preferowany pakiet (ceny promocyjne)
+            </h4>
             
+            <div className={`grid gap-6 ${
+              activeData.packages.length === 3 
+                ? "grid-cols-1 sm:grid-cols-3" 
+                : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+            }`}>
+              {activeData.packages.map((pack) => (
+                <GlassCard
+                  key={pack.id}
+                  className="p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300 min-h-[300px]"
+                  hover={true}
+                >
+                  {/* Promo Badge */}
+                  <div className="absolute top-4 right-4 bg-cyan text-white font-body text-[9px] font-bold px-2 py-0.5 rounded-full tracking-wide uppercase shadow-sm">
+                    Promocja
+                  </div>
+
+                  <div className="text-center pt-4">
+                    <h4 className="font-display font-bold text-base text-charcoal/90 mb-4 tracking-wide uppercase">
+                      {pack.name}
+                    </h4>
+
+                    <div className="flex flex-col items-center justify-center gap-1 mb-4">
+                      {/* Regular price (crossed out) */}
+                      <span className="font-body text-xs text-charcoal/45 line-through">
+                        {pack.regularPrice} zł
+                      </span>
+                      {/* Promo price */}
+                      <span className="font-display font-extrabold text-3xl gradient-text">
+                        {pack.promoPrice} zł
+                      </span>
+                    </div>
+
+                    {/* Savings pill */}
+                    <div className="mb-6 py-1 px-4 bg-cyan/10 border border-cyan/15 rounded-pill inline-block">
+                      <span className="font-body text-[10px] font-bold text-cyan uppercase tracking-wider whitespace-nowrap">
+                        Oszczędzasz {pack.savings} zł
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* CTA Button */}
+                  <PillButton
+                    variant="cyan"
+                    className="w-full text-xs py-2.5 px-3 justify-center text-center font-semibold mt-auto"
+                    onClick={() => selectPackage(activeData.id, pack.id)}
+                  >
+                    Zacznij teraz
+                  </PillButton>
+                </GlassCard>
+              ))}
+            </div>
           </div>
         </div>
       </div>
