@@ -287,7 +287,7 @@ export default function PricingSection() {
 
               {/* Callout box */}
               <div className="p-5 rounded-2xl bg-pink-light/20 border border-pink-light/35 text-center sm:text-left">
-                <p className="font-accent text-base text-pink-hot italic leading-normal">
+                <p className="font-display font-semibold text-base sm:text-lg text-pink-hot leading-relaxed">
                   "{activeData.callout}"
                 </p>
               </div>
