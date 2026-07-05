@@ -10,7 +10,7 @@ const navLinks = [
   { label: "O mnie", href: "#about" },
   { label: "Oferta", href: "#pricing" },
   { label: "Kontakt", href: "#contact" },
-  { label: "Opinie", href: "#community" },
+  { label: "Opinie", href: "#opinie" },
 ];
 
 export default function Navigation() {

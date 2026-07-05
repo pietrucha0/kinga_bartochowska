@@ -4,7 +4,7 @@ import HeroSection from "@/sections/HeroSection";
 import PhilosophySection from "@/sections/PhilosophySection";
 import TransformationsSection from "@/sections/TransformationsSection";
 import PricingSection from "@/sections/PricingSection";
-import CommunityMarquee from "@/sections/CommunityMarquee";
+import OpinionsSection from "@/sections/OpinionsSection";
 import ContactSection from "@/sections/ContactSection";
 import Footer from "@/sections/Footer";
 
@@ -20,7 +20,7 @@ export default function App() {
         <TransformationsSection />
         <PricingSection />
         <ContactSection />
-        <CommunityMarquee />
+        <OpinionsSection />
       </main>
       <Footer />
     </div>
