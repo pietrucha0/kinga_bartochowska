@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import GlassCard from "@/components/GlassCard";
@@ -59,6 +59,36 @@ const testimonials = [
 export default function OpinionsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const scrollOpinions = (direction: "left" | "right") => {
+    if (cardsRef.current) {
+      const scrollAmount = window.innerWidth * 0.8;
+      cardsRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    const canScroll = scrollWidth > clientWidth;
+    setShowLeftArrow(canScroll && scrollLeft > 10);
+    setShowRightArrow(canScroll && scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (cardsRef.current) {
+        const { scrollWidth, clientWidth } = cardsRef.current;
+        setShowRightArrow(scrollWidth > clientWidth);
+      }
+    }, 150);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -107,7 +137,7 @@ export default function OpinionsSection() {
     <section
       ref={sectionRef}
       id="opinie"
-      className="relative w-full py-24 sm:py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white border-t border-pink-light/20"
+      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white border-t border-pink-light/20"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-light/10 to-transparent pointer-events-none" />
@@ -124,17 +154,34 @@ export default function OpinionsSection() {
           </p>
         </div>
 
-        {/* Testimonials Grid */}
-        <div
-          ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto"
-        >
-          {testimonials.map((t, index) => (
-            <GlassCard
-              key={index}
-              className="opinion-card p-6 sm:p-8 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-3xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-pink/40 transition-all duration-300"
-              hover={true}
-            >
+        {/* Scroll Container Wrapper with Mobile Scroll Indicators */}
+        <div className="relative max-w-6xl mx-auto">
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scrollOpinions("left")}
+            className={`absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-glass md:hidden transition-all duration-300 hover:bg-white/45 active:scale-90 ${
+              showLeftArrow ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
+            }`}
+            aria-label="Poprzedni"
+          >
+            <svg className="w-5 h-5 text-pink-hot" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Testimonials Grid */}
+          <div
+            ref={cardsRef}
+            onScroll={handleScroll}
+            className="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-6 pb-6 md:pb-0 px-4 md:px-0 -mx-4 md:mx-auto scrollbar-none md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+          >
+            {testimonials.map((t, index) => (
+              <GlassCard
+                key={index}
+                className="opinion-card w-[85vw] md:w-auto shrink-0 md:shrink snap-center p-6 sm:p-8 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-3xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-pink/40 transition-all duration-300"
+                hover={true}
+              >
               <div>
                 {/* Star rating */}
                 <div className="flex gap-1 mb-4">
@@ -171,7 +218,22 @@ export default function OpinionsSection() {
                 </div>
               </div>
             </GlassCard>
-          ))}
+            ))}
+          </div>
+
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scrollOpinions("right")}
+            className={`absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-glass md:hidden transition-all duration-300 hover:bg-white/45 active:scale-90 ${
+              showRightArrow ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
+            }`}
+            aria-label="Następny"
+          >
+            <svg className="w-5 h-5 text-pink-hot" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>

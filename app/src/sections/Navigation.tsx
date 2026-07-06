@@ -67,9 +67,13 @@ export default function Navigation() {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
-          className="absolute left-6 sm:left-8 font-display font-bold text-lg sm:text-xl md:text-2xl gradient-text tracking-tight whitespace-nowrap"
+          className="absolute left-6 sm:left-8 flex items-center h-full"
         >
-          KINGA BARTOCHOWSKA
+          <img
+            src="/assets/kingsquad_logo.png"
+            alt="King Squad Logo"
+            className="h-10 sm:h-12 w-auto object-contain transition-all duration-300 filter hover:opacity-80"
+          />
         </a>
 
         {/* Desktop Links */}

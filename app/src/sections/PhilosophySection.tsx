@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import GlassCard from "@/components/GlassCard";
@@ -6,6 +6,7 @@ import GlassCard from "@/components/GlassCard";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function PhilosophySection() {
+  const [activeBioTab, setActiveBioTab] = useState<"story" | "approach">("story");
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const leftColRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,7 @@ export default function PhilosophySection() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative w-full py-24 sm:py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white"
+      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white"
     >
       {/* Background gradient accent */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-light/10 to-transparent pointer-events-none" />
@@ -102,11 +103,15 @@ export default function PhilosophySection() {
         </h2>
 
         {/* 3-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           {/* Left Column */}
           <div
             ref={leftColRef}
-            className="lg:col-span-4 space-y-6 font-body text-base sm:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left"
+            className={`lg:col-span-4 space-y-4 lg:space-y-6 font-body text-sm sm:text-base lg:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left transition-all duration-500 transform ${
+              activeBioTab === "story"
+                ? "opacity-100 translate-y-0 h-auto"
+                : "opacity-0 -translate-y-4 h-0 overflow-hidden pointer-events-none lg:opacity-100 lg:translate-y-0 lg:h-auto lg:pointer-events-auto lg:overflow-visible"
+            }`}
           >
             <p>
               Nazywam się Kinga i od zawsze sport był ważną częścią mojego życia. Swoją przygodę z aktywnością rozpoczęłam od tańca towarzyskiego, który nauczył mnie dyscypliny, precyzji, świadomości własnego ciała i konsekwencji w dążeniu do celu.
@@ -120,12 +125,25 @@ export default function PhilosophySection() {
             <p>
               Doskonale wiem, ile można osiągnąć dzięki odpowiedniej strategii, konsekwencji i mądremu prowadzeniu. Dziś wykorzystuję swoje doświadczenie, aby pomagać innym odkrywać własną siłę, przekraczać granice i osiągać rezultaty, które wcześniej wydawały się poza ich zasięgiem.
             </p>
+            
+            {/* Small Mobile Link to Switch to the opposite tab */}
+            <div className="flex lg:hidden justify-center pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveBioTab("approach");
+                }}
+                className="font-display font-bold text-xs text-pink hover:text-pink-hot flex items-center gap-1.5 px-4 py-2 border border-pink/30 rounded-pill bg-white/20"
+              >
+                Czytam dalej (Moje Podejście) ➔
+              </button>
+            </div>
           </div>
 
           {/* Middle Column (Portrait & Highlight Card) */}
           <div
             ref={middleColRef}
-            className="lg:col-span-4 flex flex-col items-center gap-8 px-4 sm:px-0 order-first lg:order-none"
+            className="lg:col-span-4 flex flex-col items-center gap-8 px-4 sm:px-0 order-first lg:order-none mb-6 lg:mb-0"
           >
             <div className="relative">
               {/* Decorative background shape */}
@@ -133,7 +151,7 @@ export default function PhilosophySection() {
               
               <div className="relative p-3 rounded-[32px] bg-white/50 backdrop-blur-lg border border-white shadow-xl">
                 <img
-                  src="/assets/kinga2.webp"
+                  src="/assets/o-mnie.png"
                   alt="Kinga Bartochowska - O mnie"
                   loading="lazy"
                   className="w-full max-w-[280px] h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
@@ -153,12 +171,42 @@ export default function PhilosophySection() {
                 Za tymi osiągnięciami stoją lata ciężkiej pracy, dyscypliny i nieustannego doskonalenia techniki.
               </p>
             </GlassCard>
+
+            {/* Mobile Tab Selector for Bio (placed under achievements on mobile, hidden on lg and up) */}
+            <div className="flex lg:hidden bg-white/30 backdrop-blur-xl border border-white/60 p-1 rounded-[999px] w-full max-w-xs mx-auto shadow-sm relative z-20">
+              <button
+                type="button"
+                onClick={() => setActiveBioTab("story")}
+                className={`flex-1 font-display font-bold text-xs py-2 px-4 rounded-[999px] transition-all duration-300 text-center uppercase tracking-wider ${
+                  activeBioTab === "story"
+                    ? "bg-gradient-to-r from-pink to-pink-hot text-white shadow-sm"
+                    : "text-charcoal/70 hover:text-charcoal"
+                }`}
+              >
+                Moja Historia
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveBioTab("approach")}
+                className={`flex-1 font-display font-bold text-xs py-2 px-4 rounded-[999px] transition-all duration-300 text-center uppercase tracking-wider ${
+                  activeBioTab === "approach"
+                    ? "bg-gradient-to-r from-pink to-pink-hot text-white shadow-sm"
+                    : "text-charcoal/70 hover:text-charcoal"
+                }`}
+              >
+                Moje Podejście
+              </button>
+            </div>
           </div>
 
           {/* Right Column */}
           <div
             ref={rightColRef}
-            className="lg:col-span-4 space-y-6 font-body text-base sm:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left"
+            className={`lg:col-span-4 space-y-4 lg:space-y-6 font-body text-sm sm:text-base lg:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left transition-all duration-500 transform ${
+              activeBioTab === "approach"
+                ? "opacity-100 translate-y-0 h-auto"
+                : "opacity-0 -translate-y-4 h-0 overflow-hidden pointer-events-none lg:opacity-100 lg:translate-y-0 lg:h-auto lg:pointer-events-auto lg:overflow-visible"
+            }`}
           >
             <p>
               Moim celem jest pokazanie Ci, że prawdziwa zmiana sylwetki to coś więcej niż sam trening. Dlatego dbam o cały proces — od indywidualnie dopasowanego planu treningowego, przez budowanie zdrowych nawyków, aż po wsparcie w zakresie odżywiania.
@@ -172,6 +220,19 @@ export default function PhilosophySection() {
             <p className="font-semibold text-pink-hot">
               Ty masz cel. Ja pomogę Ci stworzyć plan i przeprowadzę Cię przez cały proces — krok po kroku.
             </p>
+
+            {/* Small Mobile Link to Switch to the opposite tab */}
+            <div className="flex lg:hidden justify-center pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveBioTab("story");
+                }}
+                className="font-display font-bold text-xs text-pink hover:text-pink-hot flex items-center gap-1.5 px-4 py-2 border border-pink/30 rounded-pill bg-white/20"
+              >
+                Czytam dalej (Moja Historia) ➔
+              </button>
+            </div>
           </div>
         </div>
       </div>

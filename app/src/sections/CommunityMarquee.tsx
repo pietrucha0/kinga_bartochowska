@@ -127,7 +127,7 @@ export default function CommunityMarquee() {
     <section
       ref={sectionRef}
       id="community"
-      className="relative w-full py-32 sm:py-40 lg:py-52 overflow-hidden bg-charcoal"
+      className="relative w-full py-16 sm:py-40 lg:py-52 overflow-hidden bg-charcoal"
     >
       {/* Floating icons marquee background */}
       <div className="absolute inset-0 flex items-center overflow-hidden opacity-20 pointer-events-none">
@@ -154,12 +154,12 @@ export default function CommunityMarquee() {
           ref={textRef}
           className="text-center"
         >
-          <h2 className="font-display font-bold text-[clamp(4rem,15vw,12rem)] leading-[0.9] text-white uppercase tracking-tight">
-            <span className="block">
-              <span className="bouncy-word">SILNIEJSZE</span>
+          <h2 className="font-display font-bold text-[clamp(2.3rem,12vw,12rem)] leading-[0.9] text-white uppercase tracking-tight text-center">
+            <span className="block text-center">
+              <span className="bouncy-word text-center">SILNIEJSZE</span>
             </span>
-            <span className="block mt-2">
-              <span className="bouncy-word">RAZEM</span>
+            <span className="block mt-2 text-center">
+              <span className="bouncy-word text-center">RAZEM</span>
             </span>
           </h2>
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getLenis } from "@/hooks/useSmoothScroll";
@@ -39,6 +39,36 @@ const transformations = [
 export default function TransformationsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const scrollTransformations = (direction: "left" | "right") => {
+    if (cardsRef.current) {
+      const scrollAmount = window.innerWidth * 0.8;
+      cardsRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    const canScroll = scrollWidth > clientWidth;
+    setShowLeftArrow(canScroll && scrollLeft > 10);
+    setShowRightArrow(canScroll && scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (cardsRef.current) {
+        const { scrollWidth, clientWidth } = cardsRef.current;
+        setShowRightArrow(scrollWidth > clientWidth);
+      }
+    }, 150);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -89,7 +119,7 @@ export default function TransformationsSection() {
     <section
       ref={sectionRef}
       id="transformations"
-      className="relative w-full py-24 sm:py-32 lg:py-40 overflow-hidden"
+      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-blush-mist" />
@@ -120,16 +150,33 @@ export default function TransformationsSection() {
           </p>
         </div>
 
-        {/* Transformation Cards Grid */}
-        <div
-          ref={cardsRef}
-          className="grid sm:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto"
-        >
-          {transformations.map((t) => (
-            <div
-              key={t.name}
-              className="transform-card glass-card p-6 sm:p-8 bg-gradient-to-br from-white/40 to-white/20 hover:shadow-glass-lg transition-all duration-500 group"
-            >
+        {/* Scroll Container Wrapper with Mobile Scroll Indicators */}
+        <div className="relative max-w-5xl mx-auto">
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scrollTransformations("left")}
+            className={`absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-glass sm:hidden transition-all duration-300 hover:bg-white/45 active:scale-90 ${
+              showLeftArrow ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
+            }`}
+            aria-label="Poprzedni"
+          >
+            <svg className="w-5 h-5 text-pink-hot" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Transformation Cards Grid */}
+          <div
+            ref={cardsRef}
+            onScroll={handleScroll}
+            className="flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-6 pb-6 sm:pb-0 px-4 sm:px-0 -mx-4 sm:mx-auto scrollbar-none sm:grid sm:grid-cols-2 lg:gap-8"
+          >
+            {transformations.map((t) => (
+              <div
+                key={t.name}
+                className="transform-card w-[85vw] sm:w-auto shrink-0 sm:shrink snap-center glass-card p-6 sm:p-8 bg-gradient-to-br from-white/40 to-white/20 hover:shadow-glass-lg transition-all duration-500 group"
+              >
               {/* Before/After visual representation */}
               <div className="flex gap-3 mb-6">
                 <div
@@ -187,6 +234,21 @@ export default function TransformationsSection() {
               </p>
             </div>
           ))}
+        </div>
+
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scrollTransformations("right")}
+            className={`absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-glass sm:hidden transition-all duration-300 hover:bg-white/45 active:scale-90 ${
+              showRightArrow ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
+            }`}
+            aria-label="Następny"
+          >
+            <svg className="w-5 h-5 text-pink-hot" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
 
         {/* Bottom CTA */}

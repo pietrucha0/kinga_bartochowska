@@ -232,6 +232,17 @@ export default function ContactSection() {
     goal: "",
   });
 
+  const emailUser = "tdauqsgnik";
+  const emailDomain = "moc.liamg";
+  const emailAddress = emailUser.split("").reverse().join("") + "@" + emailDomain.split("").reverse().join("");
+
+  const phonePart1 = "085";
+  const phonePart2 = "745";
+  const phonePart3 = "005";
+  const rev = (s: string) => s.split("").reverse().join("");
+  const phoneRaw = rev(phonePart3) + rev(phonePart2) + rev(phonePart1);
+  const phoneFormatted = `${rev(phonePart3)}-${rev(phonePart2)}-${rev(phonePart1)}`;
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -404,7 +415,7 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative w-full py-24 sm:py-32 lg:py-40 overflow-hidden bg-white"
+      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden bg-white"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-blush-mist pointer-events-none" />
@@ -439,11 +450,11 @@ export default function ContactSection() {
           
           {/* Column 1: Contact Form (7 cols) */}
           <div className="lg:col-span-7 h-full flex flex-col">
-            <GlassCard className="p-6 sm:p-10 lg:p-12 w-full flex-grow flex flex-col justify-between" hover={false}>
+            <GlassCard className="p-5 sm:p-10 lg:p-12 w-full flex-grow flex flex-col justify-between" hover={false}>
               {submitted ? (
                 <ContactSuccess />
               ) : (
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6 flex-grow flex flex-col justify-between">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 flex-grow flex flex-col justify-between">
                   {/* Honeypot */}
                   <input
                     type="checkbox"
@@ -457,7 +468,7 @@ export default function ContactSection() {
                   />
 
                   {/* Fields Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     {/* Name */}
                     <div>
                       <label htmlFor="name" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2">
@@ -567,7 +578,7 @@ export default function ContactSection() {
                   </div>
 
                   {/* Goal (Description) */}
-                  <div className="mt-6">
+                  <div className="mt-4 sm:mt-6">
                     <label htmlFor="goal" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2">
                       Twój główny cel i oczekiwania
                     </label>
@@ -638,8 +649,8 @@ export default function ContactSection() {
                     </span>
                     <div>
                       <span className="font-body text-xs font-semibold text-charcoal/50 block">Telefon</span>
-                      <a href="tel:500547580" className="font-display font-bold text-lg text-charcoal hover:text-pink transition-colors">
-                        500-547-580
+                      <a href={`tel:${phoneRaw}`} className="font-display font-bold text-lg text-charcoal hover:text-pink transition-colors">
+                        {phoneFormatted}
                       </a>
                     </div>
                   </div>
@@ -653,8 +664,8 @@ export default function ContactSection() {
                     </span>
                     <div>
                       <span className="font-body text-xs font-semibold text-charcoal/50 block">E-mail</span>
-                      <a href="mailto:kingsquadt@gmail.com" className="font-display font-bold text-lg text-charcoal hover:text-pink transition-colors break-all">
-                        kingsquadt@gmail.com
+                      <a href={`mailto:${emailAddress}`} className="font-display font-bold text-lg text-charcoal hover:text-pink transition-colors break-all">
+                        {emailAddress}
                       </a>
                     </div>
                   </div>

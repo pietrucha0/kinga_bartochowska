@@ -58,29 +58,34 @@ export default function Footer() {
     return () => ctx.revert();
   }, []);
 
+  const emailUser = "tdauqsgnik";
+  const emailDomain = "moc.liamg";
+  const emailAddress = emailUser.split("").reverse().join("") + "@" + emailDomain.split("").reverse().join("");
+
+  const phonePart1 = "085";
+  const phonePart2 = "745";
+  const phonePart3 = "005";
+  const rev = (s: string) => s.split("").reverse().join("");
+  const phoneRaw = rev(phonePart3) + rev(phonePart2) + rev(phonePart1);
+  const phoneFormatted = `${rev(phonePart3)}-${rev(phonePart2)}-${rev(phonePart1)}`;
+
   return (
     <footer
       ref={footerRef}
-      className="relative w-full py-16 sm:py-20 lg:py-24 overflow-hidden"
+      className="relative bg-blush-mist border-t border-pink-light/30 pt-20 pb-10 overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-pink-mist via-pink-light/30 to-pink-soft/40" />
-
-      {/* Watermark Logo */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        <span className="font-display font-bold text-[20vw] text-charcoal/[0.03] tracking-tighter whitespace-nowrap select-none">
-          KINGA
-        </span>
-      </div>
-
-      <div className="footer-content relative z-10 section-container">
-        <div className="flex flex-col items-center">
+      <div className="section-container relative z-10">
+        <div className="footer-content flex flex-col items-center">
           {/* Logo */}
           <a
             href="#"
-            className="font-display font-bold text-3xl sm:text-4xl gradient-text mb-6"
+            className="mb-6 block"
           >
-            KINGA
+            <img
+              src="/assets/kingsquad_logo.png"
+              alt="King Squad Logo"
+              className="h-16 sm:h-20 w-auto object-contain mx-auto transition-all duration-300 filter hover:opacity-80"
+            />
           </a>
 
           <p className="font-accent text-xl sm:text-2xl text-pink-hot italic mb-6 text-center">
@@ -89,17 +94,17 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mb-8 text-charcoal/70 font-body text-sm">
-            <a href="mailto:kingsquadt@gmail.com" className="hover:text-pink transition-colors flex items-center gap-2">
+            <a href={`mailto:${emailAddress}`} className="hover:text-pink transition-colors flex items-center gap-2">
               <svg className="w-4 h-4 text-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span>kingsquadt@gmail.com</span>
+              <span>{emailAddress}</span>
             </a>
-            <a href="tel:500547580" className="hover:text-pink transition-colors flex items-center gap-2">
+            <a href={`tel:${phoneRaw}`} className="hover:text-pink transition-colors flex items-center gap-2">
               <svg className="w-4 h-4 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              <span>500-547-580</span>
+              <span>{phoneFormatted}</span>
             </a>
           </div>
 

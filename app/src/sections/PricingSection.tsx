@@ -104,7 +104,43 @@ export default function PricingSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
+  const packagesRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<"personal" | "group" | "online" >("personal");
+
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const scrollPackages = (direction: "left" | "right") => {
+    if (packagesRef.current) {
+      const scrollAmount = window.innerWidth * 0.75;
+      packagesRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    const canScroll = scrollWidth > clientWidth;
+    setShowLeftArrow(canScroll && scrollLeft > 10);
+    setShowRightArrow(canScroll && scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  useEffect(() => {
+    if (packagesRef.current) {
+      packagesRef.current.scrollLeft = 0;
+      setShowLeftArrow(false);
+      const timer = setTimeout(() => {
+        if (packagesRef.current) {
+          const { scrollWidth, clientWidth } = packagesRef.current;
+          setShowRightArrow(scrollWidth > clientWidth);
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -182,7 +218,7 @@ export default function PricingSection() {
     <section
       ref={sectionRef}
       id="pricing"
-      className="relative w-full py-24 sm:py-32 lg:py-40 overflow-hidden"
+      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-blush-mist pointer-events-none" />
@@ -199,10 +235,31 @@ export default function PricingSection() {
           </p>
         </div>
 
-        {/* 3 Category Cards (acting as interactive tabs) */}
+        {/* Mobile Tab Selector (hidden on md and up) */}
+        <div className="flex md:hidden bg-white/30 backdrop-blur-xl border border-white/60 p-1.5 rounded-[999px] max-w-sm mx-auto mb-10 shadow-sm relative z-20">
+          {(Object.values(offerCategories) as CategoryData[]).map((category) => {
+            const isSelected = activeTab === category.id;
+            return (
+              <button
+                key={category.id}
+                type="button"
+                onClick={() => setActiveTab(category.id)}
+                className={`flex-1 font-display font-extrabold text-[13px] sm:text-sm py-2.5 px-3 rounded-[999px] transition-all duration-300 text-center uppercase tracking-wide ${
+                  isSelected
+                    ? "bg-gradient-to-r from-pink to-pink-hot text-white shadow-md scale-100"
+                    : "text-charcoal/70 hover:text-charcoal"
+                }`}
+              >
+                {category.id === "personal" ? "1:1" : category.id === "group" ? "Grupa" : "Online"}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Desktop 3 Category Cards (hidden on mobile) */}
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch mb-16"
+          className="hidden md:grid grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch mb-16"
         >
           {(Object.values(offerCategories) as CategoryData[]).map((category) => {
             const isSelected = activeTab === category.id;
@@ -253,7 +310,7 @@ export default function PricingSection() {
           })}
         </div>
 
-        <div ref={detailsRef} className="max-w-6xl mx-auto mt-12 bg-white/30 backdrop-blur-xl border border-white/60 rounded-[32px] p-6 sm:p-10 lg:p-12 shadow-glass">
+        <div ref={detailsRef} className="max-w-6xl mx-auto mt-12 bg-white/30 backdrop-blur-xl border border-white/60 rounded-[32px] p-5 sm:p-10 lg:p-12 shadow-glass">
           {/* Top Row: Category Info and Features Checklist */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pb-10 border-b border-charcoal/5">
             {/* Left side: Category Intro and Callout */}
@@ -304,17 +361,37 @@ export default function PricingSection() {
               Wybierz preferowany pakiet (ceny promocyjne)
             </h4>
             
-            <div className={`grid gap-6 ${
-              activeData.packages.length === 3 
-                ? "grid-cols-1 sm:grid-cols-3" 
-                : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-            }`}>
-              {activeData.packages.map((pack) => (
-                <GlassCard
-                  key={pack.id}
-                  className="p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300 min-h-[300px]"
-                  hover={true}
-                >
+            {/* Scroll Wrapper with Mobile Indicators */}
+            <div className="relative">
+              {/* Left Arrow Button */}
+              <button
+                type="button"
+                onClick={() => scrollPackages("left")}
+                className={`absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-glass sm:hidden transition-all duration-300 hover:bg-white/45 active:scale-90 ${
+                  showLeftArrow ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
+                }`}
+                aria-label="Poprzedni"
+              >
+                <svg className="w-5 h-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <div
+                ref={packagesRef}
+                onScroll={handleScroll}
+                className={`flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-6 pb-6 sm:pb-0 px-4 sm:px-0 -mx-4 sm:mx-0 scrollbar-none sm:grid sm:gap-6 ${
+                  activeData.packages.length === 3 
+                    ? "sm:grid-cols-3" 
+                    : "sm:grid-cols-2 lg:grid-cols-4"
+                }`}
+              >
+                {activeData.packages.map((pack) => (
+                  <GlassCard
+                    key={pack.id}
+                    className="w-[80vw] sm:w-auto shrink-0 sm:shrink snap-center p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300 min-h-[300px]"
+                    hover={true}
+                  >
                   {/* Promo Badge */}
                   <div className="absolute top-4 right-4 bg-cyan text-white font-body text-[9px] font-bold px-2 py-0.5 rounded-full tracking-wide uppercase shadow-sm">
                     Promocja
@@ -352,8 +429,23 @@ export default function PricingSection() {
                   >
                     Zacznij teraz
                   </PillButton>
-                </GlassCard>
-              ))}
+                  </GlassCard>
+                ))}
+              </div>
+
+              {/* Right Arrow Button */}
+              <button
+                type="button"
+                onClick={() => scrollPackages("right")}
+                className={`absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-glass sm:hidden transition-all duration-300 hover:bg-white/45 active:scale-90 ${
+                  showRightArrow ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
+                }`}
+                aria-label="Następny"
+              >
+                <svg className="w-5 h-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
