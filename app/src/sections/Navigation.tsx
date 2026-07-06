@@ -48,7 +48,7 @@ export default function Navigation() {
       }`}
     >
       <div
-        className={`mx-auto max-w-6xl relative flex items-center h-[60px] px-6 sm:px-8 rounded-pill transition-all duration-500 ${
+        className={`mx-auto max-w-6xl relative flex items-center h-[70px] px-6 sm:px-8 rounded-pill transition-all duration-500 ${
           scrolled
             ? "bg-white/40 backdrop-blur-2xl shadow-glass border border-white/60"
             : "bg-transparent"
@@ -72,7 +72,7 @@ export default function Navigation() {
           <img
             src="/assets/kingsquad_logo.png"
             alt="King Squad Logo"
-            className="h-10 sm:h-12 w-auto object-contain transition-all duration-300 filter hover:opacity-80"
+            className="h-11 sm:h-14 w-auto object-contain transition-all duration-300 filter hover:opacity-80"
           />
         </a>
 
@@ -93,7 +93,7 @@ export default function Navigation() {
         </ul>
 
         {/* Desktop CTA */}
-        <div className="hidden md:block absolute right-6 sm:right-8">
+        <div className="hidden md:block absolute right-6 sm:right-8 top-1/2 -translate-y-1/2">
           <PillButton
             variant="cyan"
             className="text-xs lg:text-sm py-2 lg:py-2.5 px-4 lg:px-6"
@@ -106,7 +106,7 @@ export default function Navigation() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden absolute right-6 sm:right-8 flex flex-col gap-1.5 p-2"
+          className="md:hidden absolute right-6 sm:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-1.5 p-2"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-expanded={mobileOpen}
           aria-label="Menu nawigacyjne"
