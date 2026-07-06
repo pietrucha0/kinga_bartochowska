@@ -80,7 +80,7 @@ const offerCategories: Record<"personal" | "group" | "online", CategoryData> = {
     title: "WSPÓŁPRACA ONLINE",
     subtitle: "Twój cel. Twój plan. Moje wsparcie.",
     description: "Indywidualne prowadzenie treningowe i wsparcie w zakresie odżywiania — niezależnie od tego, gdzie jesteś i gdzie trenujesz.",
-    intro: "Chcesz poprawić sylwetkę, zbudować siłę i w końcu trenować według konkretnego planu? Współpraca online to kompleksowe prowadzenie dopasowane do Twojego celu, możliwości i codziennego życia — niezależnie od tego, gdzie jesteś i gdzie trenujesz.",
+    intro: "Chcesz poprawić sylwetkę, zbudować siłę i w końcu trenować według konkretnego planu? Współpraca online to kompleksowe prowadzenie dopasowane to Twojego celu, możliwości i codziennego życia — niezależnie od tego, gdzie jesteś i gdzie trenujesz.",
     callout: "Stały kontakt, moje wsparcie i motywacja przez cały okres współpracy.",
     features: [
       "indywidualny plan treningowy dopasowany do Twojego celu i możliwości",
@@ -98,6 +98,10 @@ const offerCategories: Record<"personal" | "group" | "online", CategoryData> = {
     ],
     tint: "from-pink-light/50 to-pink-soft/40",
   },
+};
+
+const formatPrice = (price: number) => {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
 
 export default function PricingSection() {
@@ -405,18 +409,18 @@ export default function PricingSection() {
                     <div className="flex flex-col items-center justify-center gap-1 mb-4">
                       {/* Regular price (crossed out) */}
                       <span className="font-body text-xs text-charcoal/45 line-through">
-                        {pack.regularPrice} zł
+                        {formatPrice(pack.regularPrice)} zł
                       </span>
                       {/* Promo price */}
                       <span className="font-display font-extrabold text-3xl gradient-text">
-                        {pack.promoPrice} zł
+                        {formatPrice(pack.promoPrice)} zł
                       </span>
                     </div>
 
                     {/* Savings pill */}
                     <div className="mb-6 py-1 px-4 bg-cyan/10 border border-cyan/15 rounded-pill inline-block">
                       <span className="font-body text-[10px] font-bold text-cyan uppercase tracking-wider whitespace-nowrap">
-                        Oszczędzasz {pack.savings} zł
+                        Oszczędzasz {formatPrice(pack.savings)} zł
                       </span>
                     </div>
                   </div>

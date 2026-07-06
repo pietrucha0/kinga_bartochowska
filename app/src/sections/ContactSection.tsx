@@ -196,21 +196,21 @@ const packageOptionsMap: Record<string, Option[]> = {
     { value: "", label: "Wybierz interesujący Cię pakiet" },
     { value: "1_training", label: "1 trening (180 zł)" },
     { value: "5_trainings", label: "Pakiet 5 treningów (700 zł)" },
-    { value: "10_trainings", label: "Pakiet 10 treningów (1300 zł)" },
-    { value: "20_trainings", label: "Pakiet 20 treningów (2400 zł)" },
+    { value: "10_trainings", label: "Pakiet 10 treningów (1 300 zł)" },
+    { value: "20_trainings", label: "Pakiet 20 treningów (2 400 zł)" },
   ],
   group: [
     { value: "", label: "Wybierz interesujący Cię pakiet" },
     { value: "1_training", label: "1 trening (300 zł)" },
-    { value: "5_trainings", label: "Pakiet 5 treningów (1000 zł)" },
-    { value: "10_trainings", label: "Pakiet 10 treningów (2000 zł)" },
-    { value: "20_trainings", label: "Pakiet 20 treningów (3600 zł)" },
+    { value: "5_trainings", label: "Pakiet 5 treningów (1 000 zł)" },
+    { value: "10_trainings", label: "Pakiet 10 treningów (2 000 zł)" },
+    { value: "20_trainings", label: "Pakiet 20 treningów (3 600 zł)" },
   ],
   online: [
     { value: "", label: "Wybierz interesujący Cię pakiet" },
     { value: "1_month", label: "1 miesiąc współpracy (250 zł)" },
     { value: "3_months", label: "3 miesiące współpracy (700 zł)" },
-    { value: "6_months", label: "6 miesięcy współpracy (1000 zł)" },
+    { value: "6_months", label: "6 miesięcy współpracy (1 000 zł)" },
   ],
 };
 
