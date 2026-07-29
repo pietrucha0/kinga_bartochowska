@@ -75,7 +75,7 @@ export default function HeroSection() {
         <img
           src="/assets/dumbbell.webp"
           alt=""
-          className="floating-shape dumbbell-shape absolute top-[14%] right-[2%] w-16 sm:top-[12%] sm:right-[8%] sm:w-24 md:w-32 animate-float"
+          className="floating-shape dumbbell-shape absolute top-[10%] right-[3%] w-14 sm:top-[12%] sm:right-[8%] sm:w-24 md:w-32 animate-float"
           style={{ animationDelay: "1s" }}
         />
         {/* Kettlebell - Bottom Right Corner */}
@@ -107,6 +107,7 @@ export default function HeroSection() {
                 <span className="hero-headline-word inline-block gradient-text">
                   TWOJA
                 </span>{" "}
+                <br className="block sm:hidden" />
                 <span className="hero-headline-word inline-block gradient-text">
                   NAJLEPSZA
                 </span>{" "}
