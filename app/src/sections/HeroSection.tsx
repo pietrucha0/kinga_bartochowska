@@ -59,7 +59,7 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-[100dvh] lg:min-h-screen xl:min-h-[72vh] overflow-hidden flex items-center py-0 lg:py-0"
+      className="relative w-full min-h-screen lg:min-h-screen xl:min-h-[72vh] overflow-hidden flex items-center py-0 lg:py-0"
     >
       <div className="absolute inset-0 bg-blush-mist" />
 
@@ -95,7 +95,7 @@ export default function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-20 w-full h-full lg:h-auto section-container pt-[110px] sm:pt-32 lg:pt-16 pb-6 lg:pb-8 flex flex-col lg:block justify-center">
+      <div className="relative z-20 w-full h-full lg:h-auto section-container pt-[110px] sm:pt-32 lg:pt-16 pb-16 sm:pb-24 lg:pb-8 flex flex-col lg:block justify-center">
         <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-4 items-center justify-center h-full lg:h-auto min-h-0 lg:min-h-[50vh] gap-1 sm:gap-2">
           
           {/* Group wrapper for text and CTA to keep them close on desktop, while maintaining mobile ordering via 'contents' */}
