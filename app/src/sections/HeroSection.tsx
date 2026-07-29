@@ -51,6 +51,30 @@ export default function HeroSection() {
         { opacity: 1, y: 0, scale: 1, duration: 0.8 },
         1
       );
+
+      // Scroll parallax effect for trainer image and floating elements
+      gsap.to(".hero-trainer-image", {
+        y: () => (window.innerWidth < 1024 ? 50 : 80),
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.6,
+        },
+      });
+
+      gsap.to(".floating-shape", {
+        y: (i) => (i % 2 === 0 ? -30 : 40),
+        rotate: (i) => (i % 2 === 0 ? 10 : -10),
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.8,
+        },
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -71,38 +95,38 @@ export default function HeroSection() {
           className="floating-shape clips-shape absolute hidden sm:block top-[2%] left-[2%] w-16 sm:top-[2%] sm:left-[3%] sm:w-32 md:w-40 animate-float-slow"
           style={{ animationDelay: "0s" }}
         />
-        {/* Dumbbell - Top Right Corner (lower on mobile) */}
+        {/* Dumbbell - Top Right Corner */}
         <img
           src="/assets/dumbbell.webp"
           alt=""
-          className="floating-shape dumbbell-shape absolute top-[20%] right-[2%] w-16 sm:top-[12%] sm:right-[8%] sm:w-24 md:w-32 animate-float"
+          className="floating-shape dumbbell-shape absolute top-[14%] right-[2%] w-16 sm:top-[12%] sm:right-[8%] sm:w-24 md:w-32 animate-float"
           style={{ animationDelay: "1s" }}
         />
         {/* Kettlebell - Bottom Right Corner */}
         <img
           src="/assets/kettlebell.webp"
           alt=""
-          className="floating-shape kettlebell-shape absolute bottom-[22%] right-[2%] w-16 sm:bottom-[20%] sm:right-[3%] sm:w-24 md:w-32 animate-float"
+          className="floating-shape kettlebell-shape absolute bottom-[18%] right-[2%] w-16 sm:bottom-[20%] sm:right-[3%] sm:w-24 md:w-32 animate-float"
           style={{ animationDelay: "0.5s" }}
         />
-        {/* Barbell - Desktop and Mobile (higher on mobile) */}
+        {/* Barbell - Desktop and Mobile */}
         <img
           src="/assets/barbell.webp"
           alt=""
-          className="floating-shape barbell-shape absolute bottom-[30%] left-[2%] w-24 sm:w-28 sm:bottom-[10%] sm:left-[45%] sm:w-64 md:w-80 animate-float-slow"
+          className="floating-shape barbell-shape absolute bottom-[38%] left-[2%] w-20 sm:w-28 sm:bottom-[10%] sm:left-[45%] sm:w-64 md:w-80 animate-float-slow"
           style={{ animationDelay: "3s" }}
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-20 w-full h-full lg:h-auto section-container pt-[75px] sm:pt-32 lg:pt-16 pb-8 lg:pb-8 flex flex-col lg:block justify-center">
+      <div className="relative z-20 w-full h-full lg:h-auto section-container pt-[75px] sm:pt-32 lg:pt-16 pb-6 lg:pb-8 flex flex-col lg:block justify-center">
         <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-4 items-center justify-center h-full lg:h-auto min-h-0 lg:min-h-[50vh] gap-1 sm:gap-2">
           
           {/* Group wrapper for text and CTA to keep them close on desktop, while maintaining mobile ordering via 'contents' */}
           <div className="contents lg:flex lg:flex-col lg:justify-center lg:col-start-1 lg:row-start-1 lg:row-span-3 lg:gap-y-3 w-full">
             
             {/* 1. Headline - Order 1 on mobile, Col 1 Row 1 on desktop */}
-            <div className="order-1 lg:order-none flex flex-col justify-center items-start text-left w-full pl-8 sm:pl-0 mt-1 lg:mt-0">
+            <div className="order-1 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-1 lg:mt-0">
               <h1 className="font-display font-black sm:font-bold text-[38px] xs:text-[42px] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] lg:leading-[0.85] tracking-tight lg:tracking-tighter">
                 <span className="hero-headline-word inline-block gradient-text">
                   TWOJA
@@ -127,14 +151,14 @@ export default function HeroSection() {
             </div>
 
             {/* 3. Subheadline - Order 3 on mobile, Col 1 Row 2 on desktop */}
-            <div className="order-3 lg:order-none flex flex-col justify-center items-start text-left w-full pl-8 sm:pl-0 mt-2 lg:mt-0">
+            <div className="order-3 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-2 lg:mt-0">
               <p className="hero-subheadline font-accent text-[21px] xs:text-[24px] sm:text-3xl text-pink-hot mb-1 lg:mb-0 italic leading-normal">
                 Trenuj ciężko. Wyglądaj i czuj się świetnie.
               </p>
             </div>
 
             {/* 4. CTA - Order 4 on mobile, Col 1 Row 3 on desktop */}
-            <div className="order-4 lg:order-none flex items-center justify-start w-full pl-8 sm:pl-0 mt-2 lg:mt-0">
+            <div className="order-4 lg:order-none flex items-center justify-start w-full pl-6 sm:pl-0 mt-2 lg:mt-0">
               <div className="relative hero-cta-button">
                 <PillButton
                   variant="cyan"
@@ -161,7 +185,7 @@ export default function HeroSection() {
               <img
                 src="/assets/trainer.png"
                 alt="Kinga Bartochowska - Personal Trainer"
-                className="relative z-10 w-[96vw] lg:w-full max-w-[450px] lg:max-w-[410px] xl:max-w-[460px] max-h-[38vh] sm:max-h-[50vh] lg:max-h-none h-auto object-contain drop-shadow-2xl scale-100 sm:scale-100 lg:scale-125 origin-bottom transform lg:translate-y-6"
+                className="relative z-10 w-[96vw] lg:w-full max-w-[450px] lg:max-w-[410px] xl:max-w-[460px] max-h-[46vh] sm:max-h-[50vh] lg:max-h-none h-auto object-contain drop-shadow-2xl scale-105 sm:scale-100 lg:scale-125 origin-bottom transform lg:translate-y-6"
               />
             </div>
           </div>
