@@ -80,7 +80,7 @@ const offerCategories: Record<"personal" | "group" | "online", CategoryData> = {
     title: "WSPÓŁPRACA ONLINE",
     subtitle: "Twój cel. Twój plan. Moje wsparcie.",
     description: "Indywidualne prowadzenie treningowe i wsparcie w zakresie odżywiania — niezależnie od tego, gdzie jesteś i gdzie trenujesz.",
-    intro: "Chcesz poprawić sylwetkę, zbudować siłę i w końcu trenować według konkretnego planu? Współpraca online to kompleksowe prowadzenie dopasowane to Twojego celu, możliwości i codziennego życia — niezależnie od tego, gdzie jesteś i gdzie trenujesz.",
+    intro: "Chcesz poprawić sylwetkę, zbudować siłę i w końcu trenować według konkretnego planu? Współpraca online to kompleksowe prowadzenie dopasowane do Twojego celu, możliwości i codziennego życia — niezależnie od tego, gdzie jesteś i gdzie trenujesz.",
     callout: "Stały kontakt, moje wsparcie i motywacja przez cały okres współpracy.",
     features: [
       "indywidualny plan treningowy dopasowany do Twojego celu i możliwości",
@@ -100,10 +100,6 @@ const offerCategories: Record<"personal" | "group" | "online", CategoryData> = {
   },
 };
 
-const formatPrice = (price: number) => {
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-};
-
 export default function PricingSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -116,11 +112,37 @@ export default function PricingSection() {
 
   const scrollPackages = (direction: "left" | "right") => {
     if (packagesRef.current) {
-      const scrollAmount = window.innerWidth * 0.75;
-      packagesRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
+      const container = packagesRef.current;
+      const cards = Array.from(container.children) as HTMLElement[];
+      if (cards.length === 0) return;
+
+      const containerCenter = container.scrollLeft + container.clientWidth / 2;
+      let closestIndex = 0;
+      let minDiff = Infinity;
+
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const diff = Math.abs(cardCenter - containerCenter);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestIndex = idx;
+        }
       });
+
+      const targetIndex =
+        direction === "right"
+          ? Math.min(cards.length - 1, closestIndex + 1)
+          : Math.max(0, closestIndex - 1);
+
+      const targetCard = cards[targetIndex];
+      if (targetCard) {
+        const targetLeft =
+          targetCard.offsetLeft - (container.clientWidth - targetCard.clientWidth) / 2;
+        container.scrollTo({
+          left: targetLeft,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
@@ -384,7 +406,7 @@ export default function PricingSection() {
               <div
                 ref={packagesRef}
                 onScroll={handleScroll}
-                className={`flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-6 pb-6 sm:pb-0 px-4 sm:px-0 -mx-4 sm:mx-0 scrollbar-none sm:grid sm:gap-6 ${
+                className={`flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-6 sm:pb-0 px-[7%] sm:px-0 -mx-5 sm:mx-0 scrollbar-none sm:grid sm:gap-6 ${
                   activeData.packages.length === 3 
                     ? "sm:grid-cols-3" 
                     : "sm:grid-cols-2 lg:grid-cols-4"
@@ -393,7 +415,7 @@ export default function PricingSection() {
                 {activeData.packages.map((pack) => (
                   <GlassCard
                     key={pack.id}
-                    className="w-[80vw] sm:w-auto shrink-0 sm:shrink snap-center p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300 min-h-[300px]"
+                    className="w-[86%] sm:w-auto shrink-0 sm:shrink snap-center p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300 min-h-[300px]"
                     hover={true}
                   >
                   {/* Promo Badge */}
@@ -409,18 +431,18 @@ export default function PricingSection() {
                     <div className="flex flex-col items-center justify-center gap-1 mb-4">
                       {/* Regular price (crossed out) */}
                       <span className="font-body text-xs text-charcoal/45 line-through">
-                        {formatPrice(pack.regularPrice)} zł
+                        {pack.regularPrice} zł
                       </span>
                       {/* Promo price */}
                       <span className="font-display font-extrabold text-3xl gradient-text">
-                        {formatPrice(pack.promoPrice)} zł
+                        {pack.promoPrice} zł
                       </span>
                     </div>
 
                     {/* Savings pill */}
                     <div className="mb-6 py-1 px-4 bg-cyan/10 border border-cyan/15 rounded-pill inline-block">
                       <span className="font-body text-[10px] font-bold text-cyan uppercase tracking-wider whitespace-nowrap">
-                        Oszczędzasz {formatPrice(pack.savings)} zł
+                        Oszczędzasz {pack.savings} zł
                       </span>
                     </div>
                   </div>

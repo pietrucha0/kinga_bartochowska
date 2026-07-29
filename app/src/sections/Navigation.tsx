@@ -92,6 +92,18 @@ export default function Navigation() {
           ))}
         </ul>
 
+        {/* Mobile Contact CTA (Centered on mobile) */}
+        <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
+          <PillButton
+            variant="cyan"
+            className="text-xs py-1.5 px-4 font-semibold"
+            href="#contact"
+            onClick={(e) => scrollToSection(e, "#contact")}
+          >
+            Kontakt
+          </PillButton>
+        </div>
+
         {/* Desktop CTA */}
         <div className="hidden md:block absolute right-6 sm:right-8 top-1/2 -translate-y-1/2">
           <PillButton

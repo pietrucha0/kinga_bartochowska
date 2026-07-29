@@ -92,9 +92,9 @@ export default function CommunityMarquee() {
         rotation: 0,
         scale: 1,
         opacity: 1,
-        duration: 1.8,
+        duration: 1.2,
         ease: createBouncyEase(),
-        stagger: 0.05,
+        stagger: 0.03,
       });
 
       if (subtext) {
@@ -103,20 +103,19 @@ export default function CommunityMarquee() {
           {
             opacity: 1,
             y: 0,
-            duration: 0.8,
+            duration: 0.5,
             ease: "power2.out",
           },
-          "-=0.8"
+          0.3
         );
       }
 
-      // Animate on scroll (replays every time user enters the section)
+      // Animate on scroll
       ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: "top 85%",
-        end: "bottom 15%",
+        start: "top 95%",
         animation: tl,
-        toggleActions: "play reset play reset",
+        toggleActions: "play none none none",
       });
     }, sectionRef);
 
@@ -130,21 +129,28 @@ export default function CommunityMarquee() {
       className="relative w-full py-16 sm:py-40 lg:py-52 overflow-hidden bg-charcoal"
     >
       {/* Floating icons marquee background */}
-      <div className="absolute inset-0 flex items-center overflow-hidden opacity-20 pointer-events-none">
+      <div className="absolute inset-0 flex items-center overflow-hidden opacity-30 sm:opacity-25 pointer-events-none">
         <div className="flex animate-marquee whitespace-nowrap">
-          {[...Array(4)].map((_, setIndex) => (
-            <div key={setIndex} className="flex items-center gap-32 px-16">
-              {floatingIcons.map((icon, i) => (
-                <img
-                  key={`${setIndex}-${i}`}
-                  src={icon.src}
-                  alt=""
-                  loading="lazy"
-                  className="w-16 sm:w-20 md:w-24 h-auto flex-shrink-0"
-                />
-              ))}
-            </div>
-          ))}
+          <div className="flex items-center gap-16 sm:gap-24 md:gap-32 shrink-0 pr-16 sm:pr-24 md:pr-32">
+            {[...floatingIcons, ...floatingIcons, ...floatingIcons].map((icon, i) => (
+              <img
+                key={i}
+                src={icon.src}
+                alt=""
+                className="h-16 sm:h-22 md:h-28 w-auto object-contain shrink-0"
+              />
+            ))}
+          </div>
+          <div className="flex items-center gap-16 sm:gap-24 md:gap-32 shrink-0 pr-16 sm:pr-24 md:pr-32">
+            {[...floatingIcons, ...floatingIcons, ...floatingIcons].map((icon, i) => (
+              <img
+                key={`dup-${i}`}
+                src={icon.src}
+                alt=""
+                className="h-16 sm:h-22 md:h-28 w-auto object-contain shrink-0"
+              />
+            ))}
+          </div>
         </div>
       </div>
 

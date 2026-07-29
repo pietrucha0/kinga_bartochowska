@@ -228,7 +228,6 @@ export default function ContactSection() {
     phone: "",
     cooperationType: "",
     packageType: "",
-    experience: "beginner",
     goal: "",
   });
 
@@ -370,15 +369,8 @@ export default function ContactSection() {
           name: nameTrimmed,
           email: emailTrimmed,
           phone: phoneTrimmed || "Nie podano",
-          cooperationType: coopLabel,
-          packageType: packLabel,
-          experience: formData.experience === "beginner"
-            ? "Początkujący (brak stażu / < 6 msc)"
-            : formData.experience === "intermediate"
-              ? "Średniozaawansowany (6 msc - 2 lata)"
-              : "Zaawansowany (powyżej 2 lat)",
           subject: `Nowe zgłoszenie od ${nameTrimmed} - Kinga Bartochowska Fitness`,
-          message: `Forma współpracy: ${coopLabel}\nPakiet: ${packLabel}\nStaż treningowy: ${formData.experience === "beginner" ? "Początkujący" : formData.experience === "intermediate" ? "Średniozaawansowany" : "Zaawansowany"}\n\nCel i oczekiwania: ${goalTrimmed}\nTelefon: ${phoneTrimmed || 'Nie podano'}`,
+          message: `Forma współpracy: ${coopLabel}\nPakiet: ${packLabel}\n\nCel i oczekiwania: ${goalTrimmed}\nTelefon: ${phoneTrimmed || 'Nie podano'}`,
           from_name: "Kinga Bartochowska Fitness",
           botcheck: botcheck
         }),
@@ -393,7 +385,6 @@ export default function ContactSection() {
           phone: "",
           cooperationType: "",
           packageType: "",
-          experience: "beginner",
           goal: "",
         });
         setTimeout(() => {
@@ -540,22 +531,6 @@ export default function ContactSection() {
                       )}
                     </div>
 
-                    {/* Experience */}
-                    <div>
-                      <label htmlFor="experience" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2">
-                        Staż treningowy
-                      </label>
-                      <CustomSelect
-                        id="experience"
-                        value={formData.experience}
-                        onChange={(val) => setFormData({ ...formData, experience: val })}
-                        options={[
-                          { value: "beginner", label: "Początkujący (brak stażu lub < 6 msc)" },
-                          { value: "intermediate", label: "Średniozaawansowany (6 msc - 2 lata)" },
-                          { value: "advanced", label: "Zaawansowany (powyżej 2 lat)" },
-                        ]}
-                      />
-                    </div>
 
                     {/* Phone */}
                     <div>

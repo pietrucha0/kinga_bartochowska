@@ -72,19 +72,19 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="relative bg-blush-mist border-t border-pink-light/30 pt-20 pb-10 overflow-hidden"
+      className="relative bg-blush-mist border-t border-pink-light/30 pt-6 sm:pt-10 pb-8 overflow-hidden"
     >
       <div className="section-container relative z-10">
         <div className="footer-content flex flex-col items-center">
           {/* Logo */}
           <a
             href="#"
-            className="mb-6 block"
+            className="mb-4 block"
           >
             <img
               src="/assets/kingsquad_logo.png"
               alt="King Squad Logo"
-              className="h-16 sm:h-20 w-auto object-contain mx-auto transition-all duration-300 filter hover:opacity-80"
+              className="h-24 sm:h-32 md:h-36 w-auto object-contain mx-auto transition-all duration-300 filter hover:opacity-80"
             />
           </a>
 

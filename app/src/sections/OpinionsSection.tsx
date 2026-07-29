@@ -64,11 +64,37 @@ export default function OpinionsSection() {
 
   const scrollOpinions = (direction: "left" | "right") => {
     if (cardsRef.current) {
-      const scrollAmount = window.innerWidth * 0.8;
-      cardsRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
+      const container = cardsRef.current;
+      const cards = Array.from(container.children) as HTMLElement[];
+      if (cards.length === 0) return;
+
+      const containerCenter = container.scrollLeft + container.clientWidth / 2;
+      let closestIndex = 0;
+      let minDiff = Infinity;
+
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const diff = Math.abs(cardCenter - containerCenter);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestIndex = idx;
+        }
       });
+
+      const targetIndex =
+        direction === "right"
+          ? Math.min(cards.length - 1, closestIndex + 1)
+          : Math.max(0, closestIndex - 1);
+
+      const targetCard = cards[targetIndex];
+      if (targetCard) {
+        const targetLeft =
+          targetCard.offsetLeft - (container.clientWidth - targetCard.clientWidth) / 2;
+        container.scrollTo({
+          left: targetLeft,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
@@ -137,7 +163,7 @@ export default function OpinionsSection() {
     <section
       ref={sectionRef}
       id="opinie"
-      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white border-t border-pink-light/20"
+      className="relative w-full pt-12 pb-4 sm:pt-32 sm:pb-12 lg:pt-40 lg:pb-16 overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white border-t border-pink-light/20"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-light/10 to-transparent pointer-events-none" />
@@ -174,12 +200,12 @@ export default function OpinionsSection() {
           <div
             ref={cardsRef}
             onScroll={handleScroll}
-            className="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-6 pb-6 md:pb-0 px-4 md:px-0 -mx-4 md:mx-auto scrollbar-none md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+            className="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-4 pb-6 md:pb-0 px-[7%] md:px-0 -mx-4 md:mx-auto scrollbar-none md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
           >
             {testimonials.map((t, index) => (
               <GlassCard
                 key={index}
-                className="opinion-card w-[85vw] md:w-auto shrink-0 md:shrink snap-center p-6 sm:p-8 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-3xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-pink/40 transition-all duration-300"
+                className="opinion-card w-[86%] md:w-auto shrink-0 md:shrink snap-center p-6 sm:p-8 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-3xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-pink/40 transition-all duration-300"
                 hover={true}
               >
               <div>
