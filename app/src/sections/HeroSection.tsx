@@ -95,7 +95,7 @@ export default function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-20 w-full h-full lg:h-auto section-container pt-[75px] sm:pt-32 lg:pt-16 pb-6 lg:pb-8 flex flex-col lg:block justify-center">
+      <div className="relative z-20 w-full h-full lg:h-auto section-container pt-[110px] sm:pt-32 lg:pt-16 pb-6 lg:pb-8 flex flex-col lg:block justify-center">
         <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-4 items-center justify-center h-full lg:h-auto min-h-0 lg:min-h-[50vh] gap-1 sm:gap-2">
           
           {/* Group wrapper for text and CTA to keep them close on desktop, while maintaining mobile ordering via 'contents' */}
