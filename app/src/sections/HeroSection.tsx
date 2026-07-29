@@ -51,30 +51,6 @@ export default function HeroSection() {
         { opacity: 1, y: 0, scale: 1, duration: 0.8 },
         1
       );
-
-      // Scroll parallax effect for trainer image and floating elements
-      gsap.to(".hero-trainer-image", {
-        y: () => (window.innerWidth < 1024 ? 50 : 80),
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.6,
-        },
-      });
-
-      gsap.to(".floating-shape", {
-        y: (i) => (i % 2 === 0 ? -30 : 40),
-        rotate: (i) => (i % 2 === 0 ? 10 : -10),
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.8,
-        },
-      });
     }, sectionRef);
 
     return () => ctx.revert();
