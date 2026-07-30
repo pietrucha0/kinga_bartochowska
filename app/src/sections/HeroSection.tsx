@@ -59,7 +59,7 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen lg:min-h-screen xl:min-h-[72vh] overflow-hidden flex items-center py-0 lg:py-0"
+      className="relative w-full min-h-screen lg:min-h-screen overflow-hidden flex items-center py-0 lg:py-0"
     >
       <div className="absolute inset-0 bg-blush-mist" />
 
