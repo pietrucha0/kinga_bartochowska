@@ -406,7 +406,7 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden bg-white"
+      className="relative w-full min-h-screen py-12 sm:py-32 lg:py-14 flex items-center overflow-hidden bg-white"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-blush-mist pointer-events-none" />
@@ -425,27 +425,27 @@ export default function ContactSection() {
         className="absolute bottom-[15%] right-[8%] w-16 sm:w-24 opacity-40 animate-float pointer-events-none"
       />
 
-      <div className="relative z-10 section-container">
+      <div className="relative z-10 section-container w-full">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="font-display font-bold text-4xl sm:text-5xl gradient-text mb-4">
+        <div className="text-center mb-8 lg:mb-10">
+          <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-5xl xl:text-6xl gradient-text mb-3">
             Zacznij swoją przygodę
           </h2>
-          <p className="font-body text-base text-charcoal/70 max-w-xl mx-auto">
+          <p className="font-body text-base lg:text-base xl:text-lg text-charcoal/70 max-w-xl lg:max-w-2xl mx-auto">
             Wypełnij poniższy formularz kontaktowy, aby omówić szczegóły i rozpocząć współpracę. Odpowiem w ciągu 24 godzin!
           </p>
         </div>
 
         {/* Two-Column Grid */}
-        <div className="contact-card-wrapper grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 max-w-6xl mx-auto items-stretch">
+        <div className="contact-card-wrapper grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 max-w-6xl xl:max-w-7xl mx-auto items-stretch">
           
           {/* Column 1: Contact Form (7 cols) */}
           <div className="lg:col-span-7 h-full flex flex-col">
-            <GlassCard className="p-5 sm:p-10 lg:p-12 w-full flex-grow flex flex-col justify-between" hover={false}>
+            <GlassCard className="p-5 sm:p-8 lg:p-8 xl:p-10 w-full flex-grow flex flex-col justify-between" hover={false}>
               {submitted ? (
                 <ContactSuccess />
               ) : (
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 flex-grow flex flex-col justify-between">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 flex-grow flex flex-col justify-between">
                   {/* Honeypot */}
                   <input
                     type="checkbox"
@@ -459,10 +459,10 @@ export default function ContactSection() {
                   />
 
                   {/* Fields Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                     {/* Name */}
                     <div>
-                      <label htmlFor="name" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2">
+                      <label htmlFor="name" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
                         Imię i nazwisko
                       </label>
                       <input
@@ -471,7 +471,7 @@ export default function ContactSection() {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className={`input-minimal font-body text-base ${errors.name ? "border-pink-hot" : ""}`}
+                        className={`input-minimal font-body text-base lg:text-sm xl:text-base lg:py-2.5 ${errors.name ? "border-pink-hot" : ""}`}
                         placeholder="np. Anna Kowalska"
                       />
                       {errors.name && (
@@ -481,7 +481,7 @@ export default function ContactSection() {
 
                     {/* Email */}
                     <div>
-                      <label htmlFor="email" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2">
+                      <label htmlFor="email" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
                         Adres e-mail
                       </label>
                       <input
@@ -490,7 +490,7 @@ export default function ContactSection() {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className={`input-minimal font-body text-base ${errors.email ? "border-pink-hot" : ""}`}
+                        className={`input-minimal font-body text-base lg:text-sm xl:text-base lg:py-2.5 ${errors.email ? "border-pink-hot" : ""}`}
                         placeholder="np. anna@przyklad.pl"
                       />
                       {errors.email && (
@@ -500,7 +500,7 @@ export default function ContactSection() {
 
                     {/* Cooperation Type */}
                     <div>
-                      <label htmlFor="cooperationType" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2">
+                      <label htmlFor="cooperationType" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
                         Forma współpracy
                       </label>
                       <CustomSelect
@@ -516,7 +516,7 @@ export default function ContactSection() {
 
                     {/* Preferred Package */}
                     <div>
-                      <label htmlFor="packageType" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2">
+                      <label htmlFor="packageType" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
                         Preferowany pakiet
                       </label>
                       <CustomSelect
@@ -534,16 +534,16 @@ export default function ContactSection() {
 
                     {/* Phone */}
                     <div>
-                      <label htmlFor="phone" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2 flex items-center justify-between">
+                      <label htmlFor="phone" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5 flex items-center justify-between">
                         <span>Numer telefonu</span>
-                        <span className="text-[10px] text-charcoal/40 font-normal lowercase">opcjonalnie</span>
+                        <span className="text-[10px] lg:text-xs text-charcoal/40 font-normal lowercase">opcjonalnie</span>
                       </label>
                       <input
                         type="tel"
                         id="phone"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className={`input-minimal font-body text-base ${errors.phone ? "border-pink-hot" : ""}`}
+                        className={`input-minimal font-body text-base lg:text-sm xl:text-base lg:py-2.5 ${errors.phone ? "border-pink-hot" : ""}`}
                         placeholder="np. +48 123 456 789"
                       />
                       {errors.phone && (
@@ -553,8 +553,8 @@ export default function ContactSection() {
                   </div>
 
                   {/* Goal (Description) */}
-                  <div className="mt-4 sm:mt-6">
-                    <label htmlFor="goal" className="block font-body text-xs font-semibold text-charcoal/70 uppercase tracking-wider mb-2">
+                  <div className="mt-3 sm:mt-4">
+                    <label htmlFor="goal" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
                       Twój główny cel i oczekiwania
                     </label>
                     <textarea
@@ -563,7 +563,7 @@ export default function ContactSection() {
                       rows={3}
                       value={formData.goal}
                       onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
-                      className={`input-minimal font-body text-base resize-none ${errors.goal ? "border-pink-hot" : ""}`}
+                      className={`input-minimal font-body text-base lg:text-sm xl:text-base lg:py-2.5 resize-none ${errors.goal ? "border-pink-hot" : ""}`}
                       placeholder="np. redukcja wagi o 5 kg, budowa pośladków, poprawa kondycji, powrót do sprawności..."
                     />
                     {errors.goal && (
@@ -572,10 +572,10 @@ export default function ContactSection() {
                   </div>
 
                   {/* Submit Button */}
-                  <div className="pt-6">
+                  <div className="pt-4 lg:pt-5">
                     <PillButton
                       variant="cyan"
-                      className="w-full py-4 text-base flex justify-center items-center gap-2 font-semibold"
+                      className="w-full py-3.5 lg:py-4 text-base lg:text-base xl:text-lg flex justify-center items-center gap-2 font-semibold"
                       disabled={isSubmitting}
                       magnetic={false}
                     >
@@ -605,26 +605,26 @@ export default function ContactSection() {
 
           {/* Column 2: Contact Info Card (5 cols) */}
           <div className="lg:col-span-5 h-full flex flex-col">
-            <GlassCard className="p-6 sm:p-10 lg:p-12 w-full flex-grow flex flex-col justify-between bg-gradient-to-br from-white/70 to-pink-mist/30 border border-white/60" hover={true}>
+            <GlassCard className="p-6 sm:p-8 lg:p-8 xl:p-10 w-full flex-grow flex flex-col justify-between bg-gradient-to-br from-white/70 to-pink-mist/30 border border-white/60" hover={true}>
               <div>
-                <span className="font-body text-[10px] font-bold text-pink uppercase tracking-widest block mb-2">
+                <span className="font-body text-[10px] lg:text-xs font-bold text-pink uppercase tracking-widest block mb-2">
                   Dane kontaktowe
                 </span>
-                <h3 className="font-display font-bold text-2xl sm:text-3xl text-charcoal mb-8">
+                <h3 className="font-display font-bold text-2xl sm:text-3xl lg:text-3xl xl:text-4xl text-charcoal mb-6 lg:mb-8">
                   Skontaktuj się bezpośrednio
                 </h3>
                 
-                <div className="space-y-6">
+                <div className="space-y-5 lg:space-y-6">
                   {/* Phone */}
                   <div className="flex items-start gap-4">
-                    <span className="w-10 h-10 rounded-full bg-cyan/10 flex items-center justify-center text-cyan mt-0.5 flex-shrink-0">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <span className="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-cyan/10 flex items-center justify-center text-cyan mt-0.5 flex-shrink-0">
+                      <svg className="w-5 h-5 lg:w-5.5 lg:h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
                     </span>
                     <div>
-                      <span className="font-body text-xs font-semibold text-charcoal/50 block">Telefon</span>
-                      <a href={`tel:${phoneRaw}`} className="font-display font-bold text-lg text-charcoal hover:text-pink transition-colors">
+                      <span className="font-body text-xs lg:text-xs font-semibold text-charcoal/50 block">Telefon</span>
+                      <a href={`tel:${phoneRaw}`} className="font-display font-bold text-lg lg:text-lg xl:text-xl text-charcoal hover:text-pink transition-colors">
                         {phoneFormatted}
                       </a>
                     </div>
@@ -632,14 +632,14 @@ export default function ContactSection() {
 
                   {/* Email */}
                   <div className="flex items-start gap-4">
-                    <span className="w-10 h-10 rounded-full bg-pink/10 flex items-center justify-center text-pink mt-0.5 flex-shrink-0">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <span className="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-pink/10 flex items-center justify-center text-pink mt-0.5 flex-shrink-0">
+                      <svg className="w-5 h-5 lg:w-5.5 lg:h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </span>
                     <div>
-                      <span className="font-body text-xs font-semibold text-charcoal/50 block">E-mail</span>
-                      <a href={`mailto:${emailAddress}`} className="font-display font-bold text-lg text-charcoal hover:text-pink transition-colors break-all">
+                      <span className="font-body text-xs lg:text-xs font-semibold text-charcoal/50 block">E-mail</span>
+                      <a href={`mailto:${emailAddress}`} className="font-display font-bold text-lg lg:text-lg xl:text-xl text-charcoal hover:text-pink transition-colors break-all">
                         {emailAddress}
                       </a>
                     </div>
@@ -647,18 +647,18 @@ export default function ContactSection() {
 
                   {/* Location */}
                   <div className="flex items-start gap-4">
-                    <span className="w-10 h-10 rounded-full bg-cyan/10 flex items-center justify-center text-cyan mt-0.5 flex-shrink-0">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <span className="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-cyan/10 flex items-center justify-center text-cyan mt-0.5 flex-shrink-0">
+                      <svg className="w-5 h-5 lg:w-5.5 lg:h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </span>
                     <div>
-                      <span className="font-body text-xs font-semibold text-charcoal/50 block">Lokalizacja treningów stacjonarnych</span>
-                      <span className="font-body text-base font-semibold text-charcoal block mb-0.5">
+                      <span className="font-body text-xs lg:text-xs font-semibold text-charcoal/50 block">Lokalizacja treningów stacjonarnych</span>
+                      <span className="font-body text-base lg:text-base font-semibold text-charcoal block mb-0.5">
                         Calypso Łomianki
                       </span>
-                      <span className="font-body text-sm text-charcoal/70 block leading-relaxed">
+                      <span className="font-body text-sm lg:text-sm text-charcoal/70 block leading-relaxed">
                         Warszawska 201/203,<br />
                         05-092 Kiełpin Poduchowny
                       </span>

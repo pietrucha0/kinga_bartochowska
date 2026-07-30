@@ -244,18 +244,18 @@ export default function PricingSection() {
     <section
       ref={sectionRef}
       id="pricing"
-      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden"
+      className="relative w-full min-h-screen py-12 sm:py-32 lg:py-14 flex items-center overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-blush-mist pointer-events-none" />
 
-      <div className="relative z-10 section-container">
+      <div className="relative z-10 section-container w-full">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="pricing-heading font-display font-bold text-4xl sm:text-5xl lg:text-6xl gradient-text mb-4">
+        <div className="text-center mb-8 lg:mb-10">
+          <h2 className="pricing-heading font-display font-bold text-4xl sm:text-5xl lg:text-5xl xl:text-6xl gradient-text mb-3">
             Oferta
           </h2>
-          <p className="pricing-heading font-body text-base sm:text-lg text-charcoal/70 max-w-2xl mx-auto">
+          <p className="pricing-heading font-body text-base sm:text-lg lg:text-base xl:text-lg text-charcoal/70 max-w-2xl lg:max-w-3xl mx-auto">
             Wybierz formę współpracy dopasowaną do Twoich potrzeb, możliwości i stylu życia.
             Niezależnie od tego, gdzie jesteś — wspólnie stworzymy plan, który przybliży Cię do Twojego celu.
           </p>
@@ -285,7 +285,7 @@ export default function PricingSection() {
         {/* Desktop 3 Category Cards (hidden on mobile) */}
         <div
           ref={cardsRef}
-          className="hidden md:grid grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch mb-16"
+          className="hidden md:grid grid-cols-3 gap-6 lg:gap-6 xl:gap-8 max-w-6xl xl:max-w-7xl mx-auto items-stretch mb-8 lg:mb-10"
         >
           {(Object.values(offerCategories) as CategoryData[]).map((category) => {
             const isSelected = activeTab === category.id;
@@ -296,35 +296,35 @@ export default function PricingSection() {
                 className="cursor-pointer h-full transition-all duration-300"
               >
                 <GlassCard
-                  className={`category-card relative p-6 sm:p-8 h-full bg-gradient-to-b ${category.tint} flex flex-col justify-between transition-all duration-300 ${
+                  className={`category-card relative p-6 sm:p-8 lg:p-6 xl:p-7 h-full bg-gradient-to-b ${category.tint} flex flex-col justify-between transition-all duration-300 ${
                     isSelected
-                      ? "border-pink shadow-[0_15px_35px_rgba(224,17,95,0.2)] scale-[1.03] ring-2 ring-pink/20"
+                      ? "border-pink shadow-[0_15px_35px_rgba(224,17,95,0.2)] scale-[1.02] ring-2 ring-pink/20"
                       : "opacity-85 hover:opacity-100 hover:scale-[1.01]"
                   }`}
                   hover={!isSelected}
                 >
-                  <div className="text-center pt-2">
+                  <div className="text-center pt-1">
                     {/* Selected Indicator Badge */}
                     {isSelected && (
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                        <span className="bg-pink-hot text-white font-body text-[10px] uppercase font-bold tracking-wider px-3.5 py-1 rounded-pill glow-pink">
+                        <span className="bg-pink-hot text-white font-body text-[10px] lg:text-xs uppercase font-bold tracking-wider px-3.5 lg:px-4 py-1 rounded-pill glow-pink">
                           Wybrana opcja
                         </span>
                       </div>
                     )}
                     
-                    <h3 className="font-display font-bold text-lg sm:text-xl text-charcoal mb-3 leading-snug">
+                    <h3 className="font-display font-bold text-lg sm:text-xl lg:text-xl xl:text-2xl text-charcoal mb-2 leading-snug">
                       {category.title}
                     </h3>
-                    <h4 className="font-display font-semibold text-sm text-pink-hot mb-4 leading-normal">
+                    <h4 className="font-display font-semibold text-sm lg:text-sm xl:text-base text-pink-hot mb-3 leading-normal">
                       {category.subtitle}
                     </h4>
-                    <p className="font-body text-xs sm:text-sm text-charcoal/70 leading-relaxed">
+                    <p className="font-body text-xs sm:text-sm lg:text-xs xl:text-sm text-charcoal/70 leading-relaxed">
                       {category.description}
                     </p>
                   </div>
-                  <div className="mt-6 flex justify-center">
-                    <span className={`font-body text-xs font-semibold px-4 py-2 rounded-pill transition-colors duration-300 ${
+                  <div className="mt-4 flex justify-center">
+                    <span className={`font-body text-xs lg:text-xs xl:text-sm font-semibold px-4 py-2 lg:px-5 lg:py-2 rounded-pill transition-colors duration-300 ${
                       isSelected ? "bg-pink text-white" : "bg-black/5 text-charcoal/70 hover:bg-black/10"
                     }`}>
                       {isSelected ? "Przeglądasz pakiety" : "Zobacz pakiety"}
@@ -336,26 +336,26 @@ export default function PricingSection() {
           })}
         </div>
 
-        <div ref={detailsRef} className="max-w-6xl mx-auto mt-12 bg-white/30 backdrop-blur-xl border border-white/60 rounded-[32px] p-5 sm:p-10 lg:p-12 shadow-glass">
+        <div ref={detailsRef} className="max-w-6xl xl:max-w-7xl mx-auto mt-6 bg-white/30 backdrop-blur-xl border border-white/60 rounded-[32px] p-5 sm:p-8 lg:p-8 xl:p-10 shadow-glass">
           {/* Top Row: Category Info and Features Checklist */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pb-10 border-b border-charcoal/5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start pb-6 lg:pb-8 border-b border-charcoal/5">
             {/* Left side: Category Intro and Callout */}
             <div className="lg:col-span-7 flex flex-col justify-between h-full">
               <div>
-                <span className="font-body text-[10px] font-bold text-pink uppercase tracking-widest block mb-2">
+                <span className="font-body text-[10px] lg:text-xs font-bold text-pink uppercase tracking-widest block mb-1.5">
                   O ofercie
                 </span>
-                <h3 className="font-display font-bold text-3xl text-charcoal mb-4">
+                <h3 className="font-display font-bold text-3xl lg:text-3xl xl:text-4xl text-charcoal mb-3">
                   {activeData.title}
                 </h3>
-                <p className="font-body text-base text-charcoal/80 leading-relaxed mb-6">
+                <p className="font-body text-base lg:text-sm xl:text-base text-charcoal/80 leading-relaxed mb-4">
                   {activeData.intro}
                 </p>
               </div>
 
               {/* Callout box */}
-              <div className="p-4 rounded-xl bg-pink-light/10 border border-pink-light/25 text-center sm:text-left">
-                <p className="font-body font-medium text-xs sm:text-sm text-pink-hot/90 leading-relaxed">
+              <div className="p-3.5 lg:p-4 rounded-xl bg-pink-light/10 border border-pink-light/25 text-center sm:text-left">
+                <p className="font-body font-medium text-xs sm:text-sm lg:text-xs xl:text-sm text-pink-hot/90 leading-relaxed">
                   "{activeData.callout}"
                 </p>
               </div>
@@ -363,14 +363,14 @@ export default function PricingSection() {
 
             {/* Right side: Features Checklist */}
             <div className="lg:col-span-5">
-              <span className="font-body text-[10px] font-bold text-cyan uppercase tracking-widest block mb-4">
+              <span className="font-body text-[10px] lg:text-xs font-bold text-cyan uppercase tracking-widest block mb-3">
                 Co zawiera współpraca
               </span>
-              <ul className="space-y-3.5">
+              <ul className="space-y-2.5 lg:space-y-3">
                 {activeData.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3 font-body text-sm text-charcoal/85">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-cyan/15 flex items-center justify-center mt-0.5">
-                      <svg className="w-3.5 h-3.5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <li key={idx} className="flex items-start gap-2.5 font-body text-sm lg:text-xs xl:text-sm text-charcoal/85">
+                    <span className="flex-shrink-0 w-4.5 h-4.5 lg:w-5 lg:h-5 rounded-full bg-cyan/15 flex items-center justify-center mt-0.5">
+                      <svg className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     </span>
@@ -382,8 +382,8 @@ export default function PricingSection() {
           </div>
 
           {/* Bottom Row: Dynamic Packages Grid */}
-          <div className="pt-10">
-            <h4 className="font-display font-semibold text-charcoal text-center mb-8 block uppercase tracking-wider text-xs">
+          <div className="pt-6 lg:pt-8">
+            <h4 className="font-display font-semibold text-charcoal text-center mb-6 block uppercase tracking-wider text-xs lg:text-xs xl:text-sm">
               Wybierz preferowany pakiet (ceny promocyjne)
             </h4>
             
@@ -406,7 +406,7 @@ export default function PricingSection() {
               <div
                 ref={packagesRef}
                 onScroll={handleScroll}
-                className={`flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-6 sm:pb-0 px-[7%] sm:px-0 -mx-5 sm:mx-0 scrollbar-none sm:grid sm:gap-6 ${
+                className={`flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-6 sm:pb-0 px-[7%] sm:px-0 -mx-5 sm:mx-0 scrollbar-none sm:grid sm:gap-4 lg:gap-5 ${
                   activeData.packages.length === 3 
                     ? "sm:grid-cols-3" 
                     : "sm:grid-cols-2 lg:grid-cols-4"
@@ -415,33 +415,33 @@ export default function PricingSection() {
                 {activeData.packages.map((pack) => (
                   <GlassCard
                     key={pack.id}
-                    className="w-[86%] sm:w-auto shrink-0 sm:shrink snap-center p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300 min-h-[300px]"
+                    className="w-[86%] sm:w-auto shrink-0 sm:shrink snap-center p-5 lg:p-5 xl:p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300 min-h-[270px] lg:min-h-[280px]"
                     hover={true}
                   >
                   {/* Promo Badge */}
-                  <div className="absolute top-4 right-4 bg-cyan text-white font-body text-[9px] font-bold px-2 py-0.5 rounded-full tracking-wide uppercase shadow-sm">
+                  <div className="absolute top-3 right-3 bg-cyan text-white font-body text-[9px] lg:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide uppercase shadow-sm">
                     Promocja
                   </div>
 
-                  <div className="text-center pt-4">
-                    <h4 className="font-display font-bold text-base text-charcoal/90 mb-4 tracking-wide uppercase">
+                  <div className="text-center pt-2">
+                    <h4 className="font-display font-bold text-base lg:text-sm xl:text-base text-charcoal/90 mb-3 tracking-wide uppercase">
                       {pack.name}
                     </h4>
 
-                    <div className="flex flex-col items-center justify-center gap-1 mb-4">
+                    <div className="flex flex-col items-center justify-center gap-0.5 mb-3">
                       {/* Regular price (crossed out) */}
-                      <span className="font-body text-xs text-charcoal/45 line-through">
+                      <span className="font-body text-xs lg:text-xs text-charcoal/45 line-through">
                         {pack.regularPrice} zł
                       </span>
                       {/* Promo price */}
-                      <span className="font-display font-extrabold text-3xl gradient-text">
+                      <span className="font-display font-extrabold text-3xl lg:text-3xl xl:text-4xl gradient-text">
                         {pack.promoPrice} zł
                       </span>
                     </div>
 
                     {/* Savings pill */}
-                    <div className="mb-6 py-1 px-4 bg-cyan/10 border border-cyan/15 rounded-pill inline-block">
-                      <span className="font-body text-[10px] font-bold text-cyan uppercase tracking-wider whitespace-nowrap">
+                    <div className="mb-4 py-0.5 px-3 bg-cyan/10 border border-cyan/15 rounded-pill inline-block">
+                      <span className="font-body text-[10px] lg:text-[11px] font-bold text-cyan uppercase tracking-wider whitespace-nowrap">
                         Oszczędzasz {pack.savings} zł
                       </span>
                     </div>
@@ -450,7 +450,7 @@ export default function PricingSection() {
                   {/* CTA Button */}
                   <PillButton
                     variant="cyan"
-                    className="w-full text-xs py-2.5 px-3 justify-center text-center font-semibold mt-auto"
+                    className="w-full text-xs lg:text-xs xl:text-sm py-2.5 lg:py-2.5 px-3 justify-center text-center font-semibold mt-auto"
                     onClick={() => selectPackage(activeData.id, pack.id)}
                   >
                     Zacznij teraz

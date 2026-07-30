@@ -88,26 +88,26 @@ export default function PhilosophySection() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative w-full py-12 sm:py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white"
+      className="relative w-full min-h-screen py-12 sm:py-32 lg:py-16 xl:py-20 flex items-center overflow-hidden bg-gradient-to-b from-white via-pink-light/5 to-white"
     >
       {/* Background gradient accent */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-light/10 to-transparent pointer-events-none" />
 
-      <div className="relative z-10 section-container">
+      <div className="relative z-10 section-container w-full">
         {/* Header */}
         <h2
           ref={headingRef}
-          className="font-display font-bold text-center text-4xl sm:text-5xl lg:text-6xl gradient-text mb-16 sm:mb-20"
+          className="font-display font-bold text-center text-4xl sm:text-5xl lg:text-5xl xl:text-6xl gradient-text mb-12 lg:mb-14"
         >
           O mnie
         </h2>
 
         {/* 3-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center">
           {/* Left Column */}
           <div
             ref={leftColRef}
-            className={`lg:col-span-4 space-y-4 lg:space-y-6 font-body text-sm sm:text-base lg:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left transition-all duration-500 transform ${
+            className={`lg:col-span-4 space-y-4 lg:space-y-4 xl:space-y-5 font-body text-sm sm:text-base lg:text-base xl:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left transition-all duration-500 transform ${
               activeBioTab === "story"
                 ? "opacity-100 translate-y-0 h-auto"
                 : "opacity-0 -translate-y-4 h-0 overflow-hidden pointer-events-none lg:opacity-100 lg:translate-y-0 lg:h-auto lg:pointer-events-auto lg:overflow-visible"
@@ -143,31 +143,31 @@ export default function PhilosophySection() {
           {/* Middle Column (Portrait & Highlight Card) */}
           <div
             ref={middleColRef}
-            className="lg:col-span-4 flex flex-col items-center gap-8 px-4 sm:px-0 order-first lg:order-none mb-6 lg:mb-0"
+            className="lg:col-span-4 flex flex-col items-center gap-6 lg:gap-6 px-4 sm:px-0 order-first lg:order-none mb-6 lg:mb-0"
           >
             <div className="relative">
               {/* Decorative background shape */}
               <div className="absolute -top-4 -left-4 w-full h-full rounded-[32px] bg-gradient-to-br from-pink-light/30 to-pink-soft/30 -z-10 animate-pulse" />
               
-              <div className="relative p-3 rounded-[32px] bg-white/50 backdrop-blur-lg border border-white shadow-xl">
+              <div className="relative p-2.5 rounded-[32px] bg-white/50 backdrop-blur-lg border border-white shadow-xl">
                 <img
                   src="/assets/o-mnie.png"
                   alt="Kinga Bartochowska - O mnie"
                   loading="lazy"
-                  className="w-full max-w-[280px] h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
+                  className="w-full max-w-[280px] lg:max-w-[290px] xl:max-w-[330px] h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
                 />
               </div>
             </div>
 
             {/* Achievements Highlight Card */}
-            <GlassCard className="p-6 bg-gradient-to-br from-white/80 to-white/40 border border-white/80 rounded-[24px] text-center shadow-lg w-full max-w-sm" hover={true}>
-              <p className="font-display font-semibold text-lg text-pink-hot mb-3 leading-snug">
+            <GlassCard className="p-5 lg:p-6 bg-gradient-to-br from-white/80 to-white/40 border border-white/80 rounded-[24px] text-center shadow-lg w-full max-w-sm lg:max-w-md" hover={true}>
+              <p className="font-display font-semibold text-base lg:text-lg xl:text-xl text-pink-hot mb-2 leading-snug">
                 Sport nauczył mnie, że granice istnieją po to, by je przekraczać.
               </p>
-              <p className="font-body text-sm text-charcoal/90 leading-relaxed mb-3">
+              <p className="font-body text-xs lg:text-sm xl:text-base text-charcoal/90 leading-relaxed mb-2">
                 Jako zawodniczka trójboju siłowego zdobyłam tytuł <strong className="text-pink font-semibold">Mistrzyni Polski Juniorów</strong> oraz ustanowiłam <strong className="text-pink font-semibold">rekord Polski w Martwym Ciągu</strong>.
               </p>
-              <p className="font-body text-xs text-charcoal/60 italic leading-relaxed">
+              <p className="font-body text-[11px] lg:text-xs xl:text-sm text-charcoal/60 italic leading-relaxed">
                 Za tymi osiągnięciami stoją lata ciężkiej pracy, dyscypliny i nieustannego doskonalenia techniki.
               </p>
             </GlassCard>
@@ -202,7 +202,7 @@ export default function PhilosophySection() {
           {/* Right Column */}
           <div
             ref={rightColRef}
-            className={`lg:col-span-4 space-y-4 lg:space-y-6 font-body text-sm sm:text-base lg:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left transition-all duration-500 transform ${
+            className={`lg:col-span-4 space-y-4 lg:space-y-4 xl:space-y-5 font-body text-sm sm:text-base lg:text-base xl:text-lg text-charcoal/80 leading-relaxed text-center lg:text-left transition-all duration-500 transform ${
               activeBioTab === "approach"
                 ? "opacity-100 translate-y-0 h-auto"
                 : "opacity-0 -translate-y-4 h-0 overflow-hidden pointer-events-none lg:opacity-100 lg:translate-y-0 lg:h-auto lg:pointer-events-auto lg:overflow-visible"
