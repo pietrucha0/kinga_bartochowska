@@ -57,7 +57,7 @@ export default function HeroSection() {
         <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-4 items-center justify-center h-full lg:h-auto min-h-0 lg:min-h-[50vh] gap-1 sm:gap-2">
           
           {/* Group wrapper for text and CTA to keep them close on desktop, while maintaining mobile ordering via 'contents' */}
-          <div className="contents lg:flex lg:flex-col lg:justify-center lg:col-start-1 lg:row-start-1 lg:row-span-3 lg:gap-y-3 w-full">
+          <div className="contents lg:flex lg:flex-col lg:justify-center lg:col-start-1 lg:row-start-1 lg:row-span-3 lg:gap-y-6 w-full">
             
             {/* 1. Headline - Order 1 on mobile, Col 1 Row 1 on desktop */}
             <div className="order-1 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-1 lg:mt-0">
@@ -86,7 +86,7 @@ export default function HeroSection() {
             </div>
 
             {/* 3. Subheadline - Order 3 on mobile, Col 1 Row 2 on desktop */}
-            <div className="order-3 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-3 lg:mt-2">
+            <div className="order-3 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-5 sm:mt-6 lg:mt-2.5">
               <div className="hero-subheadline inline-flex items-center gap-3 py-3 px-5 sm:py-3.5 sm:px-6 rounded-2xl bg-white/65 backdrop-blur-xl border border-white/80 shadow-glass transition-all duration-300 hover:border-pink-light/50 max-w-xl">
                 <span className="w-2.5 h-2.5 rounded-full bg-pink-hot shrink-0 animate-pulse" />
                 <p className="font-body text-sm xs:text-base sm:text-lg text-pink-hot font-semibold leading-snug">
@@ -96,7 +96,7 @@ export default function HeroSection() {
             </div>
 
             {/* 4. CTA - Order 4 on mobile, Col 1 Row 3 on desktop */}
-            <div className="order-4 lg:order-none flex items-center justify-start w-full pl-6 sm:pl-0 mt-2 lg:mt-0">
+            <div className="order-4 lg:order-none flex items-center justify-start w-full pl-6 sm:pl-0 mt-5 sm:mt-6 lg:mt-2.5">
               <div className="relative hero-cta-button">
                 <PillButton
                   variant="cyan"
