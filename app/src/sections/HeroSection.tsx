@@ -5,24 +5,10 @@ import { getLenis } from "@/hooks/useSmoothScroll";
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const shapesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-      tl.fromTo(
-        ".floating-shape",
-        { opacity: 0, scale: 0.5, y: 50 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 1.2,
-          stagger: 0.15,
-        },
-        0
-      );
 
       tl.fromTo(
         ".hero-headline-word",
@@ -61,38 +47,10 @@ export default function HeroSection() {
       ref={sectionRef}
       className="relative w-full min-h-screen lg:min-h-screen overflow-hidden flex items-center py-0 lg:py-0"
     >
-      <div className="absolute inset-0 bg-blush-mist" />
-
-      <div ref={shapesRef} className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Clips - Top Left Corner (hidden on mobile) */}
-        <img
-          src="/assets/clips.webp"
-          alt=""
-          className="floating-shape clips-shape absolute hidden sm:block top-[2%] left-[2%] w-16 sm:top-[2%] sm:left-[3%] sm:w-32 md:w-40 animate-float-slow"
-          style={{ animationDelay: "0s" }}
-        />
-        {/* Dumbbell - Top Right Corner */}
-        <img
-          src="/assets/dumbbell.webp"
-          alt=""
-          className="floating-shape dumbbell-shape absolute top-[10%] right-[3%] w-14 sm:top-[12%] sm:right-[8%] sm:w-24 md:w-32 animate-float"
-          style={{ animationDelay: "1s" }}
-        />
-        {/* Kettlebell - Bottom Right Corner */}
-        <img
-          src="/assets/kettlebell.webp"
-          alt=""
-          className="floating-shape kettlebell-shape absolute bottom-[18%] right-[2%] w-16 sm:bottom-[20%] sm:right-[3%] sm:w-24 md:w-32 animate-float"
-          style={{ animationDelay: "0.5s" }}
-        />
-        {/* Barbell - Desktop and Mobile */}
-        <img
-          src="/assets/barbell.webp"
-          alt=""
-          className="floating-shape barbell-shape absolute bottom-[38%] left-[2%] w-20 sm:w-28 sm:bottom-[10%] sm:left-[45%] sm:w-64 md:w-80 animate-float-slow"
-          style={{ animationDelay: "3s" }}
-        />
-      </div>
+      {/* Background Gradient & Ambient Glows */}
+      <div className="absolute inset-0 hero-bg-gradient" />
+      <div className="absolute -top-24 -left-24 w-[420px] h-[420px] bg-pink/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
+      <div className="absolute bottom-0 right-0 w-[550px] h-[550px] bg-cyan/12 rounded-full blur-3xl pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-20 w-full h-full lg:h-auto section-container pt-[110px] sm:pt-32 lg:pt-16 pb-16 sm:pb-24 lg:pb-8 flex flex-col lg:block justify-center">
@@ -128,10 +86,13 @@ export default function HeroSection() {
             </div>
 
             {/* 3. Subheadline - Order 3 on mobile, Col 1 Row 2 on desktop */}
-            <div className="order-3 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-2 lg:mt-0">
-              <p className="hero-subheadline font-accent text-[21px] xs:text-[24px] sm:text-3xl text-pink-hot mb-1 lg:mb-0 italic leading-normal">
-                Trenuj ciężko. Wyglądaj i czuj się świetnie.
-              </p>
+            <div className="order-3 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-3 lg:mt-2">
+              <div className="hero-subheadline inline-flex items-center gap-3 py-3 px-5 sm:py-3.5 sm:px-6 rounded-2xl bg-white/65 backdrop-blur-xl border border-white/80 shadow-glass transition-all duration-300 hover:border-pink-light/50 max-w-xl">
+                <span className="w-2.5 h-2.5 rounded-full bg-pink-hot shrink-0 animate-pulse" />
+                <p className="font-body text-sm xs:text-base sm:text-lg text-pink-hot font-semibold leading-snug">
+                  Ty skupiasz się na działaniu. Ja dbam o plan, technikę i kierunek Twojego progresu.
+                </p>
+              </div>
             </div>
 
             {/* 4. CTA - Order 4 on mobile, Col 1 Row 3 on desktop */}
