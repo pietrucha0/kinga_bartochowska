@@ -134,6 +134,15 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 font-body text-xs text-charcoal/50 text-center">
             <span>&copy; {new Date().getFullYear()} Kinga Bartochowska. Wszelkie prawa zastrzeżone.</span>
             <span className="hidden sm:inline">&middot;</span>
+            <span>
+              Strona stworzona przez:{" "}
+              <a
+                href="mailto:nataliawojcik09@yahoo.com"
+                className="hover:text-pink text-charcoal/70 transition-colors underline underline-offset-2"
+              >
+                nataliawojcik09@yahoo.com
+              </a>
+            </span>
           </div>
         </div>
       </div>
