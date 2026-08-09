@@ -6,7 +6,7 @@ import PhilosophySection from "@/sections/PhilosophySection";
 // import TransformationsSection from "@/sections/TransformationsSection";
 import PricingSection from "@/sections/PricingSection";
 import CommunityMarquee from "@/sections/CommunityMarquee";
-import OpinionsSection from "@/sections/OpinionsSection";
+// import OpinionsSection from "@/sections/OpinionsSection";
 import ContactSection from "@/sections/ContactSection";
 import Footer from "@/sections/Footer";
 
@@ -24,7 +24,7 @@ export default function App() {
         <PricingSection />
         <ContactSection />
         <CommunityMarquee />
-        <OpinionsSection />
+        {/* <OpinionsSection /> */}
       </main>
       <Footer />
     </div>
