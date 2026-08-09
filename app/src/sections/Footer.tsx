@@ -75,7 +75,7 @@ export default function Footer() {
             className="mb-4 block"
           >
             <img
-              src="/assets/kingsquad_logo.png"
+              src="/assets/logo-kingsquad.png"
               alt="King Squad Logo"
               className="h-24 sm:h-32 md:h-36 w-auto object-contain mx-auto transition-all duration-300 filter hover:opacity-80"
             />

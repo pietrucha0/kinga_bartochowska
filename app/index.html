@@ -23,6 +23,8 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kingabartochowska.pl" />
+    <meta property="og:site_name" content="Kinga Bartochowska" />
+    <meta property="og:locale" content="pl_PL" />
     <meta
       property="og:title"
       content="Kinga Bartochowska | Trener Personalny Warszawa Białołęka | Dieta i Metamorfozy"
@@ -33,7 +35,7 @@
     />
     <meta
       property="og:image"
-      content="https://kingabartochowska.pl/assets/kinga2.png"
+      content="https://kingabartochowska.pl/assets/og-share.webp"
     />
 
     <!-- Twitter -->
@@ -49,11 +51,38 @@
     />
     <meta
       property="twitter:image"
-      content="https://kingabartochowska.pl/assets/kinga2.png"
+      content="https://kingabartochowska.pl/assets/og-share.webp"
     />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/webp" href="/assets/kingsquad_logo.png" />
+    <link rel="icon" type="image/webp" href="/assets/logo-kingsquad.png" />
+
+    <!-- Structured Data (Schema.org JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HealthAndBeautyBusiness",
+        "name": "Kinga Bartochowska - Trener Personalny",
+        "image": "https://kingabartochowska.pl/assets/og-share.webp",
+        "@id": "https://kingabartochowska.pl/#business",
+        "url": "https://kingabartochowska.pl",
+        "telephone": "+48500547580",
+        "email": "kingsquadt@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Warszawa",
+          "addressRegion": "Mazowieckie",
+          "addressCountry": "PL",
+          "streetAddress": "Białołęka"
+        },
+        "sameAs": [
+          "https://www.instagram.com/kinga.bartochowska/",
+          "https://www.tiktok.com/@kingsquadt"
+        ],
+        "priceRange": "$$",
+        "description": "Certyfikowana trenerka personalna i dietetyk w Warszawie na Białołęce. Pomagam kobietom budować siłę, pewność siebie oraz wymarzoną sylwetkę."
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

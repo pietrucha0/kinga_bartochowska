@@ -118,7 +118,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-pink-light/40 via-pink-mist/20 to-transparent rounded-full blur-3xl scale-90" />
               
               <img
-                src="/assets/trainer.png"
+                src="/assets/hero-kinga.png"
                 alt="Kinga Bartochowska - Personal Trainer"
                 className="relative z-10 w-[96vw] lg:w-full max-w-[450px] lg:max-w-[410px] xl:max-w-[460px] max-h-[46vh] sm:max-h-[50vh] lg:max-h-none h-auto object-contain drop-shadow-2xl scale-105 sm:scale-100 lg:scale-125 origin-bottom transform lg:translate-y-6"
               />

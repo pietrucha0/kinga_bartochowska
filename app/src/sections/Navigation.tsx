@@ -70,7 +70,7 @@ export default function Navigation() {
           className="absolute left-6 sm:left-8 flex items-center h-full"
         >
           <img
-            src="/assets/kingsquad_logo.png"
+            src="/assets/logo-kingsquad.png"
             alt="King Squad Logo"
             className="h-11 sm:h-14 w-auto object-contain transition-all duration-300 filter hover:opacity-80"
           />

@@ -151,7 +151,7 @@ export default function PhilosophySection() {
               
               <div className="relative p-2.5 rounded-[32px] bg-white/50 backdrop-blur-lg border border-white shadow-xl">
                 <img
-                  src="/assets/o-mnie.png"
+                  src="/assets/about-kinga.png"
                   alt="Kinga Bartochowska - O mnie"
                   loading="lazy"
                   className="w-full max-w-[280px] lg:max-w-[290px] xl:max-w-[330px] h-auto object-contain rounded-2xl bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
