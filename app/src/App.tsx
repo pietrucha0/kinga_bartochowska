@@ -1,4 +1,5 @@
 import useSmoothScroll from "@/hooks/useSmoothScroll";
+import CustomCursor from "@/components/CustomCursor";
 import Navigation from "@/sections/Navigation";
 import HeroSection from "@/sections/HeroSection";
 import PhilosophySection from "@/sections/PhilosophySection";
@@ -14,6 +15,7 @@ export default function App() {
 
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden">
+      <CustomCursor />
       <Navigation />
       <main>
         <HeroSection />
