@@ -58,16 +58,9 @@ export default function Footer() {
     return () => ctx.revert();
   }, []);
 
-  const emailUser = "tdauqsgnik";
-  const emailDomain = "moc.liamg";
-  const emailAddress = emailUser.split("").reverse().join("") + "@" + emailDomain.split("").reverse().join("");
-
-  const phonePart1 = "085";
-  const phonePart2 = "745";
-  const phonePart3 = "005";
-  const rev = (s: string) => s.split("").reverse().join("");
-  const phoneRaw = rev(phonePart3) + rev(phonePart2) + rev(phonePart1);
-  const phoneFormatted = `${rev(phonePart3)}-${rev(phonePart2)}-${rev(phonePart1)}`;
+  const emailAddress = "kingsquadt@gmail.com";
+  const phoneRaw = "500547580";
+  const phoneFormatted = "500-547-580";
 
   return (
     <footer

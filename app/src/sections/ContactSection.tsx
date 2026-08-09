@@ -186,7 +186,7 @@ function CustomSelect({ id, value, onChange, options, disabled = false }: Custom
 const cooperationOptions = [
   { value: "", label: "Wybierz formę współpracy" },
   { value: "personal", label: "Treningi personalne 1:1" },
-  { value: "group", label: "Treningi w parach i grupowe" },
+  // { value: "group", label: "Treningi w parach i grupowe" },
   { value: "online", label: "Współpraca online" },
 ];
 
@@ -199,6 +199,7 @@ const packageOptionsMap: Record<string, Option[]> = {
     { value: "10_trainings", label: "Pakiet 10 treningów (1 300 zł)" },
     { value: "20_trainings", label: "Pakiet 20 treningów (2 400 zł)" },
   ],
+  /*
   group: [
     { value: "", label: "Wybierz interesujący Cię pakiet" },
     { value: "1_training", label: "1 trening (300 zł)" },
@@ -206,6 +207,7 @@ const packageOptionsMap: Record<string, Option[]> = {
     { value: "10_trainings", label: "Pakiet 10 treningów (2 000 zł)" },
     { value: "20_trainings", label: "Pakiet 20 treningów (3 600 zł)" },
   ],
+  */
   online: [
     { value: "", label: "Wybierz interesujący Cię pakiet" },
     { value: "1_month", label: "1 miesiąc współpracy (250 zł)" },
@@ -231,16 +233,9 @@ export default function ContactSection() {
     goal: "",
   });
 
-  const emailUser = "tdauqsgnik";
-  const emailDomain = "moc.liamg";
-  const emailAddress = emailUser.split("").reverse().join("") + "@" + emailDomain.split("").reverse().join("");
-
-  const phonePart1 = "085";
-  const phonePart2 = "745";
-  const phonePart3 = "005";
-  const rev = (s: string) => s.split("").reverse().join("");
-  const phoneRaw = rev(phonePart3) + rev(phonePart2) + rev(phonePart1);
-  const phoneFormatted = `${rev(phonePart3)}-${rev(phonePart2)}-${rev(phonePart1)}`;
+  const emailAddress = "kingsquadt@gmail.com";
+  const phoneRaw = "500547580";
+  const phoneFormatted = "500-547-580";
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -653,15 +648,28 @@ export default function ContactSection() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </span>
-                    <div>
-                      <span className="font-body text-xs lg:text-xs font-semibold text-charcoal/50 block">Lokalizacja treningów stacjonarnych</span>
-                      <span className="font-body text-base lg:text-base font-semibold text-charcoal block mb-0.5">
-                        Calypso Łomianki
-                      </span>
-                      <span className="font-body text-sm lg:text-sm text-charcoal/70 block leading-relaxed">
-                        Warszawska 201/203,<br />
-                        05-092 Kiełpin Poduchowny
-                      </span>
+                    <div className="space-y-3">
+                      <span className="font-body text-xs lg:text-xs font-semibold text-charcoal/50 block">Lokalizacje treningów stacjonarnych</span>
+                      
+                      <div>
+                        <span className="font-body text-base lg:text-base font-semibold text-charcoal block mb-0.5">
+                          Calypso Łomianki
+                        </span>
+                        <span className="font-body text-sm lg:text-sm text-charcoal/70 block leading-relaxed">
+                          Warszawska 201/203,<br />
+                          05-092 Kiełpin Poduchowny
+                        </span>
+                      </div>
+
+                      <div>
+                        <span className="font-body text-base lg:text-base font-semibold text-charcoal block mb-0.5">
+                          Zdrofit Warszawa Białołęka
+                        </span>
+                        <span className="font-body text-sm lg:text-sm text-charcoal/70 block leading-relaxed">
+                          Modlińska 256,<br />
+                          03-152 Warszawa
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

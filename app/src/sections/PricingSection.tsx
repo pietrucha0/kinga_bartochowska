@@ -27,7 +27,7 @@ interface CategoryData {
   tint: string;
 }
 
-const offerCategories: Record<"personal" | "group" | "online", CategoryData> = {
+const offerCategories: Record<"personal" | "online", CategoryData> = {
   personal: {
     id: "personal",
     title: "TRENINGI PERSONALNE 1:1",
@@ -48,10 +48,11 @@ const offerCategories: Record<"personal" | "group" | "online", CategoryData> = {
       { id: "1_training", name: "1 TRENING", regularPrice: 250, promoPrice: 180, savings: 70 },
       { id: "5_trainings", name: "5 TRENINGÓW", regularPrice: 900, promoPrice: 700, savings: 200 },
       { id: "10_trainings", name: "10 TRENINGÓW", regularPrice: 1700, promoPrice: 1300, savings: 400 },
-      { id: "20_trainings", name: "20 TRENINGÓW", regularPrice: 3000, promoPrice: 2400, savings: 600 },
+      { id: "20_trainings", name: "20 TRENINGÓW", regularPrice: 3050, promoPrice: 2400, savings: 650 },
     ],
     tint: "from-pink-mist/60 to-pink-light/40",
   },
+  /*
   group: {
     id: "group",
     title: "TRENINGI W PARACH I GRUPOWE",
@@ -75,6 +76,7 @@ const offerCategories: Record<"personal" | "group" | "online", CategoryData> = {
     ],
     tint: "from-white/50 to-pink-mist/50",
   },
+  */
   online: {
     id: "online",
     title: "WSPÓŁPRACA ONLINE",
@@ -105,7 +107,7 @@ export default function PricingSection() {
   const cardsRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
   const packagesRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState<"personal" | "group" | "online" >("personal");
+  const [activeTab, setActiveTab] = useState<"personal" | "group" | "online">("personal");
 
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -238,7 +240,7 @@ export default function PricingSection() {
     }
   };
 
-  const activeData = offerCategories[activeTab];
+  const activeData = offerCategories[activeTab as keyof typeof offerCategories] || offerCategories.personal;
 
   return (
     <section
@@ -282,10 +284,10 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* Desktop 3 Category Cards (hidden on mobile) */}
+        {/* Desktop Category Cards (hidden on mobile) */}
         <div
           ref={cardsRef}
-          className="hidden md:grid grid-cols-3 gap-6 lg:gap-6 xl:gap-8 max-w-6xl xl:max-w-7xl mx-auto items-stretch mb-8 lg:mb-10"
+          className="hidden md:grid grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto items-stretch mb-8 lg:mb-10"
         >
           {(Object.values(offerCategories) as CategoryData[]).map((category) => {
             const isSelected = activeTab === category.id;
@@ -472,6 +474,15 @@ export default function PricingSection() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
+            </div>
+          </div>
+
+          {/* Promotion Note */}
+          <div className="mt-6 pt-4 border-t border-charcoal/10 flex justify-center text-center">
+            <div className="inline-flex items-center px-4 sm:px-5 py-2 rounded-pill bg-pink-light/30 border border-pink-hot/30 shadow-sm">
+              <span className="font-body font-bold text-xs sm:text-sm text-pink-hot">
+                Promocja dotyczy jedynie treningów w Łomiankach.
+              </span>
             </div>
           </div>
         </div>

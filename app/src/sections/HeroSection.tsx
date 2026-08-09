@@ -87,12 +87,9 @@ export default function HeroSection() {
 
             {/* 3. Subheadline - Order 3 on mobile, Col 1 Row 2 on desktop */}
             <div className="order-3 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-5 sm:mt-6 lg:mt-2.5">
-              <div className="hero-subheadline inline-flex items-center gap-3 py-3 px-5 sm:py-3.5 sm:px-6 rounded-2xl bg-white/65 backdrop-blur-xl border border-white/80 shadow-glass transition-all duration-300 hover:border-pink-light/50 max-w-xl">
-                <span className="w-2.5 h-2.5 rounded-full bg-pink-hot shrink-0 animate-pulse" />
-                <p className="font-body text-sm xs:text-base sm:text-lg text-pink-hot font-semibold leading-snug">
-                  Ty skupiasz się na działaniu. Ja dbam o plan, technikę i kierunek Twojego progresu.
-                </p>
-              </div>
+              <p className="hero-subheadline font-body text-base sm:text-lg lg:text-xl text-pink-hot font-bold leading-snug">
+                Trenuj ciężko, wyglądaj i czuj się świetnie
+              </p>
             </div>
 
             {/* 4. CTA - Order 4 on mobile, Col 1 Row 3 on desktop */}
