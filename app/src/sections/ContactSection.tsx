@@ -648,28 +648,12 @@ export default function ContactSection() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </span>
-                    <div className="space-y-3">
-                      <span className="font-body text-xs lg:text-xs font-semibold text-charcoal/50 block">Lokalizacje treningów stacjonarnych</span>
-                      
-                      <div>
-                        <span className="font-body text-base lg:text-base font-semibold text-charcoal block mb-0.5">
-                          Calypso Łomianki
-                        </span>
-                        <span className="font-body text-sm lg:text-sm text-charcoal/70 block leading-relaxed">
-                          Warszawska 201/203,<br />
-                          05-092 Kiełpin Poduchowny
-                        </span>
-                      </div>
-
-                      <div>
-                        <span className="font-body text-base lg:text-base font-semibold text-charcoal block mb-0.5">
-                          Zdrofit Warszawa Białołęka
-                        </span>
-                        <span className="font-body text-sm lg:text-sm text-charcoal/70 block leading-relaxed">
-                          Modlińska 256,<br />
-                          03-152 Warszawa
-                        </span>
-                      </div>
+                    <div>
+                      <span className="font-body text-xs lg:text-xs font-semibold text-charcoal/50 block mb-1">Lokalizacje treningów stacjonarnych</span>
+                      <ul className="space-y-1 font-display font-bold text-base lg:text-lg text-charcoal">
+                        <li>Łomianki</li>
+                        <li>Warszawa Białołęka</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
