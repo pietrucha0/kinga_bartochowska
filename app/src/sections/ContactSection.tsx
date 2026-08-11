@@ -588,6 +588,16 @@ export default function ContactSection() {
                     </PillButton>
                   </div>
 
+                  {/* RODO Info Clause */}
+                  <p className="text-[11px] sm:text-xs font-body text-charcoal/50 text-center leading-relaxed mt-2.5 px-1">
+                    <strong className="font-semibold text-charcoal/70">Informacja o przetwarzaniu danych (RODO):</strong>{" "}
+                    Wysyłając formularz, wyrażasz zgodę na przetwarzanie podanych danych osobowych przez Kingę Bartochowską w celu odpowiedzi na Twoje zapytanie i omówienia współpracy. Podanie danych jest dobrowolne, ale niezbędne do kontaktu. Masz prawo dostępu do swoich danych, ich poprawiania oraz żądania ich usunięcia w dowolnym momencie (kontakt:{" "}
+                    <a href={`mailto:${emailAddress}`} className="underline underline-offset-2 hover:text-pink transition-colors">
+                      {emailAddress}
+                    </a>
+                    ).
+                  </p>
+
                   {submitError && (
                     <p className="text-center font-body text-sm text-pink-hot font-medium mt-3">
                       {submitError}
