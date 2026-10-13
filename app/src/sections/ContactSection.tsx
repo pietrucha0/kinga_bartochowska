@@ -194,10 +194,9 @@ const packageOptionsMap: Record<string, Option[]> = {
   "": [{ value: "", label: "Wybierz najpierw formę współpracy" }],
   personal: [
     { value: "", label: "Wybierz interesujący Cię pakiet" },
-    { value: "1_training", label: "1 trening (180 zł)" },
-    { value: "5_trainings", label: "Pakiet 5 treningów (700 zł)" },
-    { value: "10_trainings", label: "Pakiet 10 treningów (1 300 zł)" },
-    { value: "20_trainings", label: "Pakiet 20 treningów (2 400 zł)" },
+    { value: "5_trainings", label: "Pakiet 5 treningów (850 zł)" },
+    { value: "10_trainings", label: "Pakiet 10 treningów (1 600 zł)" },
+    { value: "20_trainings", label: "Pakiet 20 treningów (3 000 zł)" },
   ],
   /*
   group: [
@@ -660,9 +659,14 @@ export default function ContactSection() {
                     </span>
                     <div>
                       <span className="font-body text-xs lg:text-xs font-semibold text-charcoal/50 block mb-1">Lokalizacje treningów stacjonarnych</span>
-                      <ul className="space-y-1 font-display font-bold text-base lg:text-lg text-charcoal">
-                        <li>Łomianki</li>
-                        <li>Warszawa Białołęka</li>
+                      <ul className="space-y-2 font-display font-bold text-base lg:text-lg text-charcoal">
+                        <li>Zdrofit Warszawa Białołęka Modlińska 168</li>
+                        <li>
+                          <span>Łomianki</span>
+                          <span className="block font-body font-normal text-xs lg:text-sm text-charcoal/70 mt-0.5">
+                            (zgłoś się po więcej szczegółów)
+                          </span>
+                        </li>
                       </ul>
                     </div>
                   </div>

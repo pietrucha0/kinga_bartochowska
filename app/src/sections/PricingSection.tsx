@@ -10,9 +10,15 @@ gsap.registerPlugin(ScrollTrigger);
 interface Package {
   id: string;
   name: string;
-  regularPrice: number;
-  promoPrice: number;
-  savings: number;
+  price?: number;
+  regularPrice?: number;
+  promoPrice?: number;
+  savings?: number;
+  unitPrice?: string;
+  subtitle?: string;
+  badge?: string;
+  isPopular?: boolean;
+  highlights?: string[];
 }
 
 interface CategoryData {
@@ -25,6 +31,8 @@ interface CategoryData {
   features: string[];
   packages: Package[];
   tint: string;
+  note: string;
+  packagesHeader?: string;
 }
 
 const offerCategories: Record<"personal" | "online", CategoryData> = {
@@ -45,12 +53,30 @@ const offerCategories: Record<"personal" | "online", CategoryData> = {
       "wskazówki dotyczące odżywiania i codziennych nawyków",
     ],
     packages: [
-      { id: "1_training", name: "1 TRENING", regularPrice: 250, promoPrice: 180, savings: 70 },
-      { id: "5_trainings", name: "5 TRENINGÓW", regularPrice: 900, promoPrice: 700, savings: 200 },
-      { id: "10_trainings", name: "10 TRENINGÓW", regularPrice: 1700, promoPrice: 1300, savings: 400 },
-      { id: "20_trainings", name: "20 TRENINGÓW", regularPrice: 3050, promoPrice: 2400, savings: 650 },
+      {
+        id: "5_trainings",
+        name: "5 TRENINGÓW",
+        price: 850,
+        unitPrice: "170 zł / trening",
+      },
+      {
+        id: "10_trainings",
+        name: "10 TRENINGÓW",
+        price: 1600,
+        unitPrice: "160 zł / trening",
+        isPopular: true,
+        badge: "Najczęściej wybierany",
+      },
+      {
+        id: "20_trainings",
+        name: "20 TRENINGÓW",
+        price: 3000,
+        unitPrice: "150 zł / trening",
+      },
     ],
     tint: "from-pink-mist/60 to-pink-light/40",
+    note: "Możliwość płatności za każdy trening osobno, bez konieczności opłacania całego pakietu z góry. Szczegóły współpracy ustalamy w umowie.",
+    packagesHeader: "Wybierz preferowany pakiet",
   },
   /*
   group: {
@@ -94,11 +120,36 @@ const offerCategories: Record<"personal" | "online", CategoryData> = {
       "stały kontakt, moje wsparcie i motywacja przez cały okres współpracy",
     ],
     packages: [
-      { id: "1_month", name: "1 MIESIĄC", regularPrice: 350, promoPrice: 250, savings: 100 },
-      { id: "3_months", name: "3 MIESIĄCE", regularPrice: 900, promoPrice: 700, savings: 200 },
-      { id: "6_months", name: "6 MIESIĘCY", regularPrice: 1500, promoPrice: 1000, savings: 500 },
+      {
+        id: "1_month",
+        name: "1 MIESIĄC",
+        regularPrice: 350,
+        promoPrice: 250,
+        savings: 100,
+        unitPrice: "250 zł / miesiąc",
+      },
+      {
+        id: "3_months",
+        name: "3 MIESIĄCE",
+        regularPrice: 900,
+        promoPrice: 700,
+        savings: 200,
+        unitPrice: "ok. 233 zł / miesiąc",
+        isPopular: true,
+        badge: "Najczęściej wybierany",
+      },
+      {
+        id: "6_months",
+        name: "6 MIESIĘCY",
+        regularPrice: 1500,
+        promoPrice: 1000,
+        savings: 500,
+        unitPrice: "ok. 167 zł / miesiąc",
+      },
     ],
     tint: "from-pink-light/50 to-pink-soft/40",
+    note: "Możliwość płatności za każdy miesiąc współpracy osobno, bez konieczności opłacania całego pakietu z góry. Szczegóły współpracy ustalamy w umowie.",
+    packagesHeader: "Wybierz preferowany pakiet (ceny promocyjne)",
   },
 };
 
@@ -386,7 +437,7 @@ export default function PricingSection() {
           {/* Bottom Row: Dynamic Packages Grid */}
           <div className="pt-6 lg:pt-8">
             <h4 className="font-display font-semibold text-charcoal text-center mb-6 block uppercase tracking-wider text-xs lg:text-xs xl:text-sm">
-              Wybierz preferowany pakiet (ceny promocyjne)
+              {activeData.packagesHeader || "Wybierz preferowany pakiet"}
             </h4>
             
             {/* Scroll Wrapper with Mobile Indicators */}
@@ -408,57 +459,91 @@ export default function PricingSection() {
               <div
                 ref={packagesRef}
                 onScroll={handleScroll}
-                className={`flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-6 sm:pb-0 px-[7%] sm:px-0 -mx-5 sm:mx-0 scrollbar-none sm:grid sm:gap-4 lg:gap-5 ${
+                className={`flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-6 sm:pb-0 px-[7%] sm:px-0 -mx-5 sm:mx-0 scrollbar-none sm:grid sm:gap-4 lg:gap-5 pt-3.5 ${
                   activeData.packages.length === 3 
                     ? "sm:grid-cols-3" 
                     : "sm:grid-cols-2 lg:grid-cols-4"
                 }`}
               >
-                {activeData.packages.map((pack) => (
-                  <GlassCard
-                    key={pack.id}
-                    className="w-[86%] sm:w-auto shrink-0 sm:shrink snap-center p-5 lg:p-5 xl:p-6 bg-gradient-to-b from-white/70 to-white/40 border border-white/80 rounded-2xl flex flex-col justify-between shadow-sm relative group hover:border-cyan/50 hover:shadow-md transition-all duration-300 min-h-[270px] lg:min-h-[280px]"
-                    hover={true}
-                  >
-                  {/* Promo Badge */}
-                  <div className="absolute top-3 right-3 bg-cyan text-white font-body text-[9px] lg:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide uppercase shadow-sm">
-                    Promocja
-                  </div>
+                {activeData.packages.map((pack) => {
+                  const hasPromo = Boolean(pack.promoPrice && pack.regularPrice);
+                  const displayPrice = hasPromo ? pack.promoPrice : (pack.price ?? pack.regularPrice);
 
-                  <div className="text-center pt-2">
-                    <h4 className="font-display font-bold text-base lg:text-sm xl:text-base text-charcoal/90 mb-3 tracking-wide uppercase">
-                      {pack.name}
-                    </h4>
+                  return (
+                    <GlassCard
+                      key={pack.id}
+                      className={`w-[86%] sm:w-auto shrink-0 sm:shrink snap-center p-6 lg:p-7 rounded-3xl flex flex-col justify-between shadow-sm relative group transition-all duration-300 ${
+                        pack.isPopular
+                          ? "bg-gradient-to-b from-white/95 via-pink-mist/30 to-white/75 border-pink/40 ring-2 ring-pink/20 shadow-[0_12px_32px_rgba(224,17,95,0.12)] sm:scale-[1.02] z-10"
+                          : "bg-gradient-to-b from-white/80 to-white/55 border border-white/80 hover:border-cyan/50 hover:shadow-md"
+                      }`}
+                      hover={true}
+                    >
+                      {/* Top Badge */}
+                      {pack.badge && (
+                        <div
+                          className={`absolute -top-3 left-1/2 -translate-x-1/2 font-body text-[10px] lg:text-[11px] font-bold px-3.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm whitespace-nowrap ${
+                            pack.isPopular
+                              ? "bg-gradient-to-r from-pink to-pink-hot text-white glow-pink"
+                              : "bg-cyan text-white shadow-sm"
+                          }`}
+                        >
+                          {pack.badge}
+                        </div>
+                      )}
 
-                    <div className="flex flex-col items-center justify-center gap-0.5 mb-3">
-                      {/* Regular price (crossed out) */}
-                      <span className="font-body text-xs lg:text-xs text-charcoal/45 line-through">
-                        {pack.regularPrice} zł
-                      </span>
-                      {/* Promo price */}
-                      <span className="font-display font-extrabold text-3xl lg:text-3xl xl:text-4xl gradient-text">
-                        {pack.promoPrice} zł
-                      </span>
-                    </div>
+                      <div className="text-center pt-1">
+                        {/* Package name */}
+                        <h4 className="font-display font-extrabold text-base lg:text-lg text-charcoal/90 uppercase tracking-wider mb-2">
+                          {pack.name}
+                        </h4>
 
-                    {/* Savings pill */}
-                    <div className="mb-4 py-0.5 px-3 bg-cyan/10 border border-cyan/15 rounded-pill inline-block">
-                      <span className="font-body text-[10px] lg:text-[11px] font-bold text-cyan uppercase tracking-wider whitespace-nowrap">
-                        Oszczędzasz {pack.savings} zł
-                      </span>
-                    </div>
-                  </div>
+                        {/* Price Section */}
+                        <div className="flex flex-col items-center justify-center my-3">
+                          {hasPromo && pack.regularPrice ? (
+                            <div className="flex items-center gap-1.5 mb-1">
+                              <span className="font-body text-xs text-charcoal/40 line-through font-medium">
+                                {pack.regularPrice} zł
+                              </span>
+                              {pack.savings && (
+                                <span className="font-body text-[10px] font-bold text-pink-hot bg-pink-light/40 px-2 py-0.5 rounded-pill">
+                                  -{pack.savings} zł
+                                </span>
+                              )}
+                            </div>
+                          ) : null}
 
-                  {/* CTA Button */}
-                  <PillButton
-                    variant="cyan"
-                    className="w-full text-xs lg:text-xs xl:text-sm py-2.5 lg:py-2.5 px-3 justify-center text-center font-semibold mt-auto"
-                    onClick={() => selectPackage(activeData.id, pack.id)}
-                  >
-                    Zacznij teraz
-                  </PillButton>
-                  </GlassCard>
-                ))}
+                          <div className="flex items-baseline justify-center gap-1">
+                            <span className="font-display font-black text-3xl sm:text-4xl lg:text-4xl xl:text-5xl gradient-text tracking-tight">
+                              {displayPrice}
+                            </span>
+                            <span className="font-display font-bold text-base sm:text-lg text-charcoal/70">zł</span>
+                          </div>
+
+                          {/* Unit price pill */}
+                          {pack.unitPrice && (
+                            <div className="mt-2.5 inline-flex items-center px-3 py-1 rounded-pill bg-cyan/10 border border-cyan/25">
+                              <span className="font-body font-bold text-xs text-cyan tracking-wide">
+                                {pack.unitPrice}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* CTA Button */}
+                      <div className="mt-5 pt-1">
+                        <PillButton
+                          variant={pack.isPopular ? "pink" : "cyan"}
+                          className="w-full text-xs lg:text-xs xl:text-sm py-2.5 px-3 justify-center text-center font-semibold shadow-sm"
+                          onClick={() => selectPackage(activeData.id, pack.id)}
+                        >
+                          Zacznij teraz
+                        </PillButton>
+                      </div>
+                    </GlassCard>
+                  );
+                })}
               </div>
 
               {/* Right Arrow Button */}
@@ -477,11 +562,11 @@ export default function PricingSection() {
             </div>
           </div>
 
-          {/* Promotion Note */}
+          {/* Payment Note */}
           <div className="mt-6 pt-4 border-t border-charcoal/10 flex justify-center text-center">
             <div className="inline-flex items-center px-4 sm:px-5 py-2 rounded-pill bg-pink-light/30 border border-pink-hot/30 shadow-sm">
               <span className="font-body font-bold text-xs sm:text-sm text-pink-hot">
-                Promocja dotyczy jedynie treningów w Łomiankach.
+                {activeData.note}
               </span>
             </div>
           </div>
