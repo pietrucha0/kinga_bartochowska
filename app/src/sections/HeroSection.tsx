@@ -61,6 +61,10 @@ export default function HeroSection() {
             
             {/* 1. Headline - Order 1 on mobile, Col 1 Row 1 on desktop */}
             <div className="order-1 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-1 lg:mt-0">
+              <span className="font-display font-bold text-xs sm:text-sm text-pink-hot uppercase tracking-widest mb-2 inline-flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-pink-hot animate-pulse" />
+                Kinga Bartochowska • Trenerka Personalna
+              </span>
               <h1 className="font-display font-black sm:font-bold text-[38px] xs:text-[42px] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] lg:leading-[0.85] tracking-tight lg:tracking-tighter">
                 <span className="hero-headline-word inline-block gradient-text">
                   TWOJA
