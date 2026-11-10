@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Check, Dumbbell, Info, Laptop, Sparkles, type LucideIcon } from "lucide-react";
+import { ArrowRight, Check, ChevronLeft, ChevronRight, Dumbbell, Info, Laptop, Sparkles, type LucideIcon } from "lucide-react";
 import PillButton from "@/components/PillButton";
 import { getLenis } from "@/hooks/useSmoothScroll";
 
@@ -171,7 +171,7 @@ function PackageCard({ pack, onSelect }: { pack: Package; onSelect: () => void }
 
   return (
     <div
-      className={`relative flex flex-col rounded-[28px] p-5 sm:p-6 lg:p-7 text-charcoal transition-all duration-300 hover:-translate-y-1 ${
+      className={`relative min-w-0 w-full flex flex-col rounded-[28px] p-5 sm:p-6 lg:p-7 text-charcoal transition-all duration-300 hover:-translate-y-1 ${
         popular
           ? "bg-gradient-to-b from-white to-pink-mist/70 border-2 border-pink-hot/30 shadow-glass hover:shadow-glass-lg"
           : "bg-white/85 border-2 border-white shadow-glass hover:shadow-glass-lg"
@@ -191,7 +191,7 @@ function PackageCard({ pack, onSelect }: { pack: Package; onSelect: () => void }
       </h4>
 
       {/* Price */}
-      <div className="flex items-end justify-between gap-3 sm:flex-col sm:items-start sm:justify-start">
+      <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-2 sm:flex-col sm:items-start sm:justify-start">
         <div>
           {hasPromo && pack.regularPrice ? (
             <div className="flex items-center gap-2 mb-1">
@@ -239,6 +239,49 @@ export default function PricingSection() {
   const cardsRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<TabId>("personal");
+
+  const activeData = offerCategories[activeTab as keyof typeof offerCategories] || offerCategories.personal;
+
+  // Mobile packages carousel
+  const packagesRef = useRef<HTMLDivElement>(null);
+  const [activePack, setActivePack] = useState(0);
+
+  const scrollToPack = (index: number, behavior: ScrollBehavior = "smooth") => {
+    const container = packagesRef.current;
+    const card = container?.children[index] as HTMLElement | undefined;
+    if (!container || !card) return;
+    container.scrollTo({
+      left: card.offsetLeft - (container.clientWidth - card.clientWidth) / 2,
+      behavior,
+    });
+  };
+
+  const handlePackagesScroll = () => {
+    const container = packagesRef.current;
+    if (!container) return;
+    const center = container.scrollLeft + container.clientWidth / 2;
+    let closest = 0;
+    let minDiff = Infinity;
+    Array.from(container.children).forEach((child, idx) => {
+      const el = child as HTMLElement;
+      const diff = Math.abs(el.offsetLeft + el.clientWidth / 2 - center);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closest = idx;
+      }
+    });
+    setActivePack(closest);
+  };
+
+  // Start the mobile carousel on the "most popular" package (cheapest stays on the left,
+  // most expensive on the right). The resulting scroll event updates activePack.
+  const popularIndex = Math.max(0, activeData.packages.findIndex((p) => p.isPopular));
+  useEffect(() => {
+    scrollToPack(popularIndex, "instant");
+    // On first load the scroll can happen before React attaches onScroll — sync dots/arrows explicitly.
+    const id = window.setTimeout(handlePackagesScroll, 50);
+    return () => window.clearTimeout(id);
+  }, [activeTab, popularIndex]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -298,7 +341,6 @@ export default function PricingSection() {
   };
 
   const categories = Object.values(offerCategories) as CategoryData[];
-  const activeData = offerCategories[activeTab as keyof typeof offerCategories] || offerCategories.personal;
 
   return (
     <section
@@ -446,14 +488,58 @@ export default function PricingSection() {
               <span className="h-px flex-1 bg-gradient-to-l from-transparent to-pink-hot/30" />
             </div>
 
-            <div
-              className={`grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6 items-stretch ${
-                activeData.packages.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"
-              }`}
-            >
-              {activeData.packages.map((pack) => (
-                <PackageCard key={pack.id} pack={pack} onSelect={() => selectPackage(activeData.id, pack.id)} />
-              ))}
+            <div className="relative">
+              {/* Mobile arrows */}
+              <button
+                type="button"
+                onClick={() => scrollToPack(Math.max(0, activePack - 1))}
+                aria-label="Poprzedni pakiet"
+                className={`sm:hidden absolute -left-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-white shadow-glass text-pink-hot transition-all duration-300 active:scale-90 ${
+                  activePack > 0 ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                }`}
+              >
+                <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
+              </button>
+
+              <div
+                ref={packagesRef}
+                onScroll={handlePackagesScroll}
+                className={`flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 -mx-5 px-[9%] pt-4 pb-6 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none sm:grid sm:gap-5 lg:gap-6 items-stretch ${
+                  activeData.packages.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"
+                }`}
+              >
+                {activeData.packages.map((pack) => (
+                  <div key={pack.id} className="w-[82%] min-w-0 shrink-0 snap-center flex sm:w-auto sm:shrink [&>*]:flex-1">
+                    <PackageCard pack={pack} onSelect={() => selectPackage(activeData.id, pack.id)} />
+                  </div>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => scrollToPack(Math.min(activeData.packages.length - 1, activePack + 1))}
+                aria-label="Następny pakiet"
+                className={`sm:hidden absolute -right-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-white shadow-glass text-pink-hot transition-all duration-300 active:scale-90 ${
+                  activePack < activeData.packages.length - 1 ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                }`}
+              >
+                <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
+              </button>
+
+              {/* Mobile dots */}
+              <div className="sm:hidden flex justify-center gap-2 -mt-1">
+                {activeData.packages.map((pack, idx) => (
+                  <button
+                    key={pack.id}
+                    type="button"
+                    onClick={() => scrollToPack(idx)}
+                    aria-label={pack.name}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      idx === activePack ? "w-6 bg-pink-hot" : "w-2 bg-charcoal/20"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
