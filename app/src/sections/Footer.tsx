@@ -75,8 +75,10 @@ export default function Footer() {
             className="mb-4 block"
           >
             <img
-              src="/assets/logo-kingsquad.png"
-              alt="King Squad Logo"
+              src="/assets/logo-kingsquad.webp"
+              alt="Kinga Bartochowska – logo King Squad"
+              width={400}
+              height={400}
               className="h-24 sm:h-32 md:h-36 w-auto object-contain mx-auto transition-all duration-300 filter hover:opacity-80"
             />
           </a>

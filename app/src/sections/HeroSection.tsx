@@ -61,11 +61,11 @@ export default function HeroSection() {
             
             {/* 1. Headline - Order 1 on mobile, Col 1 Row 1 on desktop */}
             <div className="order-1 lg:order-none flex flex-col justify-center items-start text-left w-full pl-6 sm:pl-0 mt-1 lg:mt-0">
-              <span className="font-display font-bold text-xs sm:text-sm text-pink-hot uppercase tracking-widest mb-2 inline-flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-pink-hot animate-pulse" />
+              <h1 className="font-display font-bold text-xs sm:text-sm text-pink-hot uppercase tracking-widest mb-2 inline-flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-pink-hot animate-pulse" aria-hidden="true" />
                 Kinga Bartochowska • Trenerka Personalna
-              </span>
-              <h1 className="font-display font-black sm:font-bold text-[38px] xs:text-[42px] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] lg:leading-[0.85] tracking-tight lg:tracking-tighter">
+              </h1>
+              <p className="font-display font-black sm:font-bold text-[38px] xs:text-[42px] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] lg:leading-[0.85] tracking-tight lg:tracking-tighter">
                 <span className="hero-headline-word inline-block gradient-text">
                   TWOJA
                 </span>{" "}
@@ -86,7 +86,7 @@ export default function HeroSection() {
                 <span className="hero-headline-word inline-block text-charcoal">
                   TUTAJ
                 </span>
-              </h1>
+              </p>
             </div>
 
             {/* 3. Subheadline - Order 3 on mobile, Col 1 Row 2 on desktop */}
@@ -122,8 +122,12 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-pink-light/40 via-pink-mist/20 to-transparent rounded-full blur-3xl scale-90" />
               
               <img
-                src="/assets/hero-kinga.png"
-                alt="Kinga Bartochowska - Personal Trainer"
+                src="/assets/hero-kinga.webp"
+                alt="Kinga Bartochowska – trenerka personalna, Warszawa Białołęka i Łomianki"
+                width={900}
+                height={1350}
+                fetchPriority="high"
+                decoding="async"
                 className="relative z-10 w-[96vw] lg:w-full max-w-[450px] lg:max-w-[410px] xl:max-w-[460px] max-h-[46vh] sm:max-h-[50vh] lg:max-h-none h-auto object-contain drop-shadow-2xl scale-105 sm:scale-100 lg:scale-125 origin-bottom transform lg:translate-y-6"
               />
             </div>

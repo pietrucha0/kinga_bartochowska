@@ -1,10 +1,19 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 
-createRoot(document.getElementById('root')!).render(
+const container = document.getElementById('root')!
+const app = (
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 )
+
+// Production build ships prerendered HTML (see scripts/prerender.mjs): hydrate it.
+// In dev the root only holds the placeholder comment, so render from scratch.
+if (container.firstElementChild) {
+  hydrateRoot(container, app)
+} else {
+  createRoot(container).render(app)
+}

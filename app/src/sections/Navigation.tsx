@@ -70,8 +70,10 @@ export default function Navigation() {
           className="absolute left-6 sm:left-8 flex items-center h-full"
         >
           <img
-            src="/assets/logo-kingsquad.png"
-            alt="King Squad Logo"
+            src="/assets/logo-kingsquad.webp"
+            alt="Kinga Bartochowska – logo King Squad"
+              width={400}
+              height={400}
             className="h-11 sm:h-14 w-auto object-contain transition-all duration-300 filter hover:opacity-80"
           />
         </a>

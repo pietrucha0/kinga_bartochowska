@@ -79,9 +79,12 @@ function MobileAbout() {
         <div className="absolute -top-3 -left-3 w-full h-full rounded-[28px] bg-gradient-to-br from-pink-light/40 to-pink-soft/30 -z-10" />
         <div className="relative p-2 rounded-[28px] bg-white/60 backdrop-blur-lg border border-white shadow-xl">
           <img
-            src="/assets/about-kinga.png"
-            alt="Kinga Bartochowska - O mnie"
+            src="/assets/about-kinga.webp"
+            alt="Kinga Bartochowska – trenerka personalna i zawodniczka trójboju siłowego"
+            width={800}
+            height={1200}
             loading="lazy"
+            decoding="async"
             className="w-[200px] sm:w-[240px] h-auto object-contain rounded-[20px] bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
           />
         </div>
@@ -268,9 +271,12 @@ export default function PhilosophySection() {
                 <div className="absolute top-6 -left-6 right-6 bottom-52 xl:bottom-44 rounded-[36px] bg-gradient-to-br from-pink-light/50 to-pink-soft/30 -z-10" />
                 <div className="relative p-3 rounded-[36px] bg-white/60 backdrop-blur-lg border border-white shadow-xl">
                   <img
-                    src="/assets/about-kinga.png"
-                    alt="Kinga Bartochowska - O mnie"
+                    src="/assets/about-kinga.webp"
+                    alt="Kinga Bartochowska – trenerka personalna i zawodniczka trójboju siłowego"
+                    width={800}
+                    height={1200}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-auto max-h-[560px] object-contain rounded-[28px] bg-gradient-to-tr from-pink-light/20 via-white/40 to-pink-soft/20"
                   />
                 </div>
