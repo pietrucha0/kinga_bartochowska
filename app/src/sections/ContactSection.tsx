@@ -144,16 +144,16 @@ function CustomSelect({ id, value, onChange, options, disabled = false }: Custom
         id={id}
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={`input-minimal flex items-center justify-between text-left transition-all duration-300 w-full bg-transparent ${
-          disabled ? "opacity-40 cursor-not-allowed border-charcoal/10" : "cursor-pointer"
+        className={`input-minimal flex items-center justify-between text-left transition-all duration-300 w-full ${
+          disabled ? "opacity-50 cursor-not-allowed bg-white/40" : "cursor-pointer"
         } ${
-          isOpen && !disabled ? "border-cyan shadow-[0_2px_8px_rgba(0,194,203,0.15)]" : ""
+          isOpen && !disabled ? "!bg-white !border-pink-hot/50 shadow-[0_0_0_4px_rgba(255,0,127,0.1)]" : ""
         }`}
       >
         <span className="truncate">{selectedOption?.label}</span>
         <ChevronDown
           className={`w-5 h-5 text-charcoal/50 transition-transform duration-300 pointer-events-none ${
-            isOpen && !disabled ? "transform rotate-180 text-cyan" : ""
+            isOpen && !disabled ? "transform rotate-180 text-pink-hot" : ""
           }`}
         />
       </button>
@@ -170,8 +170,8 @@ function CustomSelect({ id, value, onChange, options, disabled = false }: Custom
               }}
               className={`w-full text-left px-4 py-3 text-sm font-body transition-colors duration-200 cursor-pointer ${
                 option.value === value
-                  ? "bg-cyan/10 text-cyan font-medium"
-                  : "text-charcoal hover:bg-black/5"
+                  ? "bg-pink-mist text-pink-hot font-medium"
+                  : "text-charcoal hover:bg-pink-mist/60"
               }`}
             >
               {option.label}
@@ -435,7 +435,7 @@ export default function ContactSection() {
           
           {/* Column 1: Contact Form (7 cols) */}
           <div className="lg:col-span-7 h-full flex flex-col">
-            <GlassCard className="p-5 sm:p-8 lg:p-8 xl:p-10 w-full flex-grow flex flex-col justify-between" hover={false}>
+            <GlassCard className="p-5 sm:p-8 lg:p-9 xl:p-10 w-full flex-grow flex flex-col justify-between bg-white/50 border border-white shadow-glass-lg" hover={false}>
               {submitted ? (
                 <ContactSuccess />
               ) : (
@@ -456,7 +456,7 @@ export default function ContactSection() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                     {/* Name */}
                     <div>
-                      <label htmlFor="name" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
+                      <label htmlFor="name" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/60 uppercase tracking-[0.12em] mb-2 pl-1">
                         Imię i nazwisko
                       </label>
                       <input
@@ -475,7 +475,7 @@ export default function ContactSection() {
 
                     {/* Email */}
                     <div>
-                      <label htmlFor="email" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
+                      <label htmlFor="email" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/60 uppercase tracking-[0.12em] mb-2 pl-1">
                         Adres e-mail
                       </label>
                       <input
@@ -494,7 +494,7 @@ export default function ContactSection() {
 
                     {/* Cooperation Type */}
                     <div>
-                      <label htmlFor="cooperationType" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
+                      <label htmlFor="cooperationType" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/60 uppercase tracking-[0.12em] mb-2 pl-1">
                         Forma współpracy
                       </label>
                       <CustomSelect
@@ -510,7 +510,7 @@ export default function ContactSection() {
 
                     {/* Preferred Package */}
                     <div>
-                      <label htmlFor="packageType" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
+                      <label htmlFor="packageType" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/60 uppercase tracking-[0.12em] mb-2 pl-1">
                         Preferowany pakiet
                       </label>
                       <CustomSelect
@@ -528,7 +528,7 @@ export default function ContactSection() {
 
                     {/* Phone */}
                     <div>
-                      <label htmlFor="phone" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                      <label htmlFor="phone" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/60 uppercase tracking-[0.12em] mb-2 pl-1 flex items-center justify-between">
                         <span>Numer telefonu</span>
                         <span className="text-[10px] lg:text-xs text-charcoal/40 font-normal lowercase">opcjonalnie</span>
                       </label>
@@ -548,13 +548,13 @@ export default function ContactSection() {
 
                   {/* Goal (Description) */}
                   <div className="mt-3 sm:mt-4">
-                    <label htmlFor="goal" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-1.5">
+                    <label htmlFor="goal" className="block font-body text-xs lg:text-xs xl:text-sm font-semibold text-charcoal/60 uppercase tracking-[0.12em] mb-2 pl-1">
                       Twój główny cel i oczekiwania
                     </label>
                     <textarea
                       id="goal"
                       required
-                      rows={3}
+                      rows={4}
                       value={formData.goal}
                       onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
                       className={`input-minimal font-body text-base lg:text-sm xl:text-base lg:py-2.5 resize-none ${errors.goal ? "border-pink-hot" : ""}`}
@@ -569,7 +569,7 @@ export default function ContactSection() {
                   <div className="pt-4 lg:pt-5">
                     <PillButton
                       variant="cyan"
-                      className="w-full py-3.5 lg:py-4 text-base lg:text-base xl:text-lg flex justify-center items-center gap-2 font-semibold"
+                      className="w-full py-3.5 lg:py-4 text-base lg:text-base xl:text-lg flex justify-center items-center gap-2 font-semibold shadow-cyan-glow"
                       disabled={isSubmitting}
                       magnetic={false}
                     >

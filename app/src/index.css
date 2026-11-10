@@ -136,12 +136,18 @@
 
   /* Input Minimal Style */
   .input-minimal {
-    @apply w-full bg-transparent border-0 border-b-2 border-charcoal/20 py-3 px-1 text-charcoal placeholder:text-charcoal/40 focus:outline-none transition-colors duration-300;
+    @apply w-full rounded-2xl border border-charcoal/10 bg-white/75 py-3 px-4 text-charcoal placeholder:text-charcoal/35 focus:outline-none transition-all duration-300;
+    box-shadow: inset 0 1px 2px rgba(26, 26, 26, 0.03);
+  }
+
+  .input-minimal:hover:not(:disabled):not(:focus) {
+    border-color: rgba(255, 0, 127, 0.25);
   }
 
   .input-minimal:focus {
-    border-color: #00c2cb;
-    box-shadow: 0 2px 8px rgba(0, 194, 203, 0.2);
+    background-color: #fff;
+    border-color: rgba(255, 0, 127, 0.5);
+    box-shadow: 0 0 0 4px rgba(255, 0, 127, 0.1);
   }
 }
 

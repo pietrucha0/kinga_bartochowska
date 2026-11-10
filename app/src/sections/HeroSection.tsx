@@ -128,7 +128,7 @@ export default function HeroSection() {
                 height={1350}
                 fetchPriority="high"
                 decoding="async"
-                className="relative z-10 w-[96vw] lg:w-full max-w-[450px] lg:max-w-[410px] xl:max-w-[460px] max-h-[46vh] sm:max-h-[50vh] lg:max-h-none h-auto object-contain drop-shadow-2xl scale-105 sm:scale-100 lg:scale-125 origin-bottom transform lg:translate-y-6"
+                className="relative z-10 w-[96vw] max-w-[450px] max-h-[46vh] sm:max-h-[50vh] h-auto object-contain drop-shadow-2xl scale-105 sm:scale-100 origin-bottom transform lg:w-auto lg:max-w-none lg:h-[calc(100svh-110px)] lg:max-h-[1000px] lg:min-h-[480px] lg:scale-100 lg:translate-y-8"
               />
             </div>
           </div>
