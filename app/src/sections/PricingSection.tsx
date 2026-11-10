@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowRight, Check, Dumbbell, Info, Laptop, Sparkles, type LucideIcon } from "lucide-react";
 import PillButton from "@/components/PillButton";
-import GlassCard from "@/components/GlassCard";
 import { getLenis } from "@/hooks/useSmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -150,77 +150,98 @@ const offerCategories: Record<"personal" | "online", CategoryData> = {
   },
 };
 
+type TabId = "personal" | "group" | "online";
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  personal: Dumbbell,
+  group: Dumbbell,
+  online: Laptop,
+};
+
+const MOBILE_TAB_LABEL: Record<string, string> = {
+  personal: "1:1",
+  group: "Grupa",
+  online: "Online",
+};
+
+function PackageCard({ pack, onSelect }: { pack: Package; onSelect: () => void }) {
+  const hasPromo = Boolean(pack.promoPrice && pack.regularPrice);
+  const displayPrice = hasPromo ? pack.promoPrice : (pack.price ?? pack.regularPrice);
+  const popular = Boolean(pack.isPopular);
+
+  return (
+    <div
+      className={`relative flex flex-col rounded-[28px] p-5 sm:p-6 lg:p-7 text-charcoal transition-all duration-300 hover:-translate-y-1 ${
+        popular
+          ? "bg-gradient-to-b from-white to-pink-mist/70 border-2 border-pink-hot/30 shadow-glass hover:shadow-glass-lg"
+          : "bg-white/85 border-2 border-white shadow-glass hover:shadow-glass-lg"
+      }`}
+    >
+      {/* Badge */}
+      {pack.badge && (
+        <span className="absolute -top-3 right-5 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 inline-flex items-center gap-1 whitespace-nowrap rounded-pill bg-pink-mist border border-pink-hot/25 px-3 py-1 font-body text-[10px] font-bold uppercase tracking-wider text-pink-hot">
+          <Sparkles className="w-3 h-3" strokeWidth={2.5} />
+          {pack.badge}
+        </span>
+      )}
+
+      {/* Name */}
+      <h4 className="mb-4 sm:mb-5 font-display font-bold text-sm lg:text-[15px] uppercase tracking-[0.12em] text-charcoal/80">
+        {pack.name}
+      </h4>
+
+      {/* Price */}
+      <div className="flex items-end justify-between gap-3 sm:flex-col sm:items-start sm:justify-start">
+        <div>
+          {hasPromo && pack.regularPrice ? (
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-body text-sm line-through text-charcoal/40">{pack.regularPrice} zł</span>
+              {pack.savings ? (
+                <span className="font-body text-[11px] font-bold px-2 py-0.5 rounded-pill bg-pink-mist text-pink-hot">
+                  -{pack.savings} zł
+                </span>
+              ) : null}
+            </div>
+          ) : null}
+
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-display font-bold text-4xl lg:text-5xl tracking-tight leading-none text-charcoal">
+              {displayPrice}
+            </span>
+            <span className="font-display font-semibold text-lg text-charcoal/50">zł</span>
+          </div>
+        </div>
+
+        {pack.unitPrice && (
+          <span className="sm:mt-3 inline-flex items-center rounded-pill px-3 py-1 font-body text-xs font-semibold whitespace-nowrap bg-cyan/10 text-cyan">
+            {pack.unitPrice}
+          </span>
+        )}
+      </div>
+
+      {/* CTA */}
+      <div className="mt-5 sm:mt-auto sm:pt-7">
+        <PillButton
+          variant={popular ? "pink" : "cyan"}
+          className="w-full text-sm py-3 px-4 justify-center gap-2 font-semibold shadow-sm"
+          onClick={onSelect}
+        >
+          Zacznij teraz
+          <ArrowRight className="w-4 h-4" />
+        </PillButton>
+      </div>
+    </div>
+  );
+}
+
 export default function PricingSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
-  const packagesRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState<"personal" | "group" | "online">("personal");
-
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
-
-  const scrollPackages = (direction: "left" | "right") => {
-    if (packagesRef.current) {
-      const container = packagesRef.current;
-      const cards = Array.from(container.children) as HTMLElement[];
-      if (cards.length === 0) return;
-
-      const containerCenter = container.scrollLeft + container.clientWidth / 2;
-      let closestIndex = 0;
-      let minDiff = Infinity;
-
-      cards.forEach((card, idx) => {
-        const cardCenter = card.offsetLeft + card.clientWidth / 2;
-        const diff = Math.abs(cardCenter - containerCenter);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closestIndex = idx;
-        }
-      });
-
-      const targetIndex =
-        direction === "right"
-          ? Math.min(cards.length - 1, closestIndex + 1)
-          : Math.max(0, closestIndex - 1);
-
-      const targetCard = cards[targetIndex];
-      if (targetCard) {
-        const targetLeft =
-          targetCard.offsetLeft - (container.clientWidth - targetCard.clientWidth) / 2;
-        container.scrollTo({
-          left: targetLeft,
-          behavior: "smooth",
-        });
-      }
-    }
-  };
-
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const container = e.currentTarget;
-    const { scrollLeft, scrollWidth, clientWidth } = container;
-    const canScroll = scrollWidth > clientWidth;
-    setShowLeftArrow(canScroll && scrollLeft > 10);
-    setShowRightArrow(canScroll && scrollLeft < scrollWidth - clientWidth - 10);
-  };
-
-  useEffect(() => {
-    if (packagesRef.current) {
-      packagesRef.current.scrollLeft = 0;
-      setShowLeftArrow(false);
-      const timer = setTimeout(() => {
-        if (packagesRef.current) {
-          const { scrollWidth, clientWidth } = packagesRef.current;
-          setShowRightArrow(scrollWidth > clientWidth);
-        }
-      }, 150);
-      return () => clearTimeout(timer);
-    }
-  }, [activeTab]);
+  const [activeTab, setActiveTab] = useState<TabId>("personal");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Section heading
       gsap.fromTo(
         ".pricing-heading",
         { opacity: 0, y: 40 },
@@ -229,30 +250,22 @@ export default function PricingSection() {
           y: 0,
           duration: 0.8,
           ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
+          scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
         }
       );
 
-      // Category cards reveal
       const cards = cardsRef.current?.querySelectorAll(".category-card");
       if (cards) {
         gsap.fromTo(
           cards,
-          { opacity: 0, y: 50, scale: 0.95 },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
             duration: 0.8,
             stagger: 0.15,
             ease: "power3.out",
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: "top 80%",
-            },
+            scrollTrigger: { trigger: cardsRef.current, start: "top 80%" },
           }
         );
       }
@@ -264,11 +277,7 @@ export default function PricingSection() {
   // Animacja przy zmianie zakładki szczegółów oferty
   useEffect(() => {
     if (detailsRef.current) {
-      gsap.fromTo(
-        detailsRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
-      );
+      gsap.fromTo(detailsRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
     }
   }, [activeTab]);
 
@@ -288,283 +297,171 @@ export default function PricingSection() {
     }
   };
 
+  const categories = Object.values(offerCategories) as CategoryData[];
   const activeData = offerCategories[activeTab as keyof typeof offerCategories] || offerCategories.personal;
 
   return (
     <section
       ref={sectionRef}
       id="pricing"
-      className="relative w-full min-h-screen py-12 sm:py-32 lg:py-14 flex items-center overflow-hidden"
+      className="relative w-full py-16 sm:py-24 lg:py-24 xl:py-28 overflow-clip"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-blush-mist pointer-events-none" />
+      <div className="hidden lg:block absolute -right-40 top-20 w-[460px] h-[460px] rounded-full bg-white/50 blur-3xl pointer-events-none" />
+      <div className="hidden lg:block absolute -left-40 bottom-20 w-[460px] h-[460px] rounded-full bg-pink-light/30 blur-3xl pointer-events-none" />
 
       <div className="relative z-10 section-container w-full">
         {/* Section Header */}
-        <div className="text-center mb-8 lg:mb-10">
-          <h2 className="pricing-heading font-display font-bold text-4xl sm:text-5xl lg:text-5xl xl:text-6xl gradient-text mb-3">
+        <div className="text-center mb-10 lg:mb-14">
+          <h2 className="pricing-heading font-display font-bold text-4xl sm:text-5xl lg:text-5xl xl:text-6xl gradient-text mb-4">
             Oferta
           </h2>
-          <p className="pricing-heading font-body text-base sm:text-lg lg:text-base xl:text-lg text-charcoal/70 max-w-2xl lg:max-w-3xl mx-auto">
+          <p className="pricing-heading font-body text-base sm:text-lg text-charcoal/70 max-w-2xl mx-auto leading-relaxed">
             Wybierz formę współpracy dopasowaną do Twoich potrzeb, możliwości i stylu życia.
             Niezależnie od tego, gdzie jesteś — wspólnie stworzymy plan, który przybliży Cię do Twojego celu.
           </p>
         </div>
 
-        {/* Mobile Tab Selector (hidden on md and up) */}
-        <div className="flex md:hidden bg-white/30 backdrop-blur-xl border border-white/60 p-1.5 rounded-[999px] max-w-sm mx-auto mb-10 shadow-sm relative z-20">
-          {(Object.values(offerCategories) as CategoryData[]).map((category) => {
+        {/* Mobile Tab Selector */}
+        <div className="flex md:hidden bg-white/60 backdrop-blur-xl border border-white p-1.5 rounded-pill max-w-sm mx-auto mb-8 shadow-sm">
+          {categories.map((category) => {
             const isSelected = activeTab === category.id;
+            const Icon = CATEGORY_ICONS[category.id];
             return (
               <button
                 key={category.id}
                 type="button"
                 onClick={() => setActiveTab(category.id)}
-                className={`flex-1 font-display font-extrabold text-[13px] sm:text-sm py-2.5 px-3 rounded-[999px] transition-all duration-300 text-center uppercase tracking-wide ${
-                  isSelected
-                    ? "bg-gradient-to-r from-pink to-pink-hot text-white shadow-md scale-100"
-                    : "text-charcoal/70 hover:text-charcoal"
+                className={`flex-1 inline-flex items-center justify-center gap-2 font-display font-bold text-sm py-2.5 px-3 rounded-pill transition-all duration-300 uppercase tracking-wide ${
+                  isSelected ? "bg-gradient-to-r from-pink to-pink-hot text-white shadow-md" : "text-charcoal/60"
                 }`}
               >
-                {category.id === "personal" ? "1:1" : category.id === "group" ? "Grupa" : "Online"}
+                <Icon className="w-4 h-4" strokeWidth={2.25} />
+                {MOBILE_TAB_LABEL[category.id]}
               </button>
             );
           })}
         </div>
 
-        {/* Desktop Category Cards (hidden on mobile) */}
-        <div
-          ref={cardsRef}
-          className="hidden md:grid grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto items-stretch mb-8 lg:mb-10"
-        >
-          {(Object.values(offerCategories) as CategoryData[]).map((category) => {
+        {/* Desktop Category Selector */}
+        <div ref={cardsRef} className="hidden md:grid grid-cols-2 gap-5 lg:gap-6 max-w-4xl mx-auto mb-10 lg:mb-12">
+          {categories.map((category) => {
             const isSelected = activeTab === category.id;
+            const Icon = CATEGORY_ICONS[category.id];
             return (
-              <div
+              <button
                 key={category.id}
+                type="button"
                 onClick={() => setActiveTab(category.id)}
-                className="cursor-pointer h-full transition-all duration-300"
+                aria-pressed={isSelected}
+                className={`category-card group relative flex gap-5 text-left rounded-[28px] p-6 lg:p-7 border-2 transition-all duration-300 ${
+                  isSelected
+                    ? "bg-white border-pink-hot/70 shadow-[0_18px_40px_rgba(224,17,95,0.16)]"
+                    : "bg-white/50 border-white/70 hover:bg-white/80 hover:-translate-y-0.5 shadow-sm"
+                }`}
               >
-                <GlassCard
-                  className={`category-card relative p-6 sm:p-8 lg:p-6 xl:p-7 h-full bg-gradient-to-b ${category.tint} flex flex-col justify-between transition-all duration-300 ${
+                <span
+                  className={`flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 shrink-0 rounded-2xl transition-colors duration-300 ${
                     isSelected
-                      ? "border-pink shadow-[0_15px_35px_rgba(224,17,95,0.2)] scale-[1.02] ring-2 ring-pink/20"
-                      : "opacity-85 hover:opacity-100 hover:scale-[1.01]"
+                      ? "bg-gradient-to-br from-pink to-pink-hot text-white shadow-md"
+                      : "bg-pink-mist text-pink-hot"
                   }`}
-                  hover={!isSelected}
                 >
-                  <div className="text-center pt-1">
-                    {/* Selected Indicator Badge */}
-                    {isSelected && (
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                        <span className="bg-pink-hot text-white font-body text-[10px] lg:text-xs uppercase font-bold tracking-wider px-3.5 lg:px-4 py-1 rounded-pill glow-pink">
-                          Wybrana opcja
-                        </span>
-                      </div>
-                    )}
-                    
-                    <h3 className="font-display font-bold text-lg sm:text-xl lg:text-xl xl:text-2xl text-charcoal mb-2 leading-snug">
-                      {category.title}
-                    </h3>
-                    <h4 className="font-display font-semibold text-sm lg:text-sm xl:text-base text-pink-hot mb-3 leading-normal">
-                      {category.subtitle}
-                    </h4>
-                    <p className="font-body text-xs sm:text-sm lg:text-xs xl:text-sm text-charcoal/70 leading-relaxed">
-                      {category.description}
-                    </p>
-                  </div>
-                  <div className="mt-4 flex justify-center">
-                    <span className={`font-body text-xs lg:text-xs xl:text-sm font-semibold px-4 py-2 lg:px-5 lg:py-2 rounded-pill transition-colors duration-300 ${
-                      isSelected ? "bg-pink text-white" : "bg-black/5 text-charcoal/70 hover:bg-black/10"
-                    }`}>
-                      {isSelected ? "Przeglądasz pakiety" : "Zobacz pakiety"}
-                    </span>
-                  </div>
-                </GlassCard>
-              </div>
+                  <Icon className="w-6 h-6" strokeWidth={2} />
+                </span>
+
+                <div className="flex-1 pr-6">
+                  <h3 className="font-display font-bold text-lg xl:text-xl text-charcoal leading-snug mb-1">
+                    {category.title}
+                  </h3>
+                  <p className="font-display font-semibold text-sm text-pink-hot mb-2">{category.subtitle}</p>
+                  <p className="font-body text-sm text-charcoal/65 leading-relaxed">{category.description}</p>
+                </div>
+
+                {/* Radio indicator */}
+                <span
+                  className={`absolute top-6 right-6 flex items-center justify-center w-6 h-6 rounded-full border-2 transition-all duration-300 ${
+                    isSelected ? "bg-pink-hot border-pink-hot text-white" : "border-charcoal/20 bg-white"
+                  }`}
+                >
+                  {isSelected && <Check className="w-3.5 h-3.5" strokeWidth={3} />}
+                </span>
+              </button>
             );
           })}
         </div>
 
-        <div ref={detailsRef} className="max-w-6xl xl:max-w-7xl mx-auto mt-6 bg-white/30 backdrop-blur-xl border border-white/60 rounded-[32px] p-5 sm:p-8 lg:p-8 xl:p-10 shadow-glass">
-          {/* Top Row: Category Info and Features Checklist */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start pb-6 lg:pb-8 border-b border-charcoal/5">
-            {/* Left side: Category Intro and Callout */}
-            <div className="lg:col-span-7 flex flex-col justify-between h-full">
-              <div>
-                <span className="font-body text-[10px] lg:text-xs font-bold text-pink uppercase tracking-widest block mb-1.5">
-                  O ofercie
-                </span>
-                <h3 className="font-display font-bold text-3xl lg:text-3xl xl:text-4xl text-charcoal mb-3">
-                  {activeData.title}
-                </h3>
-                <p className="font-body text-base lg:text-sm xl:text-base text-charcoal/80 leading-relaxed mb-4">
-                  {activeData.intro}
-                </p>
-              </div>
+        {/* Details panel */}
+        <div
+          ref={detailsRef}
+          className="max-w-6xl mx-auto rounded-[32px] lg:rounded-[40px] bg-white/45 backdrop-blur-xl border border-white/80 shadow-glass p-5 sm:p-8 lg:p-10 xl:p-12"
+        >
+          {/* About the offer + features */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+            <div className="lg:col-span-6 xl:col-span-7 flex flex-col">
+              <span className="font-body text-[11px] lg:text-xs font-bold text-pink-hot uppercase tracking-[0.2em] mb-3">
+                O ofercie
+              </span>
+              <h3 className="font-display font-bold text-[28px] leading-tight sm:text-4xl xl:text-[42px] text-charcoal mb-4 lg:mb-5">
+                {activeData.title}
+              </h3>
+              <p className="font-body text-[15px] lg:text-base xl:text-[17px] text-charcoal/75 leading-[1.75] mb-6">
+                {activeData.intro}
+              </p>
 
-              {/* Callout box */}
-              <div className="p-3.5 lg:p-4 rounded-xl bg-pink-light/10 border border-pink-light/25 text-center sm:text-left">
-                <p className="font-body font-medium text-xs sm:text-sm lg:text-xs xl:text-sm text-pink-hot/90 leading-relaxed">
-                  "{activeData.callout}"
+              <blockquote className="pl-4 lg:pl-5 border-l-[3px] border-pink-hot">
+                <p className="font-display font-semibold text-base lg:text-lg text-pink-hot leading-snug">
+                  „{activeData.callout}”
                 </p>
-              </div>
+              </blockquote>
             </div>
 
-            {/* Right side: Features Checklist */}
-            <div className="lg:col-span-5">
-              <span className="font-body text-[10px] lg:text-xs font-bold text-cyan uppercase tracking-widest block mb-3">
-                Co zawiera współpraca
-              </span>
-              <ul className="space-y-2.5 lg:space-y-3">
-                {activeData.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 font-body text-sm lg:text-xs xl:text-sm text-charcoal/85">
-                    <span className="flex-shrink-0 w-4.5 h-4.5 lg:w-5 lg:h-5 rounded-full bg-cyan/15 flex items-center justify-center mt-0.5">
-                      <svg className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="lg:col-span-6 xl:col-span-5">
+              <div className="h-full rounded-[24px] bg-white/80 border border-white p-5 sm:p-6 lg:p-7 shadow-sm">
+                <span className="font-body text-[11px] lg:text-xs font-bold text-cyan uppercase tracking-[0.2em] block mb-4">
+                  Co zawiera współpraca
+                </span>
+                <ul className="space-y-3">
+                  {activeData.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3 font-body text-sm lg:text-[15px] text-charcoal/80 leading-snug">
+                      <span className="flex items-center justify-center w-5 h-5 shrink-0 rounded-full bg-cyan/15 mt-0.5">
+                        <Check className="w-3 h-3 text-cyan" strokeWidth={3} />
+                      </span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
 
-          {/* Bottom Row: Dynamic Packages Grid */}
-          <div className="pt-6 lg:pt-8">
-            <h4 className="font-display font-semibold text-charcoal text-center mb-6 block uppercase tracking-wider text-xs lg:text-xs xl:text-sm">
-              {activeData.packagesHeader || "Wybierz preferowany pakiet"}
-            </h4>
-            
-            {/* Scroll Wrapper with Mobile Indicators */}
-            <div className="relative">
-              {/* Left Arrow Button */}
-              <button
-                type="button"
-                onClick={() => scrollPackages("left")}
-                className={`absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-glass sm:hidden transition-all duration-300 hover:bg-white/45 active:scale-90 ${
-                  showLeftArrow ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
-                }`}
-                aria-label="Poprzedni"
-              >
-                <svg className="w-5 h-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
+          {/* Packages */}
+          <div className="mt-10 lg:mt-14">
+            <div className="flex items-center gap-4 mb-6 lg:mb-10">
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-pink-hot/30" />
+              <h4 className="font-display font-bold text-xs lg:text-sm text-charcoal/70 uppercase tracking-[0.18em] text-center">
+                {activeData.packagesHeader || "Wybierz preferowany pakiet"}
+              </h4>
+              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-pink-hot/30" />
+            </div>
 
-              <div
-                ref={packagesRef}
-                onScroll={handleScroll}
-                className={`flex overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-6 sm:pb-0 px-[7%] sm:px-0 -mx-5 sm:mx-0 scrollbar-none sm:grid sm:gap-4 lg:gap-5 pt-3.5 ${
-                  activeData.packages.length === 3 
-                    ? "sm:grid-cols-3" 
-                    : "sm:grid-cols-2 lg:grid-cols-4"
-                }`}
-              >
-                {activeData.packages.map((pack) => {
-                  const hasPromo = Boolean(pack.promoPrice && pack.regularPrice);
-                  const displayPrice = hasPromo ? pack.promoPrice : (pack.price ?? pack.regularPrice);
-
-                  return (
-                    <GlassCard
-                      key={pack.id}
-                      className={`w-[86%] sm:w-auto shrink-0 sm:shrink snap-center p-6 lg:p-7 rounded-3xl flex flex-col justify-between shadow-sm relative group transition-all duration-300 ${
-                        pack.isPopular
-                          ? "bg-gradient-to-b from-white/95 via-pink-mist/30 to-white/75 border-pink/40 ring-2 ring-pink/20 shadow-[0_12px_32px_rgba(224,17,95,0.12)] sm:scale-[1.02] z-10"
-                          : "bg-gradient-to-b from-white/80 to-white/55 border border-white/80 hover:border-cyan/50 hover:shadow-md"
-                      }`}
-                      hover={true}
-                    >
-                      {/* Top Badge */}
-                      {pack.badge && (
-                        <div
-                          className={`absolute -top-3 left-1/2 -translate-x-1/2 font-body text-[10px] lg:text-[11px] font-bold px-3.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm whitespace-nowrap ${
-                            pack.isPopular
-                              ? "bg-gradient-to-r from-pink to-pink-hot text-white glow-pink"
-                              : "bg-cyan text-white shadow-sm"
-                          }`}
-                        >
-                          {pack.badge}
-                        </div>
-                      )}
-
-                      <div className="text-center pt-1">
-                        {/* Package name */}
-                        <h4 className="font-display font-extrabold text-base lg:text-lg text-charcoal/90 uppercase tracking-wider mb-2">
-                          {pack.name}
-                        </h4>
-
-                        {/* Price Section */}
-                        <div className="flex flex-col items-center justify-center my-3">
-                          {hasPromo && pack.regularPrice ? (
-                            <div className="flex items-center gap-1.5 mb-1">
-                              <span className="font-body text-xs text-charcoal/40 line-through font-medium">
-                                {pack.regularPrice} zł
-                              </span>
-                              {pack.savings && (
-                                <span className="font-body text-[10px] font-bold text-pink-hot bg-pink-light/40 px-2 py-0.5 rounded-pill">
-                                  -{pack.savings} zł
-                                </span>
-                              )}
-                            </div>
-                          ) : null}
-
-                          <div className="flex items-baseline justify-center gap-1">
-                            <span className="font-display font-black text-3xl sm:text-4xl lg:text-4xl xl:text-5xl gradient-text tracking-tight">
-                              {displayPrice}
-                            </span>
-                            <span className="font-display font-bold text-base sm:text-lg text-charcoal/70">zł</span>
-                          </div>
-
-                          {/* Unit price pill */}
-                          {pack.unitPrice && (
-                            <div className="mt-2.5 inline-flex items-center px-3 py-1 rounded-pill bg-cyan/10 border border-cyan/25">
-                              <span className="font-body font-bold text-xs text-cyan tracking-wide">
-                                {pack.unitPrice}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* CTA Button */}
-                      <div className="mt-5 pt-1">
-                        <PillButton
-                          variant={pack.isPopular ? "pink" : "cyan"}
-                          className="w-full text-xs lg:text-xs xl:text-sm py-2.5 px-3 justify-center text-center font-semibold shadow-sm"
-                          onClick={() => selectPackage(activeData.id, pack.id)}
-                        >
-                          Zacznij teraz
-                        </PillButton>
-                      </div>
-                    </GlassCard>
-                  );
-                })}
-              </div>
-
-              {/* Right Arrow Button */}
-              <button
-                type="button"
-                onClick={() => scrollPackages("right")}
-                className={`absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-glass sm:hidden transition-all duration-300 hover:bg-white/45 active:scale-90 ${
-                  showRightArrow ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
-                }`}
-                aria-label="Następny"
-              >
-                <svg className="w-5 h-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+            <div
+              className={`grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6 items-stretch ${
+                activeData.packages.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"
+              }`}
+            >
+              {activeData.packages.map((pack) => (
+                <PackageCard key={pack.id} pack={pack} onSelect={() => selectPackage(activeData.id, pack.id)} />
+              ))}
             </div>
           </div>
 
           {/* Payment Note */}
-          <div className="mt-6 pt-4 border-t border-charcoal/10 flex justify-center text-center">
-            <div className="inline-flex items-center px-4 sm:px-5 py-2 rounded-pill bg-pink-light/30 border border-pink-hot/30 shadow-sm">
-              <span className="font-body font-bold text-xs sm:text-sm text-pink-hot">
-                {activeData.note}
-              </span>
+          <div className="mt-8 lg:mt-10 flex justify-center">
+            <div className="flex items-start sm:items-center gap-3 max-w-3xl rounded-2xl bg-white/70 border border-white px-4 sm:px-5 py-3.5 text-left">
+              <Info className="w-5 h-5 shrink-0 text-pink-hot mt-0.5 sm:mt-0" strokeWidth={2} />
+              <p className="font-body text-[13px] sm:text-sm text-charcoal/75 leading-relaxed">{activeData.note}</p>
             </div>
           </div>
         </div>
