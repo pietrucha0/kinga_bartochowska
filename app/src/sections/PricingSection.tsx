@@ -126,7 +126,6 @@ const offerCategories: Record<"personal" | "online", CategoryData> = {
         regularPrice: 350,
         promoPrice: 250,
         savings: 100,
-        unitPrice: "250 zł / miesiąc",
       },
       {
         id: "3_months",
@@ -134,7 +133,6 @@ const offerCategories: Record<"personal" | "online", CategoryData> = {
         regularPrice: 900,
         promoPrice: 700,
         savings: 200,
-        unitPrice: "ok. 233 zł / miesiąc",
         isPopular: true,
         badge: "Najczęściej wybierany",
       },
@@ -144,7 +142,6 @@ const offerCategories: Record<"personal" | "online", CategoryData> = {
         regularPrice: 1500,
         promoPrice: 1000,
         savings: 500,
-        unitPrice: "ok. 167 zł / miesiąc",
       },
     ],
     tint: "from-pink-light/50 to-pink-soft/40",
